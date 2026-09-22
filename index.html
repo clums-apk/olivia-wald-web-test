@@ -137,7 +137,7 @@
   }
   .hero-portrait .ph img{z-index:1;transition:opacity .6s ease;}
   .hero-portrait .ph video{z-index:0;}
-  .hero-portrait:hover .hero-img{opacity:0;}
+  .hero-portrait .ph:hover .hero-img{opacity:0;}
   .mock-illus{
     position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
     width:42%;height:auto;opacity:.55;pointer-events:none;z-index:0;
@@ -147,8 +147,11 @@
   .gcard .ph .mock-illus{color:rgba(244,238,221,.5);width:56%;}
   .split-thumb .mock-illus{width:60%;}
 
-  /* flaming-heart cursor over the hero photo, replaces the old glow circle */
-  .hero-portrait .ph{
+  /* flaming-heart cursor everywhere on the site */
+  body{
+    cursor: url('assets/cursor-flame.svg') 15 4, auto;
+  }
+  a, button, .flag-btn, .gcard, .carousel-arrow, .menu-toggle{
     cursor: url('assets/cursor-flame.svg') 15 4, pointer;
   }
   .spark-layer{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden;}
