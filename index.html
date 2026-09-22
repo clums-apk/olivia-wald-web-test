@@ -107,7 +107,7 @@
   /* ---------- Hero ---------- */
   .hero{
     position:relative;
-    height:230vh;
+    height:280vh;
     background:var(--ecru);
   }
   .hero-first-screen{
@@ -251,13 +251,19 @@
   .ss-track{display:inline-flex;gap:2.5rem;animation:marquee 24s linear infinite;}
   .ss-marquee.bottom .ss-track{animation-direction:reverse;animation-duration:30s;}
   .ss-marquee span{
-    font-family:var(--serif);font-style:italic;font-weight:600;
+    font-family:var(--serif);font-style:italic;font-weight:700;
     font-size:clamp(2.2rem,8.5vw,5.2rem);
-    color:transparent;-webkit-text-stroke:1px rgba(23,20,15,.35);
+    color:var(--ice);
   }
-  .ss-marquee span.solid{color:var(--fire);-webkit-text-stroke:0;}
+  .ss-marquee span.solid{color:var(--fire);}
+  /* signature: its own sticky layer, above everything, never clipped by the photo frame */
+  .hero-sig-layer{
+    position:sticky;top:0;height:100svh;z-index:5;
+    display:flex;align-items:center;justify-content:center;
+    pointer-events:none;
+  }
   .ss-sig{
-    position:absolute;inset:-20% -16%;z-index:4;pointer-events:none;
+    width:min(78vw,640px);aspect-ratio:706/769;height:auto;
     background-color:var(--fire);
     -webkit-mask-image:url('assets/firma.svg');mask-image:url('assets/firma.svg');
     -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
@@ -608,8 +614,11 @@
         <video id="hero-video" src="assets/hero-fire.mp4" muted loop playsinline preload="auto"></video>
         <img class="hero-img" src="assets/hero-fire.jpg" alt="Olivia Wald envuelta en fuego, campaña Otra Que Arde">
         <div class="spark-layer" id="spark-layer"></div>
-        <div class="ss-sig" id="scene-sig" role="img" aria-label="Firma de Olivia Wald"></div>
       </div>
+    </div>
+
+    <div class="hero-sig-layer">
+      <div class="ss-sig" id="scene-sig" role="img" aria-label="Firma de Olivia Wald"></div>
     </div>
   </section>
 
@@ -1169,25 +1178,25 @@
 
     gsap.to('.hero-first-screen', {
       opacity:0, y:-30, ease:'none',
-      scrollTrigger:{trigger:'.hero', start:'top top', end:'22% top', scrub:.6}
+      scrollTrigger:{trigger:'.hero', start:'top top', end:'16% top', scrub:.6}
     });
     if(heroPhEl){
       gsap.fromTo(heroPhEl, {scale:1}, {
         scale:.6, ease:'none',
-        scrollTrigger:{trigger:'.hero', start:'15% top', end:'58% top', scrub:.6}
+        scrollTrigger:{trigger:'.hero', start:'10% top', end:'48% top', scrub:.6}
       });
     }
     if(ssMarquees.length){
       gsap.fromTo(ssMarquees, {opacity:0}, {
         opacity:1, ease:'none',
-        scrollTrigger:{trigger:'.hero', start:'20% top', end:'45% top', scrub:.6}
+        scrollTrigger:{trigger:'.hero', start:'16% top', end:'36% top', scrub:.6}
       });
     }
     if(sceneSig){
       gsap.fromTo(sceneSig,
         {clipPath:'inset(0 100% 0 0)'},
         {clipPath:'inset(0 0% 0 0)', ease:'none',
-         scrollTrigger:{trigger:'.hero', start:'50% top', end:'92% top', scrub:.6}}
+         scrollTrigger:{trigger:'.hero', start:'40% top', end:'85% top', scrub:.6}}
       );
     }
 
