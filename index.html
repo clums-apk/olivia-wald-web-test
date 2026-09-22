@@ -519,11 +519,21 @@
     display:inline-flex;gap:6px;align-items:center;
   }
   .whatsapp-band{
-    background:var(--ink);color:var(--cream-text);border-radius:20px;
-    padding:32px 28px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;
+    position:relative;background:var(--ink);color:var(--cream-text);border-radius:24px;
+    padding:56px 32px;text-align:center;overflow:hidden;
   }
-  .whatsapp-band .eyebrow{color:var(--ice-pale);margin-bottom:6px;}
-  .whatsapp-band p{max-width:38ch;font-size:.94rem;}
+  .whatsapp-band::before{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(70% 90% at 15% 0%, var(--ice-soft), transparent 60%),
+               radial-gradient(70% 90% at 85% 100%, var(--fire-soft), transparent 60%);
+  }
+  .whatsapp-band > *{position:relative;z-index:1;}
+  .whatsapp-band .eyebrow{color:var(--ice-pale);}
+  .whatsapp-band h3{
+    font-size:clamp(1.9rem,4.8vw,3rem);line-height:1.05;margin:14px 0 16px;
+  }
+  .whatsapp-band h3 i{font-style:italic;color:var(--fire);}
+  .whatsapp-band p{max-width:46ch;margin:0 auto 28px;font-size:.96rem;opacity:.85;}
 
   /* ---------- Shows / En vivo ---------- */
   .shows{background:var(--ecru);}
@@ -839,10 +849,9 @@
       </div>
 
       <div class="whatsapp-band">
-        <div>
-          <div class="eyebrow">Comunidad global</div>
-          <p>Sumate a la comunidad de WhatsApp y conectate con fans de Olivia de todo el mundo.</p>
-        </div>
+        <div class="eyebrow">Comunidad global · WhatsApp</div>
+        <h3>¿Vas sola a los shows?<br><i>Encontrá con quién ir.</i></h3>
+        <p>Sumate a la comunidad de WhatsApp y conectate con fans de Olivia de todo el mundo: coordiná previas, compartí entradas y hacé amigos que también arden por esta era.</p>
         <a class="btn-light" href="https://chat.whatsapp.com/Dx7nGLVTWjk6KGoK3QQwML" target="_blank" rel="noopener noreferrer">💬 Unirme a la comunidad →</a>
       </div>
     </div>
