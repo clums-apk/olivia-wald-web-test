@@ -156,7 +156,7 @@
   }
   .hero-portrait .ph img{z-index:1;transition:opacity .6s ease;}
   .hero-portrait .ph video{z-index:0;}
-  .hero-portrait .ph:hover .hero-img, .hero-portrait .ph.playing .hero-img{opacity:0;}
+  .hero-portrait .ph.playing .hero-img{opacity:0;}
   .mock-illus{
     position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
     width:42%;height:auto;opacity:.55;pointer-events:none;z-index:0;
@@ -182,16 +182,18 @@
     0%{transform:translateY(0) scale(1);opacity:.95;}
     100%{transform:translateY(var(--rise,-140px)) scale(.2);opacity:0;}
   }
-  .hero-inner{position:relative;z-index:2;}
+  .hero-inner{
+    position:relative;z-index:2;
+    width:100%;max-width:min(620px,90vw);margin-inline:auto;align-self:center;
+  }
   .hero-title{
-    font-size:clamp(3.4rem,13vw,9rem);
-    line-height:.86;
+    font-size:clamp(2.1rem,10.5vw,9rem);
+    line-height:.9;
     letter-spacing:-.02em;
     color:var(--cream-text);
-    padding-inline:24px;
+    padding-inline:0;
     text-shadow:0 6px 30px rgba(0,0,0,.5), 0 2px 10px rgba(0,0,0,.4);
   }
-  @media (min-width:640px){ .hero-title{padding-inline:40px;} }
   .hero-title em{font-style:italic;color:var(--fire);}
   .hero-sub{
     display:flex;flex-wrap:wrap;gap:14px 28px;align-items:center;
@@ -200,18 +202,23 @@
   @media (min-width:640px){ .hero-sub{padding-inline:40px;} }
   .hero-sub .tag{font-size:.82rem;font-weight:600;letter-spacing:.02em;}
   .next-card{
-    position:absolute;left:24px;top:120px;z-index:3;
+    position:absolute;left:16px;top:110px;z-index:3;
     background:var(--paper);border:1px solid var(--ink-line);
-    border-radius:14px;padding:14px 16px;
-    min-width:186px;
+    border-radius:12px;padding:10px 13px;
+    width:min(45vw,186px);
     box-shadow:0 18px 40px -20px rgba(23,20,15,.25);
   }
-  @media (min-width:640px){ .next-card{left:40px;} }
-  .next-card .lbl{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--fire-deep);}
-  .next-card .city{font-family:var(--serif);font-size:1.2rem;margin-top:4px;}
+  .next-card .lbl{font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--fire-deep);}
+  .next-card .city{font-family:var(--serif);font-size:1rem;margin-top:4px;}
   .next-card .cd{display:flex;gap:8px;margin-top:10px;font-variant-numeric:tabular-nums;}
-  .next-card .cd b{display:block;font-size:1rem;font-family:var(--serif);}
+  .next-card .cd b{display:block;font-size:.85rem;font-family:var(--serif);}
   .next-card .cd span{display:block;font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;opacity:.6;}
+  @media (min-width:640px){
+    .next-card{left:40px;top:120px;padding:14px 16px;width:auto;min-width:186px;}
+    .next-card .lbl{font-size:.62rem;}
+    .next-card .city{font-size:1.2rem;}
+    .next-card .cd b{font-size:1rem;}
+  }
   .scroll-cue{
     position:absolute;right:24px;bottom:24px;z-index:3;
     display:flex;align-items:center;gap:8px;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;
@@ -267,13 +274,13 @@
 
   /* ---------- Marquee + signature drawn over the hero photo (same photo, no duplicate) ---------- */
   .ss-marquee{position:absolute;left:0;right:0;overflow:hidden;white-space:nowrap;z-index:0;opacity:0;}
-  .ss-marquee.top{top:32%;transform:translateY(-50%);}
-  .ss-marquee.bottom{top:68%;transform:translateY(-50%);}
+  .ss-marquee.top{top:26%;transform:translateY(-50%);}
+  .ss-marquee.bottom{top:38%;transform:translateY(-50%);}
   .ss-track{display:inline-flex;gap:2.5rem;animation:marquee 24s linear infinite;}
   .ss-marquee.bottom .ss-track{animation-direction:reverse;animation-duration:30s;}
   .ss-marquee span{
     font-family:var(--serif);font-style:italic;font-weight:700;
-    font-size:clamp(3rem,12vw,7.5rem);
+    font-size:clamp(2.4rem,9vw,6rem);
     color:var(--ice);
   }
   .ss-marquee span.solid{color:var(--fire);}
@@ -1416,25 +1423,36 @@
     });
   }
 
-  /* Hero video: crossfades in on hover, same crop as the photo */
+  /* Hero video: crossfades in on hover (mouse) or tap (touch/pen).
+     Uses Pointer Events with pointerType checks so a tap on mobile can't
+     also trigger a synthetic mouseenter/mouseleave pair that immediately
+     re-hides the video (that double-firing was why it looked broken). */
   var heroVideo = document.getElementById('hero-video');
   if(heroPh && heroVideo){
-    heroPh.addEventListener('mouseenter', function(){
+    function playHeroVideo(){
+      heroPh.classList.add('playing');
       try{ heroVideo.currentTime = 0; heroVideo.play(); }catch(err){}
-    });
-    heroPh.addEventListener('mouseleave', function(){
+    }
+    function pauseHeroVideo(){
+      heroPh.classList.remove('playing');
       heroVideo.pause();
-    });
-    /* touch devices have no hover: tap to play/pause instead */
-    heroPh.addEventListener('touchstart', function(){
-      if(heroPh.classList.contains('playing')){
-        heroPh.classList.remove('playing');
-        heroVideo.pause();
-      } else {
-        heroPh.classList.add('playing');
-        try{ heroVideo.currentTime = 0; heroVideo.play(); }catch(err){}
-      }
-    }, {passive:true});
+    }
+    if(window.PointerEvent){
+      heroPh.addEventListener('pointerenter', function(e){
+        if(e.pointerType === 'mouse') playHeroVideo();
+      });
+      heroPh.addEventListener('pointerleave', function(e){
+        if(e.pointerType === 'mouse') pauseHeroVideo();
+      });
+      heroPh.addEventListener('pointerdown', function(e){
+        if(e.pointerType === 'mouse') return;
+        if(heroPh.classList.contains('playing')) pauseHeroVideo();
+        else playHeroVideo();
+      });
+    } else {
+      heroPh.addEventListener('mouseenter', playHeroVideo);
+      heroPh.addEventListener('mouseleave', pauseHeroVideo);
+    }
   }
 
   /* Header logo: switches ink/cream depending on the section behind it.
