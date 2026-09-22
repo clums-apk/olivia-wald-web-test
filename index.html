@@ -549,6 +549,7 @@
   .show-row .status{font-size:.68rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--fire);margin-bottom:6px;}
   .show-row .status.done{color:rgba(23,20,15,.4);}
   .show-row .tix{font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--ink);padding:9px 16px;border-radius:999px;white-space:nowrap;display:inline-block;}
+  .show-row:has(.status.done) .tix{display:none;}
   .show-countdown{
     margin-top:6px;display:flex;gap:6px;font-variant-numeric:tabular-nums;
     font-size:.72rem;color:var(--fire-deep);font-weight:700;
