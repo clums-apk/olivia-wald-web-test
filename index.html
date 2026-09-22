@@ -1,0 +1,1303 @@
+<title>Olivia Wald</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,400..700&family=Archivo:wght@400;500;600;700;800;900&display=swap');
+
+  :root{
+    color-scheme: light;
+    --ecru:#EEE7D6;
+    --ecru-deep:#E2D9C2;
+    --paper:#F8F3E6;
+    --ink:#17140F;
+    --ink-soft:#26221A;
+    --ink-line: rgba(23,20,15,.16);
+    --fire:#E24A26;
+    --fire-deep:#A7311A;
+    --fire-soft: rgba(226,74,38,.14);
+    --ice:#3FA9C9;
+    --ice-soft: rgba(63,169,201,.16);
+    --ice-pale:#BFE6EF;
+    --cream-text:#F4EEDD;
+    --serif: 'Fraunces', 'Iowan Old Style', 'Georgia', serif;
+    --sans: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+    --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  *{box-sizing:border-box;}
+  html,body{background:var(--ecru);}
+  body{
+    margin:0;
+    font-family:var(--sans);
+    color:var(--ink);
+    background:var(--ecru);
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;margin:0;padding:0;}
+  h1,h2,h3,h4{margin:0;font-family:var(--serif);font-weight:600;text-wrap:balance;}
+  p{margin:0;}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+  ::selection{background:var(--fire);color:var(--cream-text);}
+  :focus-visible{outline:2px solid var(--fire);outline-offset:3px;}
+
+  .eyebrow{
+    font-size:.72rem;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    font-weight:700;
+    color:var(--fire-deep);
+  }
+  .eyebrow.on-dark{color:var(--ice-pale);}
+  .wrap{max-width:1180px;margin:0 auto;padding-inline:24px;}
+  @media (min-width:640px){ .wrap{padding-inline:40px;} }
+
+  /* ---------- Preloader ---------- */
+  #preloader{
+    position:fixed;inset:0;z-index:999;
+    background:var(--fire);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:18px;
+    transition:transform .9s cubic-bezier(.76,0,.24,1), visibility .9s;
+  }
+  #preloader.hide{transform:translateY(-100%);}
+  #preloader .mark{
+    font-family:var(--serif);font-style:italic;font-weight:600;
+    font-size:clamp(2.2rem,10vw,5rem);color:var(--cream-text);
+    line-height:1;text-align:center;padding:0 20px;
+  }
+  #preloader .bar{width:min(280px,60vw);height:2px;background:rgba(244,238,221,.35);position:relative;overflow:hidden;}
+  #preloader .bar i{position:absolute;inset:0;width:0%;background:var(--cream-text);display:block;transition:width .25s linear;}
+  #preloader .pct{font-size:.7rem;letter-spacing:.18em;color:var(--cream-text);text-transform:uppercase;font-weight:700;}
+
+  /* ---------- Header ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:60;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 24px;
+    mix-blend-mode:normal;
+  }
+  @media (min-width:640px){ header{padding:22px 40px;} }
+  .logo{display:block;line-height:0;}
+  .logo-mark{
+    display:block;width:150px;height:28px;
+    background-color:var(--ink);
+    -webkit-mask-image:url('assets/logo.webp');mask-image:url('assets/logo.webp');
+    -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+    -webkit-mask-size:contain;mask-size:contain;
+    -webkit-mask-position:left center;mask-position:left center;
+    transition:background-color .35s ease;
+  }
+  header.on-dark .logo-mark{background-color:var(--cream-text);}
+  .head-right{display:flex;align-items:center;gap:10px;}
+  .btn-store{
+    background:var(--fire);color:var(--cream-text);
+    font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+    padding:11px 18px;border-radius:999px;
+    display:inline-flex;align-items:center;gap:8px;
+    transition:transform .35s cubic-bezier(.2,.8,.2,1), background .3s;
+  }
+  .btn-store:hover{transform:translateY(-2px);background:var(--fire-deep);}
+  .menu-toggle{
+    width:44px;height:44px;border-radius:999px;background:var(--ink);
+    display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;
+  }
+  .menu-toggle i{width:16px;height:2px;background:var(--ecru);display:block;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    min-height:100svh;
+    display:flex;flex-direction:column;justify-content:flex-end;
+    padding-top:110px;
+    overflow:hidden;
+    background:var(--ecru);
+  }
+  .topo{position:absolute;inset:0;z-index:0;opacity:.55;}
+  .topo path{fill:none;stroke:var(--ink-line);stroke-width:1;}
+  .hero-portrait{
+    position:absolute;inset:0;z-index:1;
+    display:flex;align-items:flex-end;justify-content:center;
+  }
+  .hero-portrait .ph{
+    width:min(620px,90vw);
+    aspect-ratio:1/1;
+    border-radius:2px;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 40px 90px -30px rgba(23,20,15,.45);
+  }
+  .hero-portrait .ph img, .hero-portrait .ph video{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
+  }
+  .hero-portrait .ph img{z-index:1;transition:opacity .6s ease;}
+  .hero-portrait .ph video{z-index:0;}
+  .hero-portrait:hover .hero-img{opacity:0;}
+  .mock-illus{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:42%;height:auto;opacity:.55;pointer-events:none;z-index:0;
+  }
+  .ph .mock-illus, .split-thumb .mock-illus{color:rgba(23,20,15,.4);}
+  .manifesto-img .mock-illus, .store-band .bg-photo .mock-illus{color:rgba(244,238,221,.55);width:52%;}
+  .gcard .ph .mock-illus{color:rgba(244,238,221,.5);width:56%;}
+  .split-thumb .mock-illus{width:60%;}
+
+  /* flaming-heart cursor over the hero photo, replaces the old glow circle */
+  .hero-portrait .ph{
+    cursor: url('assets/cursor-flame.svg') 15 4, pointer;
+  }
+  .spark-layer{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden;}
+  .spark{
+    position:absolute;bottom:0;border-radius:50%;
+    background:radial-gradient(circle, #fff2c8 0%, var(--fire) 55%, transparent 75%);
+    filter:blur(.3px);
+  }
+  @keyframes spark-rise{
+    0%{transform:translateY(0) scale(1);opacity:.95;}
+    100%{transform:translateY(var(--rise,-140px)) scale(.2);opacity:0;}
+  }
+  .hero-inner{position:relative;z-index:2;}
+  .hero-title{
+    font-size:clamp(3.4rem,13vw,9rem);
+    line-height:.86;
+    letter-spacing:-.02em;
+    color:var(--cream-text);
+    padding-inline:24px;
+    text-shadow:0 6px 30px rgba(0,0,0,.5), 0 2px 10px rgba(0,0,0,.4);
+  }
+  @media (min-width:640px){ .hero-title{padding-inline:40px;} }
+  .hero-title em{font-style:italic;color:var(--fire);}
+  .hero-sub{
+    display:flex;flex-wrap:wrap;gap:14px 28px;align-items:center;
+    padding:22px 24px 30px;
+  }
+  @media (min-width:640px){ .hero-sub{padding-inline:40px;} }
+  .hero-sub .tag{font-size:.82rem;font-weight:600;letter-spacing:.02em;}
+  .next-card{
+    position:absolute;left:24px;top:120px;z-index:3;
+    background:var(--paper);border:1px solid var(--ink-line);
+    border-radius:14px;padding:14px 16px;
+    min-width:150px;
+    box-shadow:0 18px 40px -20px rgba(23,20,15,.25);
+  }
+  @media (min-width:640px){ .next-card{left:40px;} }
+  .next-card .lbl{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--fire-deep);}
+  .next-card .city{font-family:var(--serif);font-size:1.2rem;margin-top:4px;}
+  .next-card .cd{display:flex;gap:8px;margin-top:10px;font-variant-numeric:tabular-nums;}
+  .next-card .cd b{display:block;font-size:1rem;font-family:var(--serif);}
+  .next-card .cd span{display:block;font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;opacity:.6;}
+  .scroll-cue{
+    position:absolute;right:24px;bottom:24px;z-index:3;
+    display:flex;align-items:center;gap:8px;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;
+    writing-mode:vertical-rl;
+  }
+  @media (min-width:640px){ .scroll-cue{right:40px;bottom:36px;} }
+  .scroll-cue .line{width:1px;height:44px;background:var(--ink);animation:pulseline 2.2s ease-in-out infinite;}
+  @keyframes pulseline{0%,100%{transform:scaleY(1);opacity:.5;}50%{transform:scaleY(.5);opacity:1;}}
+
+  /* ---------- Signature / message ---------- */
+  .message{
+    padding:70px 0 60px;background:var(--ecru);
+    display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;
+  }
+  .sig{
+    width:min(320px,70vw);aspect-ratio:706/769;height:auto;
+    background-color:var(--fire);
+    -webkit-mask-image:url('assets/firma.svg');mask-image:url('assets/firma.svg');
+    -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+    -webkit-mask-size:contain;mask-size:contain;
+    -webkit-mask-position:center;mask-position:center;
+    clip-path:inset(0 100% 0 0);
+  }
+  .message p{
+    font-family:var(--serif);font-style:italic;font-size:clamp(1.1rem,2.4vw,1.5rem);
+    max-width:36ch;color:var(--ink-soft);
+  }
+  .msg-cite{
+    display:block;font-style:normal;font-family:var(--sans);font-size:.72rem;
+    letter-spacing:.03em;color:rgba(23,20,15,.55);max-width:34ch;line-height:1.5;
+  }
+  .msg-cite-link{color:var(--fire-deep);font-weight:600;border-bottom:1px solid currentColor;}
+
+  /* ---------- Dark manifesto ---------- */
+  .manifesto{
+    position:relative;background:var(--ink);color:var(--cream-text);
+    padding:90px 0 60px;overflow:hidden;
+  }
+  .manifesto .topo path{stroke:rgba(244,238,221,.08);}
+  .marquee{
+    position:relative;overflow:hidden;white-space:nowrap;
+    padding:10px 0;border-top:1px solid rgba(244,238,221,.14);border-bottom:1px solid rgba(244,238,221,.14);
+    margin-bottom:60px;
+  }
+  .marquee .track{display:inline-flex;gap:2.5rem;animation:marquee 28s linear infinite;}
+  .marquee.rev .track{animation-direction:reverse;animation-duration:34s;}
+  .marquee span{
+    font-family:var(--serif);font-style:italic;font-size:clamp(2rem,6vw,3.4rem);
+    color:transparent;-webkit-text-stroke:1px rgba(244,238,221,.5);
+  }
+  .marquee span.solid{color:var(--fire);-webkit-text-stroke:0;}
+  @keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  .manifesto-hero{position:relative;display:flex;justify-content:center;margin-bottom:60px;}
+  .manifesto-img{
+    width:min(360px,80vw);aspect-ratio:4/5;position:relative;z-index:1;
+    background:
+      radial-gradient(90% 70% at 30% 10%, rgba(63,169,201,.3), transparent 60%),
+      radial-gradient(90% 70% at 80% 100%, rgba(226,74,38,.35), transparent 60%),
+      linear-gradient(160deg,#3a362c,#1d1b16);
+    overflow:hidden;
+  }
+  .manifesto-img::before{
+    content:'';position:absolute;inset:0;background-image:var(--grain);
+    mix-blend-mode:overlay;opacity:.45;
+  }
+  .manifesto-img::after{
+    content:'📷 Foto de gira';position:absolute;left:14px;bottom:14px;
+    color:rgba(244,238,221,.55);
+    font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700;
+    background:rgba(23,20,15,.4);padding:5px 10px;border-radius:999px;backdrop-filter:blur(3px);
+  }
+  .stroke-svg{position:absolute;inset:-15% -10%;z-index:2;pointer-events:none;color:var(--fire);}
+  .stroke-svg path{fill:none;stroke:currentColor;stroke-width:14;stroke-linecap:round;stroke-dasharray:1400;stroke-dashoffset:1400;}
+
+  .statement{
+    text-align:center;padding:0 24px;max-width:920px;margin:0 auto;
+  }
+  .statement h2{
+    font-size:clamp(2rem,5.6vw,3.6rem);line-height:1.1;font-weight:500;
+  }
+  .statement h2 b{font-weight:600;color:var(--ice-pale);}
+  .statement h2 i{font-style:italic;color:var(--fire);}
+  .crest{display:flex;justify-content:center;margin-bottom:26px;opacity:.8;}
+
+  /* ---------- Horizontal video carousel (videoteca + conversaciones) ---------- */
+  .carousel-section{position:relative;background:var(--ink);padding:64px 0 56px;overflow:hidden;}
+  .carousel-head{
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    padding:0 8vw;margin-bottom:26px;flex-wrap:wrap;
+  }
+  .carousel-head-left{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+  .carousel-head p{color:rgba(244,238,221,.55);font-size:.88rem;max-width:36ch;}
+  .carousel-count{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:rgba(244,238,221,.4);}
+  .carousel-arrows{display:flex;gap:8px;}
+  .carousel-arrow{
+    width:42px;height:42px;border-radius:999px;border:1px solid rgba(244,238,221,.3);
+    display:flex;align-items:center;justify-content:center;color:var(--cream-text);
+    font-size:1rem;transition:background .25s ease, border-color .25s ease;flex:0 0 auto;
+  }
+  .carousel-arrow:hover{background:var(--fire);border-color:var(--fire);}
+  .carousel-track{
+    display:flex;gap:20px;padding:0 8vw;
+    overflow-x:auto;scroll-snap-type:x proximity;scroll-behavior:smooth;
+    -ms-overflow-style:none;scrollbar-width:none;
+  }
+  .carousel-track::-webkit-scrollbar{display:none;}
+  .gcard{position:relative;flex:0 0 auto;text-align:left;display:block;scroll-snap-align:start;}
+  .gcard .cap{margin-bottom:10px;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:rgba(244,238,221,.5);}
+  .gcard .ph{
+    width:min(58vw,270px);aspect-ratio:3/4;
+    background:#2b271f;
+    position:relative;display:flex;align-items:flex-end;padding:12px;overflow:hidden;
+  }
+  .gcard.tall .ph{aspect-ratio:4/5.4;width:min(62vw,300px);}
+  .gcard .ph img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    filter:saturate(.9) contrast(1.02);
+  }
+  .gcard .ph::before{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(0deg, rgba(23,20,15,.55) 0%, rgba(23,20,15,0) 45%);
+    z-index:1;
+  }
+  .gcard .play{
+    position:relative;z-index:2;width:36px;height:36px;border-radius:999px;background:var(--fire);
+    display:flex;align-items:center;justify-content:center;color:var(--cream-text);
+    transition:transform .3s ease;
+  }
+  .gcard:hover .play{transform:scale(1.12);}
+  .gcard .gtitle{
+    margin-top:10px;max-width:min(58vw,270px);
+    font-family:var(--serif);font-style:italic;font-size:.9rem;line-height:1.3;
+    color:rgba(244,238,221,.85);
+  }
+
+  /* ---------- Split ON/OFF stage ---------- */
+  .split{display:grid;grid-template-columns:1fr;background:var(--ecru);}
+  @media (min-width:820px){ .split{grid-template-columns:1fr 1fr;} }
+  .split > a{
+    position:relative;padding:70px 32px;min-height:340px;
+    display:flex;flex-direction:column;justify-content:flex-end;gap:14px;
+    overflow:hidden;border-top:1px solid var(--ink-line);
+  }
+  .split > a:first-child{border-right:1px solid var(--ink-line);}
+  .split .bg{position:absolute;inset:0;z-index:0;transition:transform .7s cubic-bezier(.2,.8,.2,1);}
+  .split > a:hover .bg{transform:scale(1.06);}
+  .split .bg.ice{background:radial-gradient(120% 100% at 20% 20%, var(--ice-soft), transparent 60%), var(--ecru-deep);}
+  .split .bg.fire{background:radial-gradient(120% 100% at 80% 20%, var(--fire-soft), transparent 60%), var(--ecru-deep);}
+  .split-thumb{
+    position:absolute;top:28px;right:28px;z-index:1;
+    width:78px;aspect-ratio:3/4;border-radius:4px;overflow:hidden;
+    box-shadow:0 14px 30px -14px rgba(23,20,15,.4);
+  }
+  .split-thumb::before{content:'';position:absolute;inset:0;background-image:var(--grain);mix-blend-mode:overlay;opacity:.4;}
+  .split-thumb.ice{background:radial-gradient(120% 100% at 30% 0%, rgba(63,169,201,.7), transparent 60%), #cfc6ab;}
+  .split-thumb.fire{background:radial-gradient(120% 100% at 30% 0%, rgba(226,74,38,.7), transparent 60%), #cfc6ab;}
+  .split h3{position:relative;z-index:1;font-size:clamp(2.6rem,6vw,4.2rem);line-height:.92;}
+  .split p{position:relative;z-index:1;max-width:34ch;font-size:.95rem;color:var(--ink-soft);}
+  .split .go{position:relative;z-index:1;font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;display:inline-flex;gap:8px;align-items:center;}
+
+  /* ---------- Generic section heading ---------- */
+  .sec{padding:90px 0;}
+  .sec-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px;align-items:flex-end;margin-bottom:44px;}
+  .sec-head h2{font-size:clamp(2.2rem,5vw,3.4rem);line-height:.96;}
+  .sec-head h2 i{font-style:italic;color:var(--fire);}
+  .sec-head p{max-width:34ch;font-size:.92rem;color:var(--ink-soft);}
+
+  /* ---------- Discografia ---------- */
+  .disco{background:var(--ink);color:var(--cream-text);}
+  .disco .sec-head p{color:rgba(244,238,221,.6);}
+  .disco-list{border-top:1px solid rgba(244,238,221,.18);}
+  .disco-row{
+    display:flex;align-items:baseline;gap:16px;padding:16px 0;
+    border-bottom:1px solid rgba(244,238,221,.18);
+    font-family:var(--serif);
+  }
+  .disco-row .yr{font-size:.72rem;font-family:var(--sans);font-weight:700;color:var(--fire);letter-spacing:.08em;width:44px;flex:0 0 auto;}
+  .disco-row .ti{font-size:1.15rem;flex:1;}
+  .disco-row .ty{font-size:.68rem;font-family:var(--sans);text-transform:uppercase;letter-spacing:.08em;color:rgba(244,238,221,.45);}
+  .disco-grid{display:grid;grid-template-columns:1fr;gap:0 60px;}
+  @media (min-width:820px){ .disco-grid{grid-template-columns:1fr 1fr;} }
+
+  .spotify-embed{
+    margin-top:34px;height:152px;border-radius:12px;background:#121212;
+    display:flex;align-items:center;gap:16px;padding:0 20px;
+    border:1px solid rgba(244,238,221,.1);
+  }
+  .spotify-embed-art{
+    width:60px;height:60px;border-radius:8px;background:linear-gradient(160deg, var(--fire), var(--fire-deep));
+    display:flex;align-items:center;justify-content:center;color:var(--cream-text);flex:0 0 auto;
+  }
+  .spotify-embed-info{flex:1;min-width:0;}
+  .spotify-embed-title{font-family:var(--serif);font-size:1.15rem;color:var(--cream-text);}
+  .spotify-embed-sub{font-size:.78rem;color:rgba(244,238,221,.5);margin-top:2px;}
+  .spotify-embed-btn{
+    flex:0 0 auto;background:#1DB954;color:#0b1a0f;font-weight:800;font-size:.76rem;
+    letter-spacing:.04em;text-transform:uppercase;padding:10px 18px;border-radius:999px;
+  }
+  @media (max-width:640px){ .spotify-embed{flex-wrap:wrap;height:auto;padding:16px;} }
+
+  .disco-cta{
+    margin-top:50px;padding-top:30px;border-top:1px solid rgba(244,238,221,.18);
+    display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;
+  }
+  .disco-cta p{color:rgba(244,238,221,.7);font-size:.92rem;}
+  .link-arrow{
+    display:inline-flex;align-items:center;gap:10px;font-size:.75rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+    border-bottom:1px solid currentColor;padding-bottom:4px;
+  }
+
+  /* ---------- Store banner ---------- */
+  .store-band{
+    position:relative;background:var(--fire);color:var(--cream-text);
+    padding:80px 24px;text-align:center;overflow:hidden;
+  }
+  .store-band .bg-photo{
+    position:absolute;inset:0;z-index:0;
+    background:
+      linear-gradient(0deg, var(--fire) 0%, rgba(226,74,38,.55) 40%, rgba(226,74,38,.85) 100%),
+      radial-gradient(60% 60% at 50% 30%, rgba(23,20,15,.35), transparent 70%),
+      linear-gradient(160deg,#8c3d24,#5c2214);
+  }
+  .store-band .bg-photo::before{content:'';position:absolute;inset:0;background-image:var(--grain);mix-blend-mode:overlay;opacity:.35;}
+  .store-band .bg-photo::after{
+    content:'📷 Foto de Olivia en vivo';position:absolute;left:16px;bottom:16px;
+    font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:rgba(244,238,221,.7);
+    background:rgba(23,20,15,.35);padding:5px 10px;border-radius:999px;
+  }
+  .store-band > *{position:relative;z-index:1;}
+  .store-band .eyebrow{color:var(--cream-text);opacity:.75;}
+  .store-band h2{font-size:clamp(2.2rem,6vw,4rem);margin:14px 0 20px;}
+  .store-band h2 i{color:var(--ink);font-style:italic;}
+  .store-band p{max-width:46ch;margin:0 auto 30px;font-size:.95rem;opacity:.9;}
+  .btn-light{
+    background:var(--ink);color:var(--cream-text);
+    padding:14px 28px;border-radius:999px;font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+    display:inline-flex;gap:10px;align-items:center;
+  }
+
+  /* ---------- Colabs ---------- */
+  .colabs-row{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--ink-line);
+    border:1px solid var(--ink-line);margin-top:10px;
+  }
+  @media (min-width:640px){ .colabs-row{grid-template-columns:repeat(3,1fr);} }
+  .colabs-row div{
+    background:var(--ecru);padding:26px 14px;display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-style:italic;font-size:1.05rem;text-align:center;color:var(--ink-soft);
+    min-height:90px;
+  }
+
+  /* ---------- Fans / games ---------- */
+  .fans{background:var(--ice);color:var(--ink);position:relative;overflow:hidden;}
+  .fans .eyebrow{color:var(--ink);}
+  .fans-grid{display:grid;grid-template-columns:1fr;gap:40px;align-items:center;}
+  @media (min-width:900px){ .fans-grid{grid-template-columns:1.1fr .9fr;} }
+  .fans h2{font-size:clamp(2.4rem,6.4vw,4.2rem);line-height:.95;}
+  .fans h2 i{font-style:italic;color:var(--fire);}
+  .fans p{margin-top:16px;max-width:40ch;font-size:1rem;}
+  .fans .btn-store{background:var(--ink);margin-top:26px;}
+  .fans .btn-store:hover{background:var(--fire-deep);}
+  .arcade-card{
+    background:var(--ink);color:var(--cream-text);border-radius:18px;padding:30px;
+    display:flex;flex-direction:column;gap:16px;
+  }
+  .arcade-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
+  .arcade-grid span{
+    aspect-ratio:1;border-radius:6px;background:rgba(244,238,221,.08);
+    display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:rgba(244,238,221,.55);
+  }
+  .arcade-grid span:nth-child(odd){background:var(--fire-soft);color:var(--fire);}
+
+  /* ---------- Comunidad ---------- */
+  .flags-row{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:24px;}
+  .flag-btn{
+    background:var(--paper);border:1px solid var(--ink-line);
+    padding:14px 20px;border-radius:14px;font-size:1.6rem;
+    display:flex;flex-direction:column;align-items:center;gap:6px;
+    min-width:96px;transition:border-color .25s ease, transform .25s ease;
+  }
+  .flag-btn span{font-size:.68rem;font-family:var(--sans);font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft);}
+  .flag-btn:hover{transform:translateY(-2px);}
+  .flag-btn.active{border-color:var(--fire);}
+  .community-panel{
+    background:var(--paper);border:1px solid var(--ink-line);border-radius:16px;
+    padding:26px 24px;min-height:80px;margin-bottom:40px;
+  }
+  .community-hint{color:var(--ink-soft);font-size:.9rem;}
+  .community-account{margin-bottom:16px;}
+  .community-account:last-child{margin-bottom:0;}
+  .community-account h4{font-family:var(--serif);font-size:1.1rem;margin-bottom:8px;}
+  .community-account .soc-links{display:flex;flex-wrap:wrap;gap:8px;}
+  .community-account .soc-links a{
+    background:var(--ecru);border:1px solid rgba(23,20,15,.15);
+    padding:7px 14px;border-radius:999px;font-size:.76rem;font-weight:700;
+    display:inline-flex;gap:6px;align-items:center;
+  }
+  .whatsapp-band{
+    background:var(--ink);color:var(--cream-text);border-radius:20px;
+    padding:32px 28px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:20px;
+  }
+  .whatsapp-band .eyebrow{color:var(--ice-pale);margin-bottom:6px;}
+  .whatsapp-band p{max-width:38ch;font-size:.94rem;}
+
+  /* ---------- Shows / En vivo ---------- */
+  .shows{background:var(--ecru);}
+  .show-row{
+    display:grid;grid-template-columns:56px 1fr auto;gap:18px;align-items:center;
+    padding:18px 0;border-bottom:1px solid var(--ink-line);
+  }
+  .show-row .date{font-family:var(--serif);line-height:1;}
+  .show-row .date b{display:block;font-size:1.5rem;}
+  .show-row .date span{display:block;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--fire-deep);font-weight:800;}
+  .show-row .city{font-weight:700;}
+  .show-row .venue{font-size:.82rem;color:var(--ink-soft);}
+  .show-row .status{font-size:.68rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--fire);margin-bottom:6px;}
+  .show-row .status.done{color:rgba(23,20,15,.4);}
+  .show-row .tix{font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--ink);padding:9px 16px;border-radius:999px;white-space:nowrap;display:inline-block;}
+  .show-countdown{
+    margin-top:6px;display:flex;gap:6px;font-variant-numeric:tabular-nums;
+    font-size:.72rem;color:var(--fire-deep);font-weight:700;
+  }
+  .show-countdown b{font-family:var(--serif);font-size:.9rem;}
+  .show-countdown span{opacity:.6;margin-right:4px;}
+
+  /* ---------- Socials ---------- */
+  .socials{background:var(--ecru-deep);}
+  .soc-grid{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--ink-line);}
+  @media (min-width:640px){ .soc-grid{grid-template-columns:repeat(3,1fr);} }
+  .soc-grid a{
+    padding:26px 20px;border-right:1px solid var(--ink-line);border-bottom:1px solid var(--ink-line);
+    font-family:var(--serif);font-size:1.1rem;display:flex;justify-content:space-between;align-items:center;
+    transition:background .3s;
+  }
+  .soc-grid a:hover{background:var(--paper);}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--ink);color:var(--cream-text);padding:70px 0 26px;}
+  .foot-grid{display:grid;grid-template-columns:1fr;gap:40px;}
+  @media (min-width:820px){ .foot-grid{grid-template-columns:1.3fr 1fr 1fr;} }
+  .foot-col h4{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:rgba(244,238,221,.5);margin-bottom:14px;}
+  .foot-col a{display:block;padding:6px 0;font-size:.92rem;color:rgba(244,238,221,.85);}
+  footer h3{font-family:var(--serif);font-style:italic;font-size:clamp(1.8rem,4.6vw,3rem);margin-bottom:10px;}
+  .foot-bottom{
+    margin-top:60px;padding-top:24px;border-top:1px solid rgba(244,238,221,.14);
+    display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;
+    font-size:.72rem;color:rgba(244,238,221,.5);
+  }
+
+  /* ---------- Reveal utility ---------- */
+  .reveal{opacity:1;}
+  @media (prefers-reduced-motion: no-preference){
+    .js-ready .reveal{opacity:0;transform:translateY(28px);}
+  }
+</style>
+
+<div id="preloader">
+  <div class="mark">Olivia Wald</div>
+  <div class="bar"><i id="pbar"></i></div>
+  <div class="pct" id="ppct">CARGANDO — 0%</div>
+</div>
+
+<header>
+  <a class="logo" href="#inicio"><span class="logo-mark"></span></a>
+  <div class="head-right">
+    <a class="btn-store" href="https://oliviawaldfans.com/juegos/">🎮 Juegos</a>
+    <button class="menu-toggle" aria-label="Abrir menú"><i></i><i></i></button>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio" data-header="light">
+    <svg class="topo" viewBox="0 0 1200 800" preserveAspectRatio="none">
+      <path d="M-50 120 C 200 60, 400 200, 650 120 S 1100 60 1250 140"/>
+      <path d="M-50 260 C 250 180, 420 340, 700 260 S 1050 180 1250 300"/>
+      <path d="M-50 420 C 220 340, 460 500, 720 420 S 1080 340 1250 460"/>
+      <path d="M-50 580 C 260 500, 480 660, 760 580 S 1100 500 1250 620"/>
+      <path d="M-50 40 C 180 -20, 360 120, 600 40 S 980 -20 1250 60"/>
+    </svg>
+    <div class="hero-portrait" id="hero-portrait">
+      <div class="ph">
+        <video id="hero-video" src="assets/hero-fire.mp4" muted loop playsinline preload="auto"></video>
+        <img class="hero-img" src="assets/hero-fire.jpg" alt="Olivia Wald envuelta en fuego, campaña Otra Que Arde">
+        <div class="spark-layer" id="spark-layer"></div>
+      </div>
+    </div>
+
+    <div class="next-card">
+      <div class="lbl">Próximo show</div>
+      <div class="city">Buenos Aires</div>
+      <div style="font-size:.72rem;margin-top:2px;color:var(--ink-soft);font-weight:600;">C Art Media · 03 OCT</div>
+      <div class="cd" id="countdown">
+        <div><b id="cd-d">–</b><span>días</span></div>
+        <div><b id="cd-h">–</b><span>hs</span></div>
+        <div><b id="cd-m">–</b><span>min</span></div>
+      </div>
+    </div>
+
+    <div class="scroll-cue"><span class="line"></span>SCROLL</div>
+
+    <div class="hero-inner">
+      <h1 class="hero-title">OLIVIA<br><em>WALD</em></h1>
+      <div class="hero-sub">
+        <span class="eyebrow" style="color:var(--fire-deep);background:rgba(244,238,221,.85);padding:5px 12px;border-radius:999px;">Otra Que Arde · Gira 2026</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MESSAGE -->
+  <section class="message reveal" data-header="light">
+    <div class="sig" id="sig-hero" role="img" aria-label="Firma de Olivia Wald"></div>
+    <p>&ldquo;Sacar y sacar música a veces viene de la emoción, de que nos guste lo que hacemos y lo disfrutamos. Yo realmente lo disfruto.&rdquo;</p>
+    <cite class="msg-cite">— Olivia Wald, <a href="https://es.rollingstone.com/la-combustion-honesta-de-olivia-wald-en-otra-que-arde/" class="msg-cite-link">entrevista con Rolling Stone en Español →</a></cite>
+  </section>
+
+  <!-- MANIFESTO -->
+  <section class="manifesto" data-header="dark">
+    <svg class="topo" viewBox="0 0 1200 500" preserveAspectRatio="none" style="position:absolute;inset:0;">
+      <path d="M-50 80 C 200 20, 420 160, 650 80 S 1100 20 1250 100"/>
+      <path d="M-50 240 C 250 160, 460 320, 720 240 S 1080 160 1250 280"/>
+      <path d="M-50 400 C 260 320, 480 460, 760 400 S 1100 320 1250 420"/>
+    </svg>
+
+    <div class="marquee"><div class="track">
+      <span>OTRA QUE ARDE</span><span class="solid">★</span><span>CUERPO</span><span class="solid">★</span><span>OTRA QUE ARDE</span><span class="solid">★</span><span>CUERPO</span><span class="solid">★</span>
+      <span>OTRA QUE ARDE</span><span class="solid">★</span><span>CUERPO</span><span class="solid">★</span><span>OTRA QUE ARDE</span><span class="solid">★</span><span>CUERPO</span><span class="solid">★</span>
+    </div></div>
+
+    <div class="manifesto-hero reveal">
+      <div class="manifesto-img">
+        <svg class="mock-illus" viewBox="0 0 220 160" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M40 6 L14 96M110 0 L110 96M180 6 L206 96" opacity=".55"/>
+          <path d="M20 150 L36 110 L52 150M70 150 L86 104 L102 150M118 150 L134 112 L150 150M166 150 L182 108 L198 150"/>
+        </svg>
+      </div>
+      <svg class="stroke-svg" id="stroke1" viewBox="0 0 400 500">
+        <path d="M60 440 C 120 380, 90 300, 160 320 C 210 334, 150 400, 220 360 C 300 314, 260 200, 320 160 C 350 140, 340 100, 300 70"/>
+      </svg>
+    </div>
+
+    <div class="statement reveal">
+      <div class="crest">
+        <svg width="46" height="46" viewBox="0 0 46 46" fill="none"><circle cx="23" cy="23" r="21" stroke="rgba(244,238,221,.5)"/><path d="M23 10 L26 20 L36 20 L28 26 L31 36 L23 30 L15 36 L18 26 L10 20 L20 20 Z" fill="rgba(244,238,221,.5)"/></svg>
+      </div>
+      <h2>Redefiniendo el sonido, <i>ardiendo</i> por cada show, entregándolo todo. Construyendo un <b>legado</b> dentro y fuera del escenario.</h2>
+    </div>
+
+    <div class="marquee rev" style="margin-top:60px;margin-bottom:0;"><div class="track">
+      <span>CUERPO · 2024</span><span class="solid">★</span><span>OTRA QUE ARDE · 2026</span><span class="solid">★</span>
+      <span>CUERPO · 2024</span><span class="solid">★</span><span>OTRA QUE ARDE · 2026</span><span class="solid">★</span>
+      <span>CUERPO · 2024</span><span class="solid">★</span><span>OTRA QUE ARDE · 2026</span><span class="solid">★</span>
+    </div></div>
+  </section>
+
+  <!-- VIDEOTECA -->
+  <section class="carousel-section" id="gallery-section" data-header="dark">
+    <div class="carousel-head">
+      <div class="carousel-head-left">
+        <span class="eyebrow on-dark">Videoteca</span>
+        <span class="carousel-count" id="gallery-count"></span>
+      </div>
+      <div class="carousel-arrows">
+        <button class="carousel-arrow" id="gallery-prev" aria-label="Videos anteriores">←</button>
+        <button class="carousel-arrow" id="gallery-next" aria-label="Videos siguientes">→</button>
+      </div>
+    </div>
+    <div class="carousel-track" id="gallery-track"></div>
+  </section>
+
+  <!-- SPLIT ON/OFF -->
+  <div class="split" data-header="light">
+    <a href="#en-vivo">
+      <div class="bg ice"></div>
+      <div class="split-thumb ice">
+        <svg class="mock-illus" viewBox="0 0 200 240" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="100" cy="66" r="38"/><path d="M28 228c0-64 32-110 72-110s72 46 72 110"/>
+        </svg>
+      </div>
+      <h3>EN<br>VIVO</h3>
+      <p>Fechas, entradas y todo lo que pasa <span class="eyebrow" style="display:inline;color:var(--ice);">arriba del escenario</span>.</p>
+      <span class="go">Ver la gira →</span>
+    </a>
+    <a href="#fans">
+      <div class="bg fire"></div>
+      <div class="split-thumb fire">
+        <svg class="mock-illus" viewBox="0 0 160 220" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="60" y="20" width="40" height="86" rx="20"/><path d="M36 96a44 44 0 0 0 88 0"/><path d="M80 140v30M62 200h36"/>
+        </svg>
+      </div>
+      <h3>DETRÁS<br>DE CÁMARA</h3>
+      <p>Ensayos, backstage y contenido <span class="eyebrow" style="display:inline;">para la comunidad de fans</span>.</p>
+      <span class="go">Ver comunidad →</span>
+    </a>
+  </div>
+
+  <!-- DISCOGRAFIA -->
+  <section class="sec disco" id="musica" data-header="dark">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Discografía<br><i>Sala de Discos</i></h2>
+        <p>De su primer demo casero a Otra Que Arde: cada disco y sencillo marcó una era distinta.</p>
+      </div>
+      <div class="disco-grid">
+        <div class="disco-list">
+          <div class="disco-row"><span class="ti">Otra Que Arde</span><span class="ty">Álbum</span></div>
+          <div class="disco-row"><span class="ti">Ya No Duele</span><span class="ty">Single</span></div>
+          <div class="disco-row"><span class="ti">Conversaciones en la Sangre</span><span class="ty">Serie</span></div>
+          <div class="disco-row"><span class="ti">Fuego Lento</span><span class="ty">Single</span></div>
+          <div class="disco-row"><span class="ti">Cuerpo</span><span class="ty">EP</span></div>
+          <div class="disco-row"><span class="ti">Piel</span><span class="ty">Single</span></div>
+        </div>
+        <div class="disco-list">
+          <div class="disco-row"><span class="ti">Otra Vida</span><span class="ty">Single</span></div>
+          <div class="disco-row"><span class="ti">Bajo Cero</span><span class="ty">Single</span></div>
+          <div class="disco-row"><span class="ti">Ácido</span><span class="ty">Colab</span></div>
+          <div class="disco-row"><span class="ti">Costillas</span><span class="ty">Single</span></div>
+          <div class="disco-row"><span class="ti">Cicatriz</span><span class="ty">EP</span></div>
+          <div class="disco-row"><span class="ti">Olivia Wald</span><span class="ty">Debut</span></div>
+        </div>
+      </div>
+      <!--
+        En Cloudflare (fuera del Artifact) reemplazar el bloque .spotify-embed de abajo por el
+        iframe real de Spotify, que ahí sí funciona:
+        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/album/3BI8faWtulqixNf6JaGhGj?utm_source=generator&si=90041d70842b46c4" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      -->
+      <div class="spotify-embed">
+        <div class="spotify-embed-art">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.6.6 0 0 1-.83.2c-2.28-1.4-5.15-1.72-8.53-.94a.6.6 0 1 1-.27-1.17c3.7-.85 6.87-.48 9.43 1.08.3.18.39.56.2.83Zm1.22-2.7a.75.75 0 0 1-1.03.25c-2.6-1.6-6.57-2.06-9.65-1.13a.75.75 0 1 1-.44-1.44c3.53-1.07 7.9-.55 10.87 1.29.35.22.47.68.25 1.03Zm.11-2.8C14.98 9 8.98 8.8 5.58 9.83a.9.9 0 1 1-.52-1.72c3.9-1.18 10.46-.96 14.6 1.5a.9.9 0 1 1-.93 1.54Z"/></svg>
+        </div>
+        <div class="spotify-embed-info">
+          <div class="eyebrow" style="color:var(--fire);">Escuchando ahora</div>
+          <div class="spotify-embed-title">Otra Que Arde</div>
+          <div class="spotify-embed-sub">Olivia Wald · Álbum</div>
+        </div>
+        <a class="spotify-embed-btn" href="https://open.spotify.com/album/3BI8faWtulqixNf6JaGhGj" target="_blank" rel="noopener noreferrer">▶ Abrir en Spotify</a>
+      </div>
+
+      <div class="disco-cta">
+        <p>Escuchá la discografía completa y sumate a las playlists oficiales.</p>
+        <a class="link-arrow" href="https://open.spotify.com/intl-es/artist/2NprLCmdQotBBAaeXrjSU0" target="_blank" rel="noopener noreferrer" style="color:var(--fire);">Escuchar en Spotify →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORE BAND -->
+  <section class="store-band reveal" id="tienda" data-header="dark">
+    <div class="bg-photo">
+      <svg class="mock-illus" viewBox="0 0 220 160" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M40 6 L14 96M110 0 L110 96M180 6 L206 96" opacity=".55"/>
+        <path d="M20 150 L36 110 L52 150M70 150 L86 104 L102 150M118 150 L134 112 L150 150M166 150 L182 108 L198 150"/>
+      </svg>
+    </div>
+    <span class="eyebrow">Tienda Oliva</span>
+    <h2>Otra Que <i>Arde</i><br>ya es merch.</h2>
+    <p>Una colección pensada para quienes no dejaron de creer en esta era. Usalo, enmarcalo, guardalo para siempre.</p>
+    <a class="btn-light" href="#">Visitar la tienda →</a>
+  </section>
+
+  <!-- CONVERSACIONES EN LA SANGRE -->
+  <section class="carousel-section" id="conversaciones" data-header="dark">
+    <div class="carousel-head">
+      <div class="carousel-head-left">
+        <span class="eyebrow on-dark">Contenido especial</span>
+        <span class="carousel-count" id="convo-count"></span>
+      </div>
+      <div class="carousel-arrows">
+        <button class="carousel-arrow" id="convo-prev" aria-label="Episodios anteriores">←</button>
+        <button class="carousel-arrow" id="convo-next" aria-label="Episodios siguientes">→</button>
+      </div>
+    </div>
+    <div class="wrap" style="margin-bottom:22px;">
+      <h2 style="color:var(--cream-text);font-size:clamp(1.8rem,4.2vw,2.6rem);"><i style="font-style:italic;color:var(--fire);">Conversaciones</i> en la Sangre</h2>
+      <p style="color:rgba(244,238,221,.6);font-size:.92rem;max-width:44ch;margin-top:8px;">Charlas íntimas de Olivia con otros artistas, del primer episodio al más reciente.</p>
+    </div>
+    <div class="carousel-track" id="convo-track"></div>
+  </section>
+
+  <!-- FANS / GAMES -->
+  <section class="sec fans" id="fans" data-header="light">
+    <svg class="topo" viewBox="0 0 1200 700" preserveAspectRatio="none" style="position:absolute;inset:0;opacity:.35;">
+      <path d="M-50 100 C 200 40, 420 180, 650 100 S 1100 40 1250 120"/>
+      <path d="M-50 320 C 250 240, 460 400, 720 320 S 1080 240 1250 360"/>
+      <path d="M-50 540 C 260 460, 480 600, 760 540 S 1100 460 1250 580"/>
+    </svg>
+    <div class="wrap" style="position:relative;">
+      <div class="fans-grid">
+        <div class="reveal">
+          <span class="eyebrow">Otra Que Arde · Fan Arcade 2026</span>
+          <h2>Diez juegos.<br><i>Otra Que Arde.</i></h2>
+          <p>Jugá mientras dura la gira que estábamos esperando y sumate a la comunidad de fans de Olivia.</p>
+          <a class="btn-store" href="https://oliviawaldfans.com/fans/">Jugar ahora →</a>
+
+        </div>
+        <div class="arcade-card reveal">
+          <div class="eyebrow on-dark">Nivel actual</div>
+          <div class="arcade-grid">
+            <span>01</span><span>02</span><span>03</span><span>04</span><span>05</span>
+            <span>06</span><span>07</span><span>08</span><span>09</span><span>10</span>
+          </div>
+          <p style="font-size:.82rem;color:rgba(244,238,221,.65);">Puede que necesites tocar una canción para darle play.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMUNIDAD -->
+  <section class="sec community" id="comunidad" data-header="light">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Comunidad<br><i>Todos los países, un fandom</i></h2>
+        <p>Elegí un país para ver sus cuentas de fans, y sumate al canal de WhatsApp global.</p>
+      </div>
+
+      <div class="flags-row">
+        <button class="flag-btn" data-country="ar">🇦🇷 <span>Argentina</span></button>
+        <button class="flag-btn" data-country="uy">🇺🇾 <span>Uruguay</span></button>
+        <button class="flag-btn" data-country="es">🇪🇸 <span>España</span></button>
+        <button class="flag-btn" data-country="mx">🇲🇽 <span>México</span></button>
+        <button class="flag-btn" data-country="cl">🇨🇱 <span>Chile</span></button>
+      </div>
+
+      <div class="community-panel" id="community-panel">
+        <p class="community-hint">Tocá una bandera para ver sus cuentas.</p>
+      </div>
+
+      <div class="whatsapp-band">
+        <div>
+          <div class="eyebrow">Comunidad global</div>
+          <p>Sumate a la comunidad de WhatsApp y conectate con fans de Olivia de todo el mundo.</p>
+        </div>
+        <a class="btn-light" href="https://chat.whatsapp.com/Dx7nGLVTWjk6KGoK3QQwML" target="_blank" rel="noopener noreferrer">💬 Unirme a la comunidad →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOWS -->
+  <section class="sec shows" id="en-vivo" data-header="light">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Gira 2026<br><i>Otra Que Arde</i></h2>
+        <p>Buenos Aires · Rosario · Córdoba · Montevideo · Ciudad de México · Madrid.</p>
+      </div>
+
+      <div class="show-row">
+        <div class="date"><b>23</b><span>Ago</span></div>
+        <div><div class="city">Montevideo</div><div class="venue">Sala del Museo del Carnaval</div></div>
+        <div style="text-align:right;">
+          <div class="status done">Show realizado</div>
+          <a class="tix" href="https://redtickets.uy/evento/OLIVIA-WALD/31297/" target="_blank" rel="noopener noreferrer">Entradas</a>
+        </div>
+      </div>
+      <div class="show-row">
+        <div class="date"><b>29</b><span>Ago</span></div>
+        <div><div class="city">Ciudad de México</div><div class="venue">House of Vans</div></div>
+        <div style="text-align:right;">
+          <div class="status done">Show realizado</div>
+          <a class="tix" href="https://feverup.com/m/647440" target="_blank" rel="noopener noreferrer">Entradas</a>
+        </div>
+      </div>
+      <div class="show-row">
+        <div class="date"><b>11</b><span>Sep</span></div>
+        <div><div class="city">Madrid</div><div class="venue">Sala Movistar Arena</div></div>
+        <div style="text-align:right;">
+          <div class="status done">Show realizado</div>
+          <a class="tix" href="https://oliviawald.lnk.to/tickets" target="_blank" rel="noopener noreferrer">Entradas</a>
+        </div>
+      </div>
+      <div class="show-row">
+        <div class="date"><b>18</b><span>Sep</span></div>
+        <div><div class="city">Rosario</div><div class="venue">Jaguar Haus</div></div>
+        <div style="text-align:right;">
+          <div class="status done">Show realizado</div>
+          <a class="tix" href="https://www.turboentrada.com/landing/17053-olivia-wald" target="_blank" rel="noopener noreferrer">Entradas</a>
+        </div>
+      </div>
+      <div class="show-row">
+        <div class="date"><b>19</b><span>Sep</span></div>
+        <div><div class="city">Córdoba</div><div class="venue">Studio Theater</div></div>
+        <div style="text-align:right;">
+          <div class="status done">Show realizado</div>
+          <a class="tix" href="https://www.edenentradas.ar/event/olivia-wald-190926" target="_blank" rel="noopener noreferrer">Entradas</a>
+        </div>
+      </div>
+      <div class="show-row">
+        <div class="date"><b>03</b><span>Oct</span></div>
+        <div>
+          <div class="city">Buenos Aires</div>
+          <div class="venue">C Art Media</div>
+          <div class="show-countdown" id="show-countdown">
+            <b id="sc-d">–</b><span>d</span> <b id="sc-h">–</b><span>h</span> <b id="sc-m">–</b><span>m</span> <b id="sc-s">–</b><span>s</span>
+          </div>
+        </div>
+        <a class="tix" href="https://www.allaccess.com.ar/event/olivia-wald" target="_blank" rel="noopener noreferrer">Entradas</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIALS -->
+  <section class="socials" data-header="light">
+    <div class="wrap" style="padding-top:70px;">
+      <div class="sec-head" style="margin-bottom:0;">
+        <h2>Qué hay de<br><i>nuevo · redes</i></h2>
+        <p>Seguí a Olivia para no perderte lanzamientos, anuncios y contenido especial.</p>
+      </div>
+    </div>
+    <div class="soc-grid" style="margin-top:30px;">
+      <a href="#">Instagram <span>↗</span></a>
+      <a href="#">TikTok <span>↗</span></a>
+      <a href="#">Spotify <span>↗</span></a>
+      <a href="#">YouTube <span>↗</span></a>
+      <a href="#">X <span>↗</span></a>
+      <a href="#">Facebook <span>↗</span></a>
+    </div>
+  </section>
+
+</main>
+
+<footer data-header="dark">
+  <div class="wrap">
+    <h3>Siempre <em style="color:var(--fire);font-style:italic;">ardiendo</em>, siempre <em style="color:var(--ice-pale);font-style:italic;">cerca</em>.</h3>
+    <div class="foot-grid">
+      <div class="foot-col">
+        <h4>Contacto</h4>
+        <span style="display:block;padding:6px 0;font-size:.92rem;color:rgba(244,238,221,.85);">management@oliviawald.com</span>
+      </div>
+      <div class="foot-col">
+        <h4>Páginas</h4>
+        <a href="#inicio">Inicio</a>
+        <a href="#musica">Música</a>
+        <a href="#comunidad">Comunidad</a>
+        <a href="#en-vivo">Gira</a>
+        <a href="#fans">Fans</a>
+        <a href="https://oliviawaldfans.com/juegos/">Juegos</a>
+      </div>
+      <div class="foot-col">
+        <h4>Seguir en</h4>
+        <a href="#">Instagram</a>
+        <a href="#">TikTok</a>
+        <a href="#">Spotify</a>
+        <a href="#">YouTube</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Olivia Wald. Todos los derechos reservados.</span>
+      <span style="display:flex;gap:18px;"><a href="#">Privacidad</a><a href="#">Términos</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  "use strict";
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Videoteca: full YouTube catalog, rendered as gallery cards ---- */
+  var MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  var VIDEOS = [
+    ['31/08/2026','El Secreto Peor Guardado De la Humanidad (Visualizer)','fPebmP2vpcE'],
+    ['24/08/2026','México (Visualizer)','1yhD4IJSqsE'],
+    ['17/08/2026','Amante','gQEjq-y8dxc'],
+    ['23/07/2026','Tus Errores (con Coti)','0AC3XYcrqiY'],
+    ['23/06/2026','Otro Cumpleaños','JDWx0aChems'],
+    ['23/04/2026','Angustia Existencial | Vevo DSCVR','yNwtJNS6JtQ'],
+    ['16/04/2026','Angustia Existencial','RjCWMU9843s'],
+    ['26/03/2026','La Teoría | Vevo DSCVR','zcUC2Mjq080'],
+    ['19/03/2026','La Teoría (con Alex Ponce)','0iAg8InyVAQ'],
+    ['22/01/2026','Estimado Cobarde','_U8f_HrxYR8'],
+    ['22/12/2025','La Lokura (Remix, con Q’ Lokura)','eme0QADZViY'],
+    ['03/12/2025','Pecadora','gNBO30jSnAo'],
+    ['06/11/2025','La Locura','oiVlIBhlL2I'],
+    ['22/07/2025','pulso (En Vivo Desde Showcase)','wH4VAqaIQnA'],
+    ['17/07/2025','Temporada de Canciones Tristes (En Vivo Desde Showcase)','fdnpTgzfAQ8'],
+    ['15/07/2025','corazón (En Vivo Desde Showcase)','KWgrGLrE-jY'],
+    ['11/07/2025','Que Alguien Me Saque De Este Mood (En Vivo, con Meri Deal)','VMwKAjzNmdA'],
+    ['10/07/2025','cuerpo (En Vivo Desde Showcase)','nMxmBP9pSBA'],
+    ['05/06/2025','en la cara (En Vivo Desde Villa María, con Juli Cardozo)','JyvJB3mBTN4'],
+    ['01/04/2025','“en el pecho” (Lyric Video)','Ajr05Eq26JA'],
+    ['25/03/2025','“la sangre” (Lyric Video)','ogy7CR9WvuY'],
+    ['18/03/2025','“oído” (Lyric Video)','glpD97kGRcc'],
+    ['04/03/2025','“pies” (Lyric Video)','-CeJ470I3gQ'],
+    ['04/03/2025','cuerpo','viR2_KjZ224'],
+    ['21/01/2025','corazón (con Sofía Mora)','2miFpmdP26o'],
+    ['26/11/2024','paladar (con Valentina Olguin, Chule)','magusokY4wo'],
+    ['31/10/2024','en la cara (remixXx, con Rusherking)','xUCbIAcugFQ'],
+    ['10/09/2024','en la cara (En Vivo, con Q’Lokura)','CC9Se2TNcc0'],
+    ['03/09/2024','pulso','KEDr46OpSZA'],
+    ['27/08/2024','Buenos Aires (en la cara) (Audio, con Lucca Saettone, Karlo)','CdybdgUYms4'],
+    ['16/07/2024','en la cara (En Vivo Auditorio Universal Music)','9ayU_30JSVw'],
+    ['02/07/2024','en la cara','Lsr726lVR74'],
+    ['06/06/2024','¿Qué Vas a Hacer Hoy? (Versión Acústica/Audio)','Ykv4pphFWeo'],
+    ['23/05/2024','¿Qué Vas a Hacer Hoy? (En Vivo Auditorio Universal Music)','OfA98abVqHE'],
+    ['10/04/2024','¿Qué Vas a Hacer Hoy?','InCVdhEeRyo'],
+    ['15/02/2024','Temporada de Canciones Tristes','Gc00TtaVqS8'],
+    ['14/12/2023','Que Alguien Me Saque De Este Mood (con Jaz)','jP9KH8aOq5g'],
+    ['15/12/2022','Llamada','S3z4l2y3DP4'],
+    ['16/12/2021','Si Te Vas (versión acústica) by Huggar','5vfkwjLR5CU'],
+    ['16/09/2021','Me Haces Falta (con Wildo Samuel & Basti)','t1R1tKOZQLY'],
+    ['24/06/2021','No Vengas a Cantarme Reggaeton (con Aleo)','CRaZk0tazw8'],
+    ['27/05/2021','“Sirenas” (Taburete Cover)','9fV7D3OUjTA'],
+    ['06/05/2021','Se Nos Hizo Tarde (versión acústica)','Qfv4YmWiNWQ'],
+    ['18/03/2021','777 (versión acústica)','LeDZ3Enq6j4'],
+    ['25/02/2021','777','WKobxFr9OCA'],
+    ['07/04/2020','“Agua Marfil” (Usted Señalemelo Cover) Room Session by Jungla','rJqwpfnQgT4'],
+    ['26/03/2020','Donde Estés','Ht0XzBCTRH8'],
+    ['18/07/2019','Se Nos Hizo Tarde','9a7sOdJ7aUk']
+  ];
+
+  var CONVERSACIONES = [
+    ['10/09/2025','#1 — con Kendall Peña','L2Ua7Y83HBA'],
+    ['08/10/2025','#2 — con E-Lhoy','6KFZpKpjC3k'],
+    ['22/10/2025','#3 — con Valentina Olguin','tJLOWx8oyQA'],
+    ['05/11/2025','#4 — con Sofía Mora','dsAjndlr-Lw'],
+    ['19/11/2025','#5 — con Rusher','miMlWllbDmw'],
+    ['10/12/2025','#6 — con Chule','xFGIS7nrFpM'],
+    ['07/01/2026','#7 — con Cardellino','cewFoOJikdg'],
+    ['25/02/2026','#8 — con Jaz','3bl0rR7YqF8'],
+    ['03/05/2026','#9 — con Alex Ponce','v3LojkVtIdA'],
+    ['03/06/2026','En el camarín — con Juan Taleb (Los Caligaris)','HL1O77-NIGA'],
+    ['13/07/2026','En el camarín — con Carlos Rivera','He8n-9oLk2c']
+  ];
+
+  function renderCarousel(videos, trackId, countId, countSuffix){
+    var trackEl = document.getElementById(trackId);
+    var countEl = countId ? document.getElementById(countId) : null;
+    if(!trackEl) return;
+    var html = '';
+    videos.forEach(function(v, i){
+      var parts = v[0].split('/');
+      var mesAno = MESES[parseInt(parts[1],10)-1] + ' ' + parts[2];
+      var title = v[1];
+      var id = v[2];
+      var tall = (i % 2 === 1) ? ' tall' : '';
+      html += '<a class="gcard' + tall + '" href="https://www.youtube.com/watch?v=' + id + '" target="_blank" rel="noopener noreferrer">' +
+        '<div class="cap">' + mesAno + '</div>' +
+        '<div class="ph"><img src="assets/thumbs/' + id + '.jpg" alt="' + title.replace(/"/g,'&quot;') + '" loading="lazy"><span class="play">▶</span></div>' +
+        '<div class="gtitle">' + title + '</div>' +
+      '</a>';
+    });
+    trackEl.innerHTML = html;
+    if(countEl) countEl.textContent = videos.length + ' ' + (countSuffix || 'videos');
+  }
+  renderCarousel(VIDEOS, 'gallery-track', 'gallery-count', 'videos');
+  renderCarousel(CONVERSACIONES, 'convo-track', 'convo-count', 'episodios');
+
+  var COMMUNITY = {
+    ar: [
+      {name:'OliviaWaldData', links:[['X','https://x.com/oliviawalddata?s=11'],['Instagram','https://www.instagram.com/oliviawalddata'],['TikTok','https://www.tiktok.com/@oliviawald.data']]},
+      {name:'OliviaWaldAr', links:[['Instagram','https://www.instagram.com/oliviawaldar']]}
+    ],
+    uy: [
+      {name:'OliviaWaldUruguay', links:[['Instagram','https://www.instagram.com/oliviawalduruguay'],['TikTok','https://www.tiktok.com/@oliviawalduruguay']]},
+      {name:'Clums', links:[['TikTok','https://www.tiktok.com/@clums___']]}
+    ],
+    es: [
+      {name:'OliviaWaldSpain', links:[['Instagram','https://www.instagram.com/oliviawaldspain']]}
+    ],
+    mx: [
+      {name:'OliviaWaldMéxico', links:[['Instagram','https://www.instagram.com/oliviawaldmexico']]}
+    ],
+    cl: [
+      {name:'OliviaWaldChile', links:[['Instagram','https://www.instagram.com/oliviawaldchile']]}
+    ]
+  };
+
+  function setupCommunity(){
+    var panel = document.getElementById('community-panel');
+    var btns = document.querySelectorAll('.flag-btn');
+    if(!panel || !btns.length) return;
+    btns.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        btns.forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+        var accounts = COMMUNITY[btn.getAttribute('data-country')] || [];
+        var html = '';
+        accounts.forEach(function(acc){
+          html += '<div class="community-account"><h4>' + acc.name + '</h4><div class="soc-links">';
+          acc.links.forEach(function(l){
+            html += '<a href="' + l[1] + '" target="_blank" rel="noopener noreferrer">' + l[0] + ' ↗</a>';
+          });
+          html += '</div></div>';
+        });
+        panel.innerHTML = html || '<p class="community-hint">Todavía no hay cuentas cargadas para este país.</p>';
+      });
+    });
+  }
+  setupCommunity();
+
+  function setupCarousel(trackId, prevId, nextId){
+    var trackEl = document.getElementById(trackId);
+    var prevEl = document.getElementById(prevId);
+    var nextEl = document.getElementById(nextId);
+    if(!trackEl) return;
+    function step(dir){
+      var card = trackEl.querySelector('.gcard');
+      var cardWidth = card ? card.getBoundingClientRect().width + 20 : 300;
+      trackEl.scrollBy({left: dir * cardWidth * 2, behavior:'smooth'});
+    }
+    if(prevEl) prevEl.addEventListener('click', function(){ step(-1); });
+    if(nextEl) nextEl.addEventListener('click', function(){ step(1); });
+  }
+
+  /* ---- Preloader ---- */
+  var pre = document.getElementById('preloader');
+  var pbar = document.getElementById('pbar');
+  var ppct = document.getElementById('ppct');
+  var pctVal = 0;
+  function tick(){
+    pctVal = Math.min(100, pctVal + Math.random()*18 + 6);
+    pbar.style.width = pctVal + '%';
+    ppct.textContent = 'CARGANDO — ' + Math.floor(pctVal) + '%';
+    if(pctVal < 100){ setTimeout(tick, 140); }
+    else { setTimeout(finishLoad, 300); }
+  }
+  function finishLoad(){
+    pre.classList.add('hide');
+    document.body.classList.add('js-ready');
+    setTimeout(startAnim, 250);
+  }
+  setTimeout(tick, 200);
+
+  /* ---- Countdown ---- */
+  function updateCountdown(){
+    var target = new Date('2026-10-03T20:00:00');
+    var now = new Date();
+    var diff = target - now;
+    var d = document.getElementById('cd-d');
+    var h = document.getElementById('cd-h');
+    var m = document.getElementById('cd-m');
+    var scD = document.getElementById('sc-d');
+    var scH = document.getElementById('sc-h');
+    var scM = document.getElementById('sc-m');
+    var scS = document.getElementById('sc-s');
+    if(diff <= 0){
+      if(d){ d.textContent='0'; h.textContent='0'; m.textContent='0'; }
+      if(scD){ scD.textContent='0'; scH.textContent='0'; scM.textContent='0'; scS.textContent='0'; }
+      return;
+    }
+    var days = Math.floor(diff/86400000);
+    var hrs = Math.floor((diff%86400000)/3600000);
+    var mins = Math.floor((diff%3600000)/60000);
+    var secs = Math.floor((diff%60000)/1000);
+    if(d){ d.textContent = days; h.textContent = hrs; m.textContent = mins; }
+    if(scD){ scD.textContent = days; scH.textContent = hrs; scM.textContent = mins; scS.textContent = secs; }
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  /* ---- Animations ---- */
+  function startAnim(){
+    var sigFallback = document.getElementById('sig-hero');
+    if(typeof gsap === 'undefined'){
+      document.querySelectorAll('.reveal').forEach(function(el){ el.style.opacity = 1; });
+      if(sigFallback) sigFallback.style.clipPath = 'inset(0 0% 0 0)';
+      return;
+    }
+    gsap.registerPlugin(ScrollTrigger);
+
+    if(reduced){
+      document.querySelectorAll('.reveal').forEach(function(el){ el.style.opacity = 1; el.style.transform='none'; });
+      if(sigFallback) sigFallback.style.clipPath = 'inset(0 0% 0 0)';
+      return;
+    }
+
+    gsap.from('.hero-title', {y:40, opacity:0, duration:1.1, ease:'power3.out'});
+    gsap.from('.hero-sub', {y:20, opacity:0, duration:1, delay:.25, ease:'power3.out'});
+    gsap.from('.next-card', {y:20, opacity:0, duration:1, delay:.4, ease:'power3.out'});
+
+    // signature "written" on scroll, like the stroke on landonorris.com
+    var sigEl = document.getElementById('sig-hero');
+    if(sigEl){
+      gsap.fromTo(sigEl,
+        {clipPath:'inset(0 100% 0 0)'},
+        {clipPath:'inset(0 0% 0 0)', ease:'none',
+         scrollTrigger:{trigger:'.message', start:'top 85%', end:'top 35%', scrub:.6}}
+      );
+    }
+
+    document.querySelectorAll('.reveal').forEach(function(el){
+      gsap.fromTo(el, {y:28, opacity:0}, {
+        y:0, opacity:1, duration:1, ease:'power3.out',
+        scrollTrigger:{trigger:el, start:'top 88%'}
+      });
+    });
+
+    // manifesto stroke draw on scroll
+    gsap.to('#stroke1 path', {
+      strokeDashoffset:0, ease:'none',
+      scrollTrigger:{trigger:'.manifesto-hero', start:'top 70%', end:'bottom 40%', scrub:1}
+    });
+
+    // statement subtle scale/parallax
+    gsap.from('.statement', {
+      opacity:.35, duration:1,
+      scrollTrigger:{trigger:'.statement', start:'top 90%', end:'top 50%', scrub:1}
+    });
+
+    // video carousels: arrow buttons scroll the track, no scroll-jacking
+    setupCarousel('gallery-track', 'gallery-prev', 'gallery-next');
+    setupCarousel('convo-track', 'convo-prev', 'convo-next');
+
+    // split hover images subtle parallax on scroll into view
+    gsap.utils.toArray('.split > a').forEach(function(a){
+      gsap.from(a.querySelector('h3'), {
+        y:40, opacity:0, duration:1, ease:'power3.out',
+        scrollTrigger:{trigger:a, start:'top 85%'}
+      });
+    });
+
+    // disco rows stagger
+    gsap.utils.toArray('.disco-row').forEach(function(row, i){
+      gsap.from(row, {
+        opacity:0, x:-16, duration:.6, ease:'power2.out',
+        scrollTrigger:{trigger:row, start:'top 95%'}
+      });
+    });
+
+    ScrollTrigger.refresh();
+  }
+
+  /* Hero photo: flaming-heart cursor + sparks spawn on move, like the visor reveal on landonorris.com */
+  var portrait = document.querySelector('.hero-portrait');
+  var heroPh = portrait ? portrait.querySelector('.ph') : null;
+  var sparkLayer = document.getElementById('spark-layer');
+  var lastSpark = 0;
+
+  function spawnSpark(x, y){
+    if(!sparkLayer) return;
+    var s = document.createElement('div');
+    s.className = 'spark';
+    var size = 4 + Math.random()*7;
+    var rise = 60 + Math.random()*100;
+    s.style.width = size + 'px';
+    s.style.height = size + 'px';
+    s.style.left = (x + (Math.random()*24 - 12)) + 'px';
+    s.style.top = y + 'px';
+    s.style.setProperty('--rise', -rise + 'px');
+    s.style.animation = 'spark-rise ' + (.6 + Math.random()*.5) + 's ease-out forwards';
+    sparkLayer.appendChild(s);
+    setTimeout(function(){ s.remove(); }, 1200);
+  }
+
+  if(heroPh && !reduced){
+    heroPh.addEventListener('mousemove', function(e){
+      var r = this.getBoundingClientRect();
+      var x = e.clientX - r.left;
+      var y = e.clientY - r.top;
+      var now = Date.now();
+      if(now - lastSpark > 40){
+        lastSpark = now;
+        spawnSpark(x, y);
+      }
+    });
+  }
+  if(portrait && !reduced){
+    document.querySelector('.hero').addEventListener('mousemove', function(e){
+      var r = this.getBoundingClientRect();
+      var x = (e.clientX - r.left)/r.width - .5;
+      var y = (e.clientY - r.top)/r.height - .5;
+      portrait.style.transform = 'translate(' + (x*10) + 'px,' + (y*8) + 'px)';
+    });
+  }
+
+  /* Hero video: crossfades in on hover, same crop as the photo */
+  var heroVideo = document.getElementById('hero-video');
+  if(heroPh && heroVideo){
+    heroPh.addEventListener('mouseenter', function(){
+      try{ heroVideo.currentTime = 0; heroVideo.play(); }catch(err){}
+    });
+    heroPh.addEventListener('mouseleave', function(){
+      heroVideo.pause();
+    });
+  }
+
+  /* Header logo: switches ink/cream depending on the section behind it.
+     Uses elementFromPoint (sampled just below the header) instead of
+     IntersectionObserver, which was misfiring on first paint. */
+  var headerEl = document.querySelector('header');
+  var headerSections = Array.prototype.slice.call(document.querySelectorAll('[data-header]'));
+  if(headerEl && headerSections.length){
+    var updatingHeader = false;
+    function updateHeaderTheme(){
+      var probeY = headerEl.getBoundingClientRect().bottom + 6;
+      var isDark = false;
+      for(var i=0; i<headerSections.length; i++){
+        var r = headerSections[i].getBoundingClientRect();
+        if(probeY >= r.top && probeY <= r.bottom){
+          isDark = headerSections[i].getAttribute('data-header') === 'dark';
+          break;
+        }
+      }
+      headerEl.classList.toggle('on-dark', isDark);
+      updatingHeader = false;
+    }
+    function requestHeaderUpdate(){
+      if(updatingHeader) return;
+      updatingHeader = true;
+      requestAnimationFrame(updateHeaderTheme);
+    }
+    window.addEventListener('scroll', requestHeaderUpdate, {passive:true});
+    window.addEventListener('resize', requestHeaderUpdate);
+    updateHeaderTheme();
+  }
+
+  /* Menu toggle placeholder interaction */
+  document.querySelector('.menu-toggle').addEventListener('click', function(){
+    document.querySelector('header').classList.toggle('open');
+    window.location.hash = '#inicio';
+  });
+})();
+</script>
