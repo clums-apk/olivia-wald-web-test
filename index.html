@@ -182,7 +182,7 @@
     position:absolute;left:24px;top:120px;z-index:3;
     background:var(--paper);border:1px solid var(--ink-line);
     border-radius:14px;padding:14px 16px;
-    min-width:150px;
+    min-width:186px;
     box-shadow:0 18px 40px -20px rgba(23,20,15,.25);
   }
   @media (min-width:640px){ .next-card{left:40px;} }
@@ -246,13 +246,13 @@
 
   /* ---------- Marquee + signature drawn over the hero photo (same photo, no duplicate) ---------- */
   .ss-marquee{position:absolute;left:0;right:0;overflow:hidden;white-space:nowrap;z-index:0;opacity:0;}
-  .ss-marquee.top{top:36%;transform:translateY(-50%);}
-  .ss-marquee.bottom{top:62%;transform:translateY(-50%);}
+  .ss-marquee.top{top:44%;transform:translateY(-50%);}
+  .ss-marquee.bottom{top:56%;transform:translateY(-50%);}
   .ss-track{display:inline-flex;gap:2.5rem;animation:marquee 24s linear infinite;}
   .ss-marquee.bottom .ss-track{animation-direction:reverse;animation-duration:30s;}
   .ss-marquee span{
     font-family:var(--serif);font-style:italic;font-weight:700;
-    font-size:clamp(2.2rem,8.5vw,5.2rem);
+    font-size:clamp(3rem,12vw,7.5rem);
     color:var(--ice);
   }
   .ss-marquee span.solid{color:var(--fire);}
@@ -305,7 +305,7 @@
     -ms-overflow-style:none;scrollbar-width:none;
   }
   .carousel-track::-webkit-scrollbar{display:none;}
-  .gcard{position:relative;flex:0 0 auto;text-align:left;display:block;scroll-snap-align:start;}
+  .gcard{position:relative;flex:0 0 auto;text-align:left;display:block;scroll-snap-align:start;cursor:pointer;}
   .gcard .cap{margin-bottom:10px;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:rgba(244,238,221,.5);}
   .gcard .ph{
     width:min(58vw,270px);aspect-ratio:3/4;
@@ -590,6 +590,7 @@
           <div><b id="cd-d">–</b><span>días</span></div>
           <div><b id="cd-h">–</b><span>hs</span></div>
           <div><b id="cd-m">–</b><span>min</span></div>
+          <div><b id="cd-s">–</b><span>seg</span></div>
         </div>
       </div>
 
@@ -1035,14 +1036,30 @@
       var title = v[1];
       var id = v[2];
       var tall = (i % 2 === 1) ? ' tall' : '';
-      html += '<a class="gcard' + tall + '" href="https://www.youtube.com/watch?v=' + id + '" target="_blank" rel="noopener noreferrer">' +
+      html += '<div class="gcard' + tall + '" data-video-id="' + id + '" role="button" tabindex="0" aria-label="Reproducir ' + title.replace(/"/g,'&quot;') + '">' +
         '<div class="cap">' + mesAno + '</div>' +
         '<div class="ph"><img src="assets/thumbs/' + id + '.jpg" alt="' + title.replace(/"/g,'&quot;') + '" loading="lazy"><span class="play">▶</span></div>' +
         '<div class="gtitle">' + title + '</div>' +
-      '</a>';
+      '</div>';
     });
     trackEl.innerHTML = html;
     if(countEl) countEl.textContent = videos.length + ' ' + (countSuffix || 'videos');
+
+    trackEl.querySelectorAll('.gcard').forEach(function(card){
+      function playInline(){
+        var id = card.getAttribute('data-video-id');
+        var ph = card.querySelector('.ph');
+        if(!ph || ph.querySelector('iframe')) return;
+        ph.innerHTML = '<iframe src="https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0" title="YouTube video player" ' +
+          'style="position:absolute;inset:0;width:100%;height:100%;border:0;" ' +
+          'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ' +
+          'referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+      }
+      card.addEventListener('click', playInline);
+      card.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); playInline(); }
+      });
+    });
   }
   renderCarousel(VIDEOS, 'gallery-track', 'gallery-count', 'videos');
   renderCarousel(CONVERSACIONES, 'convo-track', 'convo-count', 'episodios');
@@ -1131,12 +1148,13 @@
     var d = document.getElementById('cd-d');
     var h = document.getElementById('cd-h');
     var m = document.getElementById('cd-m');
+    var s = document.getElementById('cd-s');
     var scD = document.getElementById('sc-d');
     var scH = document.getElementById('sc-h');
     var scM = document.getElementById('sc-m');
     var scS = document.getElementById('sc-s');
     if(diff <= 0){
-      if(d){ d.textContent='0'; h.textContent='0'; m.textContent='0'; }
+      if(d){ d.textContent='0'; h.textContent='0'; m.textContent='0'; s.textContent='0'; }
       if(scD){ scD.textContent='0'; scH.textContent='0'; scM.textContent='0'; scS.textContent='0'; }
       return;
     }
@@ -1144,7 +1162,7 @@
     var hrs = Math.floor((diff%86400000)/3600000);
     var mins = Math.floor((diff%3600000)/60000);
     var secs = Math.floor((diff%60000)/1000);
-    if(d){ d.textContent = days; h.textContent = hrs; m.textContent = mins; }
+    if(d){ d.textContent = days; h.textContent = hrs; m.textContent = mins; s.textContent = secs; }
     if(scD){ scD.textContent = days; scH.textContent = hrs; scM.textContent = mins; scS.textContent = secs; }
   }
   updateCountdown();
@@ -1196,7 +1214,7 @@
       gsap.fromTo(sceneSig,
         {clipPath:'inset(0 100% 0 0)'},
         {clipPath:'inset(0 0% 0 0)', ease:'none',
-         scrollTrigger:{trigger:'.hero', start:'40% top', end:'85% top', scrub:.6}}
+         scrollTrigger:{trigger:'.hero', start:'40% top', end:'68% top', scrub:.6}}
       );
     }
 
