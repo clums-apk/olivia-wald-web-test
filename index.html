@@ -107,24 +107,29 @@
   /* ---------- Hero ---------- */
   .hero{
     position:relative;
-    min-height:100svh;
+    height:230vh;
+    background:var(--ecru);
+  }
+  .hero-first-screen{
+    position:absolute;top:0;left:0;right:0;height:100svh;
     display:flex;flex-direction:column;justify-content:flex-end;
     padding-top:110px;
-    overflow:hidden;
-    background:var(--ecru);
+    overflow:hidden;z-index:2;
   }
   .topo{position:absolute;inset:0;z-index:0;opacity:.55;}
   .topo path{fill:none;stroke:var(--ink-line);stroke-width:1;}
   .hero-portrait{
-    position:absolute;inset:0;z-index:1;
-    display:flex;align-items:flex-end;justify-content:center;
+    position:sticky;top:0;height:100svh;z-index:1;
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;background:var(--ecru);
   }
   .hero-portrait .ph{
     width:min(620px,90vw);
     aspect-ratio:1/1;
     border-radius:2px;
-    position:relative;
+    position:relative;z-index:2;
     overflow:hidden;
+    transform-origin:center center;will-change:transform;
     box-shadow:0 40px 90px -30px rgba(23,20,15,.45);
   }
   .hero-portrait .ph img, .hero-portrait .ph video{
@@ -239,27 +244,28 @@
   .marquee span.solid{color:var(--fire);-webkit-text-stroke:0;}
   @keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 
-  .manifesto-hero{position:relative;display:flex;justify-content:center;margin-bottom:60px;}
-  .manifesto-img{
-    width:min(360px,80vw);aspect-ratio:4/5;position:relative;z-index:1;
-    background:
-      radial-gradient(90% 70% at 30% 10%, rgba(63,169,201,.3), transparent 60%),
-      radial-gradient(90% 70% at 80% 100%, rgba(226,74,38,.35), transparent 60%),
-      linear-gradient(160deg,#3a362c,#1d1b16);
-    overflow:hidden;
+  /* ---------- Marquee + signature drawn over the hero photo (same photo, no duplicate) ---------- */
+  .ss-marquee{position:absolute;left:0;right:0;overflow:hidden;white-space:nowrap;z-index:0;opacity:0;}
+  .ss-marquee.top{top:36%;transform:translateY(-50%);}
+  .ss-marquee.bottom{top:62%;transform:translateY(-50%);}
+  .ss-track{display:inline-flex;gap:2.5rem;animation:marquee 24s linear infinite;}
+  .ss-marquee.bottom .ss-track{animation-direction:reverse;animation-duration:30s;}
+  .ss-marquee span{
+    font-family:var(--serif);font-style:italic;font-weight:600;
+    font-size:clamp(2.2rem,8.5vw,5.2rem);
+    color:transparent;-webkit-text-stroke:1px rgba(23,20,15,.35);
   }
-  .manifesto-img::before{
-    content:'';position:absolute;inset:0;background-image:var(--grain);
-    mix-blend-mode:overlay;opacity:.45;
+  .ss-marquee span.solid{color:var(--fire);-webkit-text-stroke:0;}
+  .ss-sig{
+    position:absolute;inset:-20% -16%;z-index:4;pointer-events:none;
+    background-color:var(--fire);
+    -webkit-mask-image:url('assets/firma.svg');mask-image:url('assets/firma.svg');
+    -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+    -webkit-mask-size:contain;mask-size:contain;
+    -webkit-mask-position:center;mask-position:center;
+    clip-path:inset(0 100% 0 0);
+    filter:drop-shadow(0 8px 24px rgba(0,0,0,.4));
   }
-  .manifesto-img::after{
-    content:'📷 Foto de gira';position:absolute;left:14px;bottom:14px;
-    color:rgba(244,238,221,.55);
-    font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700;
-    background:rgba(23,20,15,.4);padding:5px 10px;border-radius:999px;backdrop-filter:blur(3px);
-  }
-  .stroke-svg{position:absolute;inset:-15% -10%;z-index:2;pointer-events:none;color:var(--fire);}
-  .stroke-svg path{fill:none;stroke:currentColor;stroke-width:14;stroke-linecap:round;stroke-dasharray:1400;stroke-dashoffset:1400;}
 
   .statement{
     text-align:center;padding:0 24px;max-width:920px;margin:0 auto;
@@ -559,47 +565,56 @@
 
 <main>
 
-  <!-- HERO -->
+  <!-- HERO: one photo that stays on screen (sticky) and shrinks as you scroll, marquee runs behind it, signature draws on top -->
   <section class="hero" id="inicio" data-header="light">
-    <svg class="topo" viewBox="0 0 1200 800" preserveAspectRatio="none">
-      <path d="M-50 120 C 200 60, 400 200, 650 120 S 1100 60 1250 140"/>
-      <path d="M-50 260 C 250 180, 420 340, 700 260 S 1050 180 1250 300"/>
-      <path d="M-50 420 C 220 340, 460 500, 720 420 S 1080 340 1250 460"/>
-      <path d="M-50 580 C 260 500, 480 660, 760 580 S 1100 500 1250 620"/>
-      <path d="M-50 40 C 180 -20, 360 120, 600 40 S 980 -20 1250 60"/>
-    </svg>
+    <div class="hero-first-screen">
+      <svg class="topo" viewBox="0 0 1200 800" preserveAspectRatio="none">
+        <path d="M-50 120 C 200 60, 400 200, 650 120 S 1100 60 1250 140"/>
+        <path d="M-50 260 C 250 180, 420 340, 700 260 S 1050 180 1250 300"/>
+        <path d="M-50 420 C 220 340, 460 500, 720 420 S 1080 340 1250 460"/>
+        <path d="M-50 580 C 260 500, 480 660, 760 580 S 1100 500 1250 620"/>
+        <path d="M-50 40 C 180 -20, 360 120, 600 40 S 980 -20 1250 60"/>
+      </svg>
+
+      <div class="next-card">
+        <div class="lbl">Próximo show</div>
+        <div class="city">Buenos Aires</div>
+        <div style="font-size:.72rem;margin-top:2px;color:var(--ink-soft);font-weight:600;">C Art Media · 03 OCT</div>
+        <div class="cd" id="countdown">
+          <div><b id="cd-d">–</b><span>días</span></div>
+          <div><b id="cd-h">–</b><span>hs</span></div>
+          <div><b id="cd-m">–</b><span>min</span></div>
+        </div>
+      </div>
+
+      <div class="scroll-cue"><span class="line"></span>SCROLL</div>
+
+      <div class="hero-inner">
+        <h1 class="hero-title">OLIVIA<br><em>WALD</em></h1>
+        <div class="hero-sub">
+          <span class="eyebrow" style="color:var(--fire-deep);background:rgba(244,238,221,.85);padding:5px 12px;border-radius:999px;">Otra Que Arde · Gira 2026</span>
+        </div>
+      </div>
+    </div>
+
     <div class="hero-portrait" id="hero-portrait">
-      <div class="ph">
+      <div class="ss-marquee top"><div class="ss-track">
+        <span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span>
+      </div></div>
+      <div class="ss-marquee bottom"><div class="ss-track">
+        <span>OTRA QUE ARDE</span><span class="solid">★</span><span>OTRA QUE ARDE</span><span class="solid">★</span><span>OTRA QUE ARDE</span><span class="solid">★</span><span>OTRA QUE ARDE</span><span class="solid">★</span>
+      </div></div>
+      <div class="ph" id="hero-ph">
         <video id="hero-video" src="assets/hero-fire.mp4" muted loop playsinline preload="auto"></video>
         <img class="hero-img" src="assets/hero-fire.jpg" alt="Olivia Wald envuelta en fuego, campaña Otra Que Arde">
         <div class="spark-layer" id="spark-layer"></div>
-      </div>
-    </div>
-
-    <div class="next-card">
-      <div class="lbl">Próximo show</div>
-      <div class="city">Buenos Aires</div>
-      <div style="font-size:.72rem;margin-top:2px;color:var(--ink-soft);font-weight:600;">C Art Media · 03 OCT</div>
-      <div class="cd" id="countdown">
-        <div><b id="cd-d">–</b><span>días</span></div>
-        <div><b id="cd-h">–</b><span>hs</span></div>
-        <div><b id="cd-m">–</b><span>min</span></div>
-      </div>
-    </div>
-
-    <div class="scroll-cue"><span class="line"></span>SCROLL</div>
-
-    <div class="hero-inner">
-      <h1 class="hero-title">OLIVIA<br><em>WALD</em></h1>
-      <div class="hero-sub">
-        <span class="eyebrow" style="color:var(--fire-deep);background:rgba(244,238,221,.85);padding:5px 12px;border-radius:999px;">Otra Que Arde · Gira 2026</span>
+        <div class="ss-sig" id="scene-sig" role="img" aria-label="Firma de Olivia Wald"></div>
       </div>
     </div>
   </section>
 
   <!-- MESSAGE -->
   <section class="message reveal" data-header="light">
-    <div class="sig" id="sig-hero" role="img" aria-label="Firma de Olivia Wald"></div>
     <p>&ldquo;Sacar y sacar música a veces viene de la emoción, de que nos guste lo que hacemos y lo disfrutamos. Yo realmente lo disfruto.&rdquo;</p>
     <cite class="msg-cite">— Olivia Wald, <a href="https://es.rollingstone.com/la-combustion-honesta-de-olivia-wald-en-otra-que-arde/" class="msg-cite-link">entrevista con Rolling Stone en Español →</a></cite>
   </section>
@@ -616,18 +631,6 @@
       <span>OTRA QUE ARDE</span><span class="solid">★</span><span>CUERPO</span><span class="solid">★</span><span>OTRA QUE ARDE</span><span class="solid">★</span><span>CUERPO</span><span class="solid">★</span>
       <span>OTRA QUE ARDE</span><span class="solid">★</span><span>CUERPO</span><span class="solid">★</span><span>OTRA QUE ARDE</span><span class="solid">★</span><span>CUERPO</span><span class="solid">★</span>
     </div></div>
-
-    <div class="manifesto-hero reveal">
-      <div class="manifesto-img">
-        <svg class="mock-illus" viewBox="0 0 220 160" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M40 6 L14 96M110 0 L110 96M180 6 L206 96" opacity=".55"/>
-          <path d="M20 150 L36 110 L52 150M70 150 L86 104 L102 150M118 150 L134 112 L150 150M166 150 L182 108 L198 150"/>
-        </svg>
-      </div>
-      <svg class="stroke-svg" id="stroke1" viewBox="0 0 400 500">
-        <path d="M60 440 C 120 380, 90 300, 160 320 C 210 334, 150 400, 220 360 C 300 314, 260 200, 320 160 C 350 140, 340 100, 300 70"/>
-      </svg>
-    </div>
 
     <div class="statement reveal">
       <div class="crest">
@@ -1140,7 +1143,7 @@
 
   /* ---- Animations ---- */
   function startAnim(){
-    var sigFallback = document.getElementById('sig-hero');
+    var sigFallback = document.getElementById('scene-sig');
     if(typeof gsap === 'undefined'){
       document.querySelectorAll('.reveal').forEach(function(el){ el.style.opacity = 1; });
       if(sigFallback) sigFallback.style.clipPath = 'inset(0 0% 0 0)';
@@ -1158,13 +1161,33 @@
     gsap.from('.hero-sub', {y:20, opacity:0, duration:1, delay:.25, ease:'power3.out'});
     gsap.from('.next-card', {y:20, opacity:0, duration:1, delay:.4, ease:'power3.out'});
 
-    // signature "written" on scroll, like the stroke on landonorris.com
-    var sigEl = document.getElementById('sig-hero');
-    if(sigEl){
-      gsap.fromTo(sigEl,
+    // hero → same photo shrinks in place (sticky) as you scroll through the tall .hero section,
+    // the title/next-card fade out first, then the marquee fades in behind it and the signature draws on top
+    var sceneSig = document.getElementById('scene-sig');
+    var heroPhEl = document.getElementById('hero-ph');
+    var ssMarquees = document.querySelectorAll('.ss-marquee');
+
+    gsap.to('.hero-first-screen', {
+      opacity:0, y:-30, ease:'none',
+      scrollTrigger:{trigger:'.hero', start:'top top', end:'22% top', scrub:.6}
+    });
+    if(heroPhEl){
+      gsap.fromTo(heroPhEl, {scale:1}, {
+        scale:.6, ease:'none',
+        scrollTrigger:{trigger:'.hero', start:'15% top', end:'58% top', scrub:.6}
+      });
+    }
+    if(ssMarquees.length){
+      gsap.fromTo(ssMarquees, {opacity:0}, {
+        opacity:1, ease:'none',
+        scrollTrigger:{trigger:'.hero', start:'20% top', end:'45% top', scrub:.6}
+      });
+    }
+    if(sceneSig){
+      gsap.fromTo(sceneSig,
         {clipPath:'inset(0 100% 0 0)'},
         {clipPath:'inset(0 0% 0 0)', ease:'none',
-         scrollTrigger:{trigger:'.message', start:'top 85%', end:'top 35%', scrub:.6}}
+         scrollTrigger:{trigger:'.hero', start:'50% top', end:'92% top', scrub:.6}}
       );
     }
 
