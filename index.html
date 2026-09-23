@@ -409,30 +409,29 @@
     color:rgba(244,238,221,.85);
   }
 
-  /* ---------- Split ON/OFF stage ---------- */
-  .split{display:grid;grid-template-columns:1fr;background:var(--ecru);}
-  @media (min-width:820px){ .split{grid-template-columns:1fr 1fr;} }
-  .split > a{
-    position:relative;padding:70px 32px;min-height:340px;
-    display:flex;flex-direction:column;justify-content:flex-end;gap:14px;
-    overflow:hidden;border-top:1px solid var(--ink-line);
+  /* ---------- Bio ---------- */
+  .bio{background:var(--ecru);}
+  .bio-grid{display:grid;grid-template-columns:1fr;gap:36px;}
+  @media (min-width:900px){ .bio-grid{grid-template-columns:.85fr 1.3fr;align-items:start;} }
+  .bio-photo{
+    position:relative;width:100%;aspect-ratio:3/4;border-radius:2px;overflow:hidden;
+    background:
+      radial-gradient(90% 70% at 25% 10%, var(--ice-soft), transparent 60%),
+      radial-gradient(90% 70% at 80% 100%, var(--fire-soft), transparent 60%),
+      linear-gradient(180deg, #d8cfba, #b9ae90);
+    box-shadow:0 30px 70px -30px rgba(23,20,15,.35);
   }
-  .split > a:first-child{border-right:1px solid var(--ink-line);}
-  .split .bg{position:absolute;inset:0;z-index:0;transition:transform .7s cubic-bezier(.2,.8,.2,1);}
-  .split > a:hover .bg{transform:scale(1.06);}
-  .split .bg.ice{background:radial-gradient(120% 100% at 20% 20%, var(--ice-soft), transparent 60%), var(--ecru-deep);}
-  .split .bg.fire{background:radial-gradient(120% 100% at 80% 20%, var(--fire-soft), transparent 60%), var(--ecru-deep);}
-  .split-thumb{
-    position:absolute;top:28px;right:28px;z-index:1;
-    width:78px;aspect-ratio:3/4;border-radius:4px;overflow:hidden;
-    box-shadow:0 14px 30px -14px rgba(23,20,15,.4);
+  .bio-photo::before{content:'';position:absolute;inset:0;background-image:var(--grain);mix-blend-mode:overlay;opacity:.4;}
+  .bio-photo::after{
+    content:'📷 Foto de Olivia';position:absolute;left:14px;bottom:14px;
+    font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700;
+    color:rgba(23,20,15,.5);background:rgba(248,243,230,.55);padding:5px 10px;border-radius:999px;backdrop-filter:blur(3px);
   }
-  .split-thumb::before{content:'';position:absolute;inset:0;background-image:var(--grain);mix-blend-mode:overlay;opacity:.4;}
-  .split-thumb.ice{background:radial-gradient(120% 100% at 30% 0%, rgba(63,169,201,.7), transparent 60%), #cfc6ab;}
-  .split-thumb.fire{background:radial-gradient(120% 100% at 30% 0%, rgba(226,74,38,.7), transparent 60%), #cfc6ab;}
-  .split h3{position:relative;z-index:1;font-size:clamp(2.6rem,6vw,4.2rem);line-height:.92;}
-  .split p{position:relative;z-index:1;max-width:34ch;font-size:.95rem;color:var(--ink-soft);}
-  .split .go{position:relative;z-index:1;font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;display:inline-flex;gap:8px;align-items:center;}
+  .bio-text h2{font-size:clamp(2.4rem,5.4vw,3.6rem);margin:6px 0 22px;}
+  .bio-text p{font-size:.98rem;line-height:1.7;color:var(--ink-soft);margin-bottom:18px;}
+  .bio-text p:last-child{margin-bottom:0;}
+  .bio-text strong{color:var(--ink);font-weight:700;}
+  .bio-text em{font-style:italic;color:var(--fire-deep);}
 
   /* ---------- Generic section heading ---------- */
   .sec{padding:90px 0;}
@@ -647,6 +646,7 @@
 
 <nav class="nav-menu" id="nav-menu">
   <a href="#inicio">Inicio</a>
+  <a href="#bio">Bio</a>
   <a href="#musica">Música</a>
   <a href="#conversaciones">Conversaciones</a>
   <a href="#comunidad">Comunidad</a>
@@ -768,31 +768,29 @@
     <div class="carousel-track" id="gallery-track"></div>
   </section>
 
-  <!-- SPLIT ON/OFF -->
-  <div class="split" data-header="light">
-    <a href="#en-vivo">
-      <div class="bg ice"></div>
-      <div class="split-thumb ice">
-        <svg class="mock-illus" viewBox="0 0 200 240" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="100" cy="66" r="38"/><path d="M28 228c0-64 32-110 72-110s72 46 72 110"/>
-        </svg>
+  <!-- BIO -->
+  <section class="sec bio" id="bio" data-header="light">
+    <div class="wrap">
+      <div class="bio-grid">
+        <div class="bio-photo">
+          <svg class="mock-illus" viewBox="0 0 200 240" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="100" cy="66" r="38"/><path d="M28 228c0-64 32-110 72-110s72 46 72 110"/>
+          </svg>
+        </div>
+        <div class="bio-text">
+          <span class="eyebrow">Quién es</span>
+          <h2>Bio</h2>
+          <p><strong>Olivia Wald</strong> es una cantante y compositora argentina nacida en Buenos Aires. Su vínculo con la música comenzó desde muy chica: compuso y grabó su primera canción a los 10 años y, entre 2016 y 2018, formó parte de la banda de cumbia pop <strong>Acantilados</strong>.</p>
+          <p>En <strong>2019</strong> comenzó oficialmente su carrera como solista con <em>Se nos hizo tarde</em>. Desde entonces fue construyendo una identidad propia dentro del pop, explorando diferentes sonidos y una forma de escribir profundamente ligada a sus experiencias personales.</p>
+          <p>En <strong>2024</strong>, <em>En la cara</em> marcó un antes y un después en su carrera. La canción tuvo un remix junto a <strong>Rusherking</strong> y una versión en vivo junto a <strong>Q'Lokura</strong>. Ese mismo año lanzó <em>Paladar</em> junto a <strong>Valentina Olguín y Chule</strong>, y <em>Vacío emocional</em> junto a <strong>Kendall Peña</strong>.</p>
+          <p>En <strong>2025</strong> llegó <strong>Cuerpo</strong>, su primer álbum de estudio. El disco reunió canciones sobre el amor, los vínculos, las emociones y el mundo interior de la artista, e incluyó colaboraciones con <strong>Sofía Mora, Valentina Olguín, Chule y Rusherking</strong>. Durante esta etapa también compartió canciones con <strong>Marasmo y Alex Ubago</strong>, <strong>Carlos Rivera</strong>, y <strong>Un Verano</strong>.</p>
+          <p>Ese mismo año recibió el <strong>Premio Gardel a Mejor Nuevo Artista</strong>, uno de los reconocimientos más importantes de la música argentina.</p>
+          <p>En <strong>2026</strong> presentó <strong>Otra que arde</strong>, su segundo álbum, donde profundiza en el desamor, la vulnerabilidad, las contradicciones y la reconstrucción personal. El disco incluye <strong>“La teoría” junto a Alex Ponce</strong> y <strong>“Tus errores” junto a Coti</strong>, además del remix de <em>La locura</em> junto a <strong>Q'Lokura</strong>.</p>
+          <p>A lo largo de su recorrido, Olivia Wald fue construyendo una carrera marcada por la exploración, las colaboraciones y una conexión cada vez más fuerte con quienes encuentran en sus canciones una forma de ponerle palabras a lo que sienten.</p>
+        </div>
       </div>
-      <h3>EN<br>VIVO</h3>
-      <p>Fechas, entradas y todo lo que pasa <span class="eyebrow" style="display:inline;color:var(--ice);">arriba del escenario</span>.</p>
-      <span class="go">Ver la gira →</span>
-    </a>
-    <a href="#fans">
-      <div class="bg fire"></div>
-      <div class="split-thumb fire">
-        <svg class="mock-illus" viewBox="0 0 160 220" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="60" y="20" width="40" height="86" rx="20"/><path d="M36 96a44 44 0 0 0 88 0"/><path d="M80 140v30M62 200h36"/>
-        </svg>
-      </div>
-      <h3>DETRÁS<br>DE CÁMARA</h3>
-      <p>Ensayos, backstage y contenido <span class="eyebrow" style="display:inline;">para la comunidad de fans</span>.</p>
-      <span class="go">Ver comunidad →</span>
-    </a>
-  </div>
+    </div>
+  </section>
 
   <!-- DISCOGRAFIA -->
   <section class="sec disco" id="musica" data-header="dark">
@@ -1040,6 +1038,7 @@
       <div class="foot-col">
         <h4>Páginas</h4>
         <a href="#inicio">Inicio</a>
+        <a href="#bio">Bio</a>
         <a href="#musica">Música</a>
         <a href="#comunidad">Comunidad</a>
         <a href="#en-vivo">Gira</a>
@@ -1395,13 +1394,8 @@
     setupCarousel('gallery-track', 'gallery-prev', 'gallery-next');
     setupCarousel('convo-track', 'convo-prev', 'convo-next');
 
-    // split hover images subtle parallax on scroll into view
-    gsap.utils.toArray('.split > a').forEach(function(a){
-      gsap.from(a.querySelector('h3'), {
-        y:40, opacity:0, duration:1, ease:'power3.out',
-        scrollTrigger:{trigger:a, start:'top 85%'}
-      });
-    });
+    // bio reveal on scroll
+    gsap.from('.bio-photo', {y:30, opacity:0, duration:1, ease:'power3.out', scrollTrigger:{trigger:'.bio', start:'top 85%'}});
 
     // disco rows stagger
     gsap.utils.toArray('.disco-row').forEach(function(row, i){
