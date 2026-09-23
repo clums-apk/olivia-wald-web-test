@@ -86,9 +86,10 @@
     -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
     -webkit-mask-size:contain;mask-size:contain;
     -webkit-mask-position:left center;mask-position:left center;
-    transition:background-color .35s ease;
+    transition:background-color .35s ease, opacity .35s ease;
   }
   header.on-dark .logo-mark{background-color:var(--cream-text);}
+  header.logo-hidden .logo-mark{opacity:0;}
   .head-right{display:flex;align-items:center;gap:10px;}
   .btn-store{
     background:var(--fire);color:var(--cream-text);
@@ -274,13 +275,16 @@
 
   /* ---------- Marquee + signature drawn over the hero photo (same photo, no duplicate) ---------- */
   .ss-marquee{position:absolute;left:0;right:0;overflow:hidden;white-space:nowrap;z-index:0;opacity:0;}
-  .ss-marquee.top{top:26%;transform:translateY(-50%);}
-  .ss-marquee.bottom{top:38%;transform:translateY(-50%);}
-  .ss-track{display:inline-flex;gap:2.5rem;animation:marquee 24s linear infinite;}
-  .ss-marquee.bottom .ss-track{animation-direction:reverse;animation-duration:30s;}
+  .ss-marquee:nth-of-type(1){top:16%;transform:translateY(-50%);}
+  .ss-marquee:nth-of-type(2){top:29%;transform:translateY(-50%);}
+  .ss-marquee:nth-of-type(3){top:42%;transform:translateY(-50%);}
+  .ss-marquee:nth-of-type(4){top:55%;transform:translateY(-50%);}
+  .ss-marquee:nth-of-type(5){top:68%;transform:translateY(-50%);}
+  .ss-track{display:inline-flex;gap:2rem;animation:marquee 24s linear infinite;}
+  .ss-marquee:nth-of-type(even) .ss-track{animation-direction:reverse;animation-duration:30s;}
   .ss-marquee span{
     font-family:var(--serif);font-style:italic;font-weight:700;
-    font-size:clamp(2.4rem,9vw,6rem);
+    font-size:clamp(1.5rem,5.6vw,3.6rem);
     color:var(--ice);
   }
   .ss-marquee span.solid{color:var(--fire);}
@@ -687,11 +691,20 @@
     </div>
 
     <div class="hero-portrait" id="hero-portrait">
-      <div class="ss-marquee top"><div class="ss-track">
+      <div class="ss-marquee"><div class="ss-track">
         <span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span>
       </div></div>
-      <div class="ss-marquee bottom"><div class="ss-track">
+      <div class="ss-marquee"><div class="ss-track">
         <span>OTRA QUE ARDE</span><span class="solid">★</span><span>OTRA QUE ARDE</span><span class="solid">★</span><span>OTRA QUE ARDE</span><span class="solid">★</span><span>OTRA QUE ARDE</span><span class="solid">★</span>
+      </div></div>
+      <div class="ss-marquee"><div class="ss-track">
+        <span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span>
+      </div></div>
+      <div class="ss-marquee"><div class="ss-track">
+        <span>OTRA QUE ARDE</span><span class="solid">★</span><span>OTRA QUE ARDE</span><span class="solid">★</span><span>OTRA QUE ARDE</span><span class="solid">★</span><span>OTRA QUE ARDE</span><span class="solid">★</span>
+      </div></div>
+      <div class="ss-marquee"><div class="ss-track">
+        <span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span>
       </div></div>
       <div class="ph" id="hero-ph">
         <video id="hero-video" src="assets/hero-fire.mp4" muted loop playsinline preload="auto"></video>
@@ -1338,6 +1351,17 @@
       gsap.fromTo(ssMarquees, {opacity:0}, {
         opacity:1, ease:'none',
         scrollTrigger:{trigger:'.hero', start:'16% top', end:'36% top', scrub:.6}
+      });
+    }
+    // hide the header logo whenever the big background text is visible behind it
+    var headerLogoEl = document.querySelector('header');
+    if(headerLogoEl){
+      ScrollTrigger.create({
+        trigger:'.hero', start:'16% top', end:'bottom top',
+        onEnter: function(){ headerLogoEl.classList.add('logo-hidden'); },
+        onEnterBack: function(){ headerLogoEl.classList.add('logo-hidden'); },
+        onLeave: function(){ headerLogoEl.classList.remove('logo-hidden'); },
+        onLeaveBack: function(){ headerLogoEl.classList.remove('logo-hidden'); }
       });
     }
     if(sceneSig){
