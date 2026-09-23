@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Olivia Wald</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,400..700&family=Archivo:wght@400;500;600;700;800;900&display=swap');
@@ -152,6 +155,10 @@
     transform-origin:center center;will-change:transform;
     box-shadow:0 40px 90px -30px rgba(23,20,15,.45);
   }
+  .ph .next-card, .ph .hero-inner{position:absolute;z-index:4;}
+  .ph .next-card{left:16px;top:16px;}
+  .ph .hero-inner{left:0;right:0;bottom:0;width:auto;max-width:none;margin-inline:0;padding:0 20px 22px;}
+  @media (min-width:640px){ .ph .next-card{left:24px;top:24px;} .ph .hero-inner{padding:0 28px 30px;} }
   .hero-portrait .ph img, .hero-portrait .ph video{
     position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
   }
@@ -185,7 +192,7 @@
   }
   .hero-inner{
     position:relative;z-index:2;
-    width:100%;max-width:min(620px,90vw);margin-inline:auto;align-self:center;
+    width:100%;align-self:center;
   }
   .hero-title{
     font-size:clamp(2.1rem,10.5vw,9rem);
@@ -203,7 +210,6 @@
   @media (min-width:640px){ .hero-sub{padding-inline:40px;} }
   .hero-sub .tag{font-size:.82rem;font-weight:600;letter-spacing:.02em;}
   .next-card{
-    position:absolute;left:16px;top:110px;z-index:3;
     background:var(--paper);border:1px solid var(--ink-line);
     border-radius:12px;padding:10px 13px;
     width:min(45vw,186px);
@@ -215,7 +221,7 @@
   .next-card .cd b{display:block;font-size:.85rem;font-family:var(--serif);}
   .next-card .cd span{display:block;font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;opacity:.6;}
   @media (min-width:640px){
-    .next-card{left:40px;top:120px;padding:14px 16px;width:auto;min-width:186px;}
+    .next-card{padding:14px 16px;width:auto;min-width:186px;}
     .next-card .lbl{font-size:.62rem;}
     .next-card .city{font-size:1.2rem;}
     .next-card .cd b{font-size:1rem;}
@@ -274,12 +280,18 @@
   @keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 
   /* ---------- Marquee + signature drawn over the hero photo (same photo, no duplicate) ---------- */
-  .ss-marquee{position:absolute;left:0;right:0;overflow:hidden;white-space:nowrap;z-index:0;opacity:0;}
-  .ss-marquee:nth-of-type(1){top:16%;transform:translateY(-50%);}
-  .ss-marquee:nth-of-type(2){top:29%;transform:translateY(-50%);}
-  .ss-marquee:nth-of-type(3){top:42%;transform:translateY(-50%);}
-  .ss-marquee:nth-of-type(4){top:55%;transform:translateY(-50%);}
-  .ss-marquee:nth-of-type(5){top:68%;transform:translateY(-50%);}
+  .ss-marquee-frame{
+    position:absolute;inset:0;z-index:0;
+    display:flex;align-items:center;justify-content:center;
+    pointer-events:none;
+  }
+  .ss-marquee-stack{position:relative;width:100%;height:min(620px,90vw);}
+  .ss-marquee{position:absolute;left:0;right:0;overflow:hidden;white-space:nowrap;opacity:0;}
+  .ss-marquee:nth-of-type(1){top:10%;transform:translateY(-50%);}
+  .ss-marquee:nth-of-type(2){top:30%;transform:translateY(-50%);}
+  .ss-marquee:nth-of-type(3){top:50%;transform:translateY(-50%);}
+  .ss-marquee:nth-of-type(4){top:70%;transform:translateY(-50%);}
+  .ss-marquee:nth-of-type(5){top:90%;transform:translateY(-50%);}
   .ss-track{display:inline-flex;gap:2rem;animation:marquee 24s linear infinite;}
   .ss-marquee:nth-of-type(even) .ss-track{animation-direction:reverse;animation-duration:30s;}
   .ss-marquee span{
@@ -307,7 +319,7 @@
 
   /* ---------- Manifesto photo/cover gallery: horizontal, self-scrolling filmstrip ---------- */
   .ms-gallery{
-    position:relative;width:100%;overflow:hidden;margin:20px 0 60px;
+    position:relative;width:100%;overflow:hidden;margin:20px 0 14px;
     -webkit-mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
     mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
   }
@@ -328,8 +340,14 @@
       linear-gradient(160deg,#302c24,#181510);
     padding:14px;
   }
-  .ms-slide.photo::before{content:'';position:absolute;inset:0;background-image:var(--grain);mix-blend-mode:overlay;opacity:.4;}
+  .ms-slide.photo::before{content:'';position:absolute;inset:0;background-image:var(--grain);mix-blend-mode:overlay;opacity:.4;z-index:1;pointer-events:none;}
   .ms-slide .ms-illus{position:absolute;top:50%;left:50%;transform:translate(-50%,-52%);width:38%;height:auto;color:rgba(244,238,221,.4);}
+  .ms-slide.photo.has-img{
+    padding:0;width:auto;height:320px;aspect-ratio:var(--ar,3/4);
+    background:none;
+  }
+  .ms-slide.photo.has-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  @media (max-width:640px){ .ms-slide.photo.has-img{height:240px;} }
   .ms-slide.cover{
     align-items:center;justify-content:center;text-align:center;padding:20px;
   }
@@ -354,7 +372,10 @@
   }
   .statement h2 b{font-weight:600;color:var(--ice-pale);}
   .statement h2 i{font-style:italic;color:var(--fire);}
-  .crest{display:flex;justify-content:center;margin-bottom:26px;opacity:.8;}
+  .statement-credit{
+    margin-top:22px;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;
+    color:rgba(244,238,221,.45);
+  }
 
   /* ---------- Horizontal video carousel (videoteca + conversaciones) ---------- */
   .carousel-section{position:relative;background:var(--ink);padding:64px 0 56px;overflow:hidden;}
@@ -408,33 +429,96 @@
     font-family:var(--serif);font-style:italic;font-size:.9rem;line-height:1.3;
     color:rgba(244,238,221,.85);
   }
+  /* light-theme override: carousel embedded inside the ecru accordion panel */
+  .acc-panel-inner .carousel-head, .acc-panel-inner .carousel-track{padding:0;}
+  .acc-panel-inner .carousel-count{color:var(--ink-soft);}
+  .acc-panel-inner .carousel-arrow{border-color:var(--ink-line);color:var(--ink);}
+  .acc-panel-inner .carousel-arrow:hover{color:var(--cream-text);}
+  .acc-panel-inner .gcard .cap{color:var(--ink-soft);}
+  .acc-panel-inner .gcard .gtitle{color:var(--ink);}
 
   /* ---------- Bio ---------- */
   .bio{background:var(--ecru);}
   .bio-grid{display:grid;grid-template-columns:1fr;gap:36px;}
   @media (min-width:900px){ .bio-grid{grid-template-columns:.85fr 1.3fr;align-items:start;} }
   .bio-photo{
-    position:relative;width:100%;aspect-ratio:3/4;border-radius:2px;overflow:hidden;
+    position:relative;width:100%;max-width:280px;aspect-ratio:3/4;border-radius:2px;overflow:hidden;
     background:
       radial-gradient(90% 70% at 25% 10%, var(--ice-soft), transparent 60%),
       radial-gradient(90% 70% at 80% 100%, var(--fire-soft), transparent 60%),
       linear-gradient(180deg, #d8cfba, #b9ae90);
     box-shadow:0 30px 70px -30px rgba(23,20,15,.35);
   }
-  .bio-photo::before{content:'';position:absolute;inset:0;background-image:var(--grain);mix-blend-mode:overlay;opacity:.4;}
-  .bio-photo::after{
-    content:'📷 Foto de Olivia';position:absolute;left:14px;bottom:14px;
-    font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700;
-    color:rgba(23,20,15,.5);background:rgba(248,243,230,.55);padding:5px 10px;border-radius:999px;backdrop-filter:blur(3px);
-  }
+  .bio-photo::before{content:'';position:absolute;inset:0;background-image:var(--grain);mix-blend-mode:overlay;opacity:.4;pointer-events:none;}
+  .bio-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
   .bio-text h2{font-size:clamp(2.4rem,5.4vw,3.6rem);margin:6px 0 22px;}
   .bio-text p{font-size:.98rem;line-height:1.7;color:var(--ink-soft);margin-bottom:18px;}
   .bio-text p:last-child{margin-bottom:0;}
   .bio-text strong{color:var(--ink);font-weight:700;}
   .bio-text em{font-style:italic;color:var(--fire-deep);}
 
+  /* ---------- Accordion: Bio / Queremos conocerte / Escuchar ---------- */
+  .acc-list{border-top:1px solid var(--ink-line);}
+  .acc-item{border-bottom:1px solid var(--ink-line);}
+  .acc-trigger{
+    width:100%;display:flex;align-items:center;justify-content:space-between;gap:20px;
+    padding:26px 4px;background:none;border:0;text-align:left;
+    font-family:var(--serif);font-style:italic;font-size:clamp(1.6rem,4.4vw,2.6rem);color:var(--ink);
+  }
+  .acc-trigger .acc-plus{
+    flex:0 0 auto;font-family:var(--sans);font-style:normal;font-size:1.6rem;font-weight:300;
+    color:var(--fire-deep);transition:transform .35s ease;
+  }
+  .acc-item.open .acc-trigger .acc-plus{transform:rotate(45deg);}
+  .acc-panel{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.76,0,.24,1);}
+  .acc-panel-inner{padding:0 4px 40px;}
+  .acc-panel iframe{display:block;border:0;width:100%;}
+  .acc-conocerte-eyebrow{color:var(--fire-deep);}
+  .acc-conocerte-h3{font-size:clamp(1.7rem,4.4vw,2.4rem);margin:10px 0 16px;}
+  .acc-conocerte-txt{font-size:.98rem;line-height:1.7;color:var(--ink-soft);max-width:62ch;margin-bottom:34px;}
+  .cf-progress{width:100%;height:4px;background:var(--ink-line);border-radius:999px;overflow:hidden;margin-bottom:30px;max-width:640px;}
+  .cf-progress span{display:block;height:100%;width:20%;background:var(--fire);transition:width .35s ease;}
+  .conocerte-form{max-width:640px;}
+  .cf-step{display:none;flex-direction:column;gap:20px;}
+  .cf-step.active{display:flex;}
+  .cf-field{display:flex;flex-direction:column;gap:8px;}
+  .cf-field label{font-size:.82rem;font-weight:600;color:var(--ink);}
+  .cf-field .note{font-size:.78rem;color:var(--ink-soft);margin:-4px 0 0;}
+  .cf-field input, .cf-field select, .cf-field textarea{
+    font-family:var(--sans);font-size:.95rem;color:var(--ink);
+    background:var(--paper);border:1px solid var(--ink-line);border-radius:10px;
+    padding:13px 16px;outline:none;transition:border-color .25s;
+  }
+  .cf-field input:focus, .cf-field select:focus, .cf-field textarea:focus{border-color:var(--fire);}
+  .cf-field textarea{resize:vertical;min-height:80px;font-family:var(--sans);}
+  .cf-options{display:flex;flex-wrap:wrap;gap:10px;}
+  .cf-option{
+    display:flex;align-items:center;gap:8px;font-size:.88rem;
+    background:var(--paper);border:1px solid var(--ink-line);border-radius:999px;padding:10px 18px;cursor:pointer;
+  }
+  .cf-option input{accent-color:var(--fire);}
+  .cf-option.checkbox{border-radius:12px;font-size:.82rem;line-height:1.5;}
+  .cf-actions{display:flex;gap:14px;align-items:center;margin-top:8px;flex-wrap:wrap;}
+  .cf-btn{
+    border:0;cursor:pointer;border-radius:999px;font-size:.85rem;font-weight:800;letter-spacing:.03em;text-transform:uppercase;
+    padding:15px 30px;transition:transform .3s cubic-bezier(.2,.8,.2,1), background .3s;
+  }
+  .cf-btn-primary{background:var(--fire);color:var(--cream-text);box-shadow:0 20px 40px -18px rgba(226,74,38,.6);}
+  .cf-btn-primary:hover{transform:translateY(-3px);background:var(--fire-deep);}
+  .cf-btn-outline{background:none;border:1px solid var(--ink-line);color:var(--ink);}
+  .cf-btn.hidden{display:none;}
+  .cf-autosave{margin-top:16px;display:flex;align-items:center;gap:8px;font-size:.7rem;color:var(--ink-soft);}
+  .cf-autosave .dot{width:7px;height:7px;border-radius:50%;background:var(--ink-line);}
+  .cf-autosave .dot.ok{background:#3fa96f;}
+  .conocerte-form.sent{display:none;}
+  .cf-thanks{display:none;max-width:640px;}
+  .cf-thanks.show{display:block;}
+  .cf-thanks h3{font-size:clamp(1.5rem,4vw,2rem);margin:10px 0 12px;}
+  .cf-thanks p{color:var(--ink-soft);margin-bottom:22px;max-width:56ch;}
+
   /* ---------- Generic section heading ---------- */
-  .sec{padding:90px 0;}
+  .sec{padding:56px 0;}
+  @media (min-width:820px){ .sec{padding:90px 0;} }
   .sec-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px;align-items:flex-end;margin-bottom:44px;}
   .sec-head h2{font-size:clamp(2.2rem,5vw,3.4rem);line-height:.96;}
   .sec-head h2 i{font-style:italic;color:var(--fire);}
@@ -534,8 +618,7 @@
   .flag-btn:hover{transform:translateY(-2px);}
   .flag-btn.active{border-color:var(--fire);}
   .community-panel{
-    background:var(--paper);border:1px solid var(--ink-line);border-radius:16px;
-    padding:26px 24px;min-height:80px;margin-bottom:40px;
+    padding:0;min-height:80px;margin-bottom:40px;
   }
   .community-hint{color:var(--ink-soft);font-size:.9rem;}
   .community-account{margin-bottom:16px;}
@@ -647,7 +730,6 @@
 <nav class="nav-menu" id="nav-menu">
   <a href="#inicio">Inicio</a>
   <a href="#bio">Bio</a>
-  <a href="#musica">Música</a>
   <a href="#conversaciones">Conversaciones</a>
   <a href="#comunidad">Comunidad</a>
   <a href="#en-vivo">Gira</a>
@@ -668,48 +750,50 @@
         <path d="M-50 40 C 180 -20, 360 120, 600 40 S 980 -20 1250 60"/>
       </svg>
 
-      <div class="next-card">
-        <div class="lbl">Próximo show</div>
-        <div class="city">Buenos Aires</div>
-        <div style="font-size:.72rem;margin-top:2px;color:var(--ink-soft);font-weight:600;">C Art Media · 03 OCT</div>
-        <div class="cd" id="countdown">
-          <div><b id="cd-d">–</b><span>días</span></div>
-          <div><b id="cd-h">–</b><span>hs</span></div>
-          <div><b id="cd-m">–</b><span>min</span></div>
-          <div><b id="cd-s">–</b><span>seg</span></div>
-        </div>
-      </div>
-
       <div class="scroll-cue"><span class="line"></span>SCROLL</div>
-
-      <div class="hero-inner">
-        <h1 class="hero-title">OLIVIA<br><em>WALD</em></h1>
-        <div class="hero-sub">
-          <span class="eyebrow" style="color:var(--fire-deep);background:rgba(244,238,221,.85);padding:5px 12px;border-radius:999px;">Otra Que Arde · Gira 2026</span>
-        </div>
-      </div>
     </div>
 
     <div class="hero-portrait" id="hero-portrait">
-      <div class="ss-marquee"><div class="ss-track">
-        <span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span>
-      </div></div>
-      <div class="ss-marquee"><div class="ss-track">
-        <span>OTRA QUE ARDE</span><span class="solid">★</span><span>OTRA QUE ARDE</span><span class="solid">★</span><span>OTRA QUE ARDE</span><span class="solid">★</span><span>OTRA QUE ARDE</span><span class="solid">★</span>
-      </div></div>
-      <div class="ss-marquee"><div class="ss-track">
-        <span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span>
-      </div></div>
-      <div class="ss-marquee"><div class="ss-track">
-        <span>OTRA QUE ARDE</span><span class="solid">★</span><span>OTRA QUE ARDE</span><span class="solid">★</span><span>OTRA QUE ARDE</span><span class="solid">★</span><span>OTRA QUE ARDE</span><span class="solid">★</span>
-      </div></div>
-      <div class="ss-marquee"><div class="ss-track">
-        <span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span>
+      <div class="ss-marquee-frame"><div class="ss-marquee-stack">
+        <div class="ss-marquee"><div class="ss-track">
+          <span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span>
+        </div></div>
+        <div class="ss-marquee"><div class="ss-track">
+          <span>OTRA QUE ARDE</span><span class="solid">★</span><span>OTRA QUE ARDE</span><span class="solid">★</span><span>OTRA QUE ARDE</span><span class="solid">★</span><span>OTRA QUE ARDE</span><span class="solid">★</span>
+        </div></div>
+        <div class="ss-marquee"><div class="ss-track">
+          <span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span>
+        </div></div>
+        <div class="ss-marquee"><div class="ss-track">
+          <span>OTRA QUE ARDE</span><span class="solid">★</span><span>OTRA QUE ARDE</span><span class="solid">★</span><span>OTRA QUE ARDE</span><span class="solid">★</span><span>OTRA QUE ARDE</span><span class="solid">★</span>
+        </div></div>
+        <div class="ss-marquee"><div class="ss-track">
+          <span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span><span>OLIVIA WALD</span><span class="solid">★</span>
+        </div></div>
       </div></div>
       <div class="ph" id="hero-ph">
         <video id="hero-video" src="assets/hero-fire.mp4" muted loop playsinline preload="auto"></video>
         <img class="hero-img" src="assets/hero-fire.jpg" alt="Olivia Wald envuelta en fuego, campaña Otra Que Arde">
         <div class="spark-layer" id="spark-layer"></div>
+
+        <div class="next-card">
+          <div class="lbl">Próximo show</div>
+          <div class="city">Buenos Aires</div>
+          <div style="font-size:.72rem;margin-top:2px;color:var(--ink-soft);font-weight:600;">C Art Media · 03 OCT</div>
+          <div class="cd" id="countdown">
+            <div><b id="cd-d">–</b><span>días</span></div>
+            <div><b id="cd-h">–</b><span>hs</span></div>
+            <div><b id="cd-m">–</b><span>min</span></div>
+            <div><b id="cd-s">–</b><span>seg</span></div>
+          </div>
+        </div>
+
+        <div class="hero-inner">
+          <h1 class="hero-title">OLIVIA<br><em>WALD</em></h1>
+          <div class="hero-sub">
+            <span class="eyebrow" style="color:var(--fire-deep);background:rgba(244,238,221,.85);padding:5px 12px;border-radius:999px;">Otra Que Arde · Gira 2026</span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -739,18 +823,16 @@
 
     <div class="ms-gallery" id="ms-gallery"></div>
 
-    <div class="statement reveal">
-      <div class="crest">
-        <svg width="46" height="46" viewBox="0 0 46 46" fill="none"><circle cx="23" cy="23" r="21" stroke="rgba(244,238,221,.5)"/><path d="M23 10 L26 20 L36 20 L28 26 L31 36 L23 30 L15 36 L18 26 L10 20 L20 20 Z" fill="rgba(244,238,221,.5)"/></svg>
-      </div>
-      <h2>Redefiniendo el sonido, <i>ardiendo</i> por cada show, entregándolo todo. Construyendo un <b>legado</b> dentro y fuera del escenario.</h2>
-    </div>
-
-    <div class="marquee rev" style="margin-top:60px;margin-bottom:0;"><div class="track">
-      <span>CUERPO · 2024</span><span class="solid">★</span><span>OTRA QUE ARDE · 2026</span><span class="solid">★</span>
-      <span>CUERPO · 2024</span><span class="solid">★</span><span>OTRA QUE ARDE · 2026</span><span class="solid">★</span>
-      <span>CUERPO · 2024</span><span class="solid">★</span><span>OTRA QUE ARDE · 2026</span><span class="solid">★</span>
+    <div class="marquee rev" style="margin-top:0;"><div class="track">
+      <span>CUERPO</span><span class="solid">★</span><span>OTRA QUE ARDE</span><span class="solid">★</span>
+      <span>CUERPO</span><span class="solid">★</span><span>OTRA QUE ARDE</span><span class="solid">★</span>
+      <span>CUERPO</span><span class="solid">★</span><span>OTRA QUE ARDE</span><span class="solid">★</span>
     </div></div>
+
+    <div class="statement" id="statement-fade">
+      <h2>Para curar mis dolores<br>no le pondré agua a tus flores.<br>Quemas así eran de plástico, <i>otro más</i><br>de todos tus <b>errores</b>.</h2>
+      <p class="statement-credit">Tus errores — Olivia Wald ft. Coti</p>
+    </div>
   </section>
 
   <!-- VIDEOTECA -->
@@ -768,152 +850,29 @@
     <div class="carousel-track" id="gallery-track"></div>
   </section>
 
-  <!-- BIO -->
-  <section class="sec bio" id="bio" data-header="light">
-    <div class="wrap">
-      <div class="bio-grid">
-        <div class="bio-photo">
-          <svg class="mock-illus" viewBox="0 0 200 240" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="100" cy="66" r="38"/><path d="M28 228c0-64 32-110 72-110s72 46 72 110"/>
-          </svg>
-        </div>
-        <div class="bio-text">
-          <span class="eyebrow">Quién es</span>
-          <h2>Bio</h2>
-          <p><strong>Olivia Wald</strong> es una cantante y compositora argentina nacida en Buenos Aires. Su vínculo con la música comenzó desde muy chica: compuso y grabó su primera canción a los 10 años y, entre 2016 y 2018, formó parte de la banda de cumbia pop <strong>Acantilados</strong>.</p>
-          <p>En <strong>2019</strong> comenzó oficialmente su carrera como solista con <em>Se nos hizo tarde</em>. Desde entonces fue construyendo una identidad propia dentro del pop, explorando diferentes sonidos y una forma de escribir profundamente ligada a sus experiencias personales.</p>
-          <p>En <strong>2024</strong>, <em>En la cara</em> marcó un antes y un después en su carrera. La canción tuvo un remix junto a <strong>Rusherking</strong> y una versión en vivo junto a <strong>Q'Lokura</strong>. Ese mismo año lanzó <em>Paladar</em> junto a <strong>Valentina Olguín y Chule</strong>, y <em>Vacío emocional</em> junto a <strong>Kendall Peña</strong>.</p>
-          <p>En <strong>2025</strong> llegó <strong>Cuerpo</strong>, su primer álbum de estudio. El disco reunió canciones sobre el amor, los vínculos, las emociones y el mundo interior de la artista, e incluyó colaboraciones con <strong>Sofía Mora, Valentina Olguín, Chule y Rusherking</strong>. Durante esta etapa también compartió canciones con <strong>Marasmo y Alex Ubago</strong>, <strong>Carlos Rivera</strong>, y <strong>Un Verano</strong>.</p>
-          <p>Ese mismo año recibió el <strong>Premio Gardel a Mejor Nuevo Artista</strong>, uno de los reconocimientos más importantes de la música argentina.</p>
-          <p>En <strong>2026</strong> presentó <strong>Otra que arde</strong>, su segundo álbum, donde profundiza en el desamor, la vulnerabilidad, las contradicciones y la reconstrucción personal. El disco incluye <strong>“La teoría” junto a Alex Ponce</strong> y <strong>“Tus errores” junto a Coti</strong>, además del remix de <em>La locura</em> junto a <strong>Q'Lokura</strong>.</p>
-          <p>A lo largo de su recorrido, Olivia Wald fue construyendo una carrera marcada por la exploración, las colaboraciones y una conexión cada vez más fuerte con quienes encuentran en sus canciones una forma de ponerle palabras a lo que sienten.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- DISCOGRAFIA -->
-  <section class="sec disco" id="musica" data-header="dark">
-    <div class="wrap">
-      <div class="sec-head">
-        <h2>Discografía<br><i>Sala de Discos</i></h2>
-        <p>De su primer demo casero a Otra Que Arde: cada disco y sencillo marcó una era distinta.</p>
-      </div>
-      <div class="disco-grid">
-        <div class="disco-list">
-          <div class="disco-row"><span class="ti">Otra Que Arde</span><span class="ty">Álbum</span></div>
-          <div class="disco-row"><span class="ti">Ya No Duele</span><span class="ty">Single</span></div>
-          <div class="disco-row"><span class="ti">Conversaciones en la Sangre</span><span class="ty">Serie</span></div>
-          <div class="disco-row"><span class="ti">Fuego Lento</span><span class="ty">Single</span></div>
-          <div class="disco-row"><span class="ti">Cuerpo</span><span class="ty">EP</span></div>
-          <div class="disco-row"><span class="ti">Piel</span><span class="ty">Single</span></div>
-        </div>
-        <div class="disco-list">
-          <div class="disco-row"><span class="ti">Otra Vida</span><span class="ty">Single</span></div>
-          <div class="disco-row"><span class="ti">Bajo Cero</span><span class="ty">Single</span></div>
-          <div class="disco-row"><span class="ti">Ácido</span><span class="ty">Colab</span></div>
-          <div class="disco-row"><span class="ti">Costillas</span><span class="ty">Single</span></div>
-          <div class="disco-row"><span class="ti">Cicatriz</span><span class="ty">EP</span></div>
-          <div class="disco-row"><span class="ti">Olivia Wald</span><span class="ty">Debut</span></div>
-        </div>
-      </div>
-      <!--
-        En Cloudflare (fuera del Artifact) reemplazar el bloque .spotify-embed de abajo por el
-        iframe real de Spotify, que ahí sí funciona:
-        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/album/3BI8faWtulqixNf6JaGhGj?utm_source=generator&si=90041d70842b46c4" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-      -->
-      <div class="spotify-embed">
-        <div class="spotify-embed-art">
-          <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.6.6 0 0 1-.83.2c-2.28-1.4-5.15-1.72-8.53-.94a.6.6 0 1 1-.27-1.17c3.7-.85 6.87-.48 9.43 1.08.3.18.39.56.2.83Zm1.22-2.7a.75.75 0 0 1-1.03.25c-2.6-1.6-6.57-2.06-9.65-1.13a.75.75 0 1 1-.44-1.44c3.53-1.07 7.9-.55 10.87 1.29.35.22.47.68.25 1.03Zm.11-2.8C14.98 9 8.98 8.8 5.58 9.83a.9.9 0 1 1-.52-1.72c3.9-1.18 10.46-.96 14.6 1.5a.9.9 0 1 1-.93 1.54Z"/></svg>
-        </div>
-        <div class="spotify-embed-info">
-          <div class="eyebrow" style="color:var(--fire);">Escuchando ahora</div>
-          <div class="spotify-embed-title">Otra Que Arde</div>
-          <div class="spotify-embed-sub">Olivia Wald · Álbum</div>
-        </div>
-        <a class="spotify-embed-btn" href="https://open.spotify.com/album/3BI8faWtulqixNf6JaGhGj" target="_blank" rel="noopener noreferrer">▶ Abrir en Spotify</a>
-      </div>
-
-      <div class="disco-cta">
-        <p>Escuchá la discografía completa y sumate a las playlists oficiales.</p>
-        <a class="link-arrow" href="https://open.spotify.com/intl-es/artist/2NprLCmdQotBBAaeXrjSU0" target="_blank" rel="noopener noreferrer" style="color:var(--fire);">Escuchar en Spotify →</a>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- CONVERSACIONES EN LA SANGRE -->
-  <section class="carousel-section" id="conversaciones" data-header="dark">
-    <div class="carousel-head">
-      <div class="carousel-head-left">
-        <span class="eyebrow on-dark">Contenido especial</span>
-        <span class="carousel-count" id="convo-count"></span>
-      </div>
-      <div class="carousel-arrows">
-        <button class="carousel-arrow" id="convo-prev" aria-label="Episodios anteriores">←</button>
-        <button class="carousel-arrow" id="convo-next" aria-label="Episodios siguientes">→</button>
-      </div>
-    </div>
-    <div class="wrap" style="margin-bottom:22px;">
-      <h2 style="color:var(--cream-text);font-size:clamp(1.8rem,4.2vw,2.6rem);"><i style="font-style:italic;color:var(--fire);">Conversaciones</i> en la Sangre</h2>
-      <p style="color:rgba(244,238,221,.6);font-size:.92rem;max-width:44ch;margin-top:8px;">Charlas íntimas de Olivia con otros artistas con los que tuvo colaboraciones.</p>
-    </div>
-    <div class="carousel-track" id="convo-track"></div>
-  </section>
-
-  <!-- FANS / GAMES -->
-  <section class="sec fans" id="fans" data-header="light">
-    <svg class="topo" viewBox="0 0 1200 700" preserveAspectRatio="none" style="position:absolute;inset:0;opacity:.35;">
-      <path d="M-50 100 C 200 40, 420 180, 650 100 S 1100 40 1250 120"/>
-      <path d="M-50 320 C 250 240, 460 400, 720 320 S 1080 240 1250 360"/>
-      <path d="M-50 540 C 260 460, 480 600, 760 540 S 1100 460 1250 580"/>
-    </svg>
-    <div class="wrap" style="position:relative;">
-      <div class="fans-grid">
-        <div class="reveal">
-          <span class="eyebrow">Otra Que Arde · Fan Arcade 2026</span>
-          <h2>Diez juegos.<br><i>Otra Que Arde.</i></h2>
-          <p>Jugá mientras dura la gira que estábamos esperando y sumate a la comunidad de fans de Olivia.</p>
-          <a class="btn-store" href="https://oliviawaldfans.com/fans/">Jugar ahora →</a>
-
-        </div>
-        <div class="arcade-card reveal">
-          <div class="eyebrow on-dark">Nivel actual</div>
-          <div class="arcade-grid">
-            <span>01</span><span>02</span><span>03</span><span>04</span><span>05</span>
-            <span>06</span><span>07</span><span>08</span><span>09</span><span>10</span>
-          </div>
-          <p style="font-size:.82rem;color:rgba(244,238,221,.65);">Puede que necesites tocar una canción para darle play.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- COMUNIDAD -->
   <section class="sec community" id="comunidad" data-header="light">
     <div class="wrap">
-      <div class="sec-head">
+      <div class="whatsapp-band">
+        <h3>¿Querés conectar con otros fans?<br><i>Encontrá con quién ir a los shows.</i></h3>
+        <p>Sumate a la comunidad de WhatsApp y conectate con fans de de todo el mundo: coordiná previas, compartí y hacé amigos que también arden por esta era.</p>
+        <a class="btn-join" href="https://chat.whatsapp.com/Dx7nGLVTWjk6KGoK3QQwML" target="_blank" rel="noopener noreferrer">💬 Unirme a la comunidad →</a>
+      </div>
+
+      <div class="sec-head" style="margin-top:36px;">
         <h2>Comunidad<br><i>Todos los países, un fandom</i></h2>
-        <p>Elegí un país para ver sus cuentas de fans, y sumate al canal de WhatsApp global.</p>
       </div>
 
       <div class="flags-row">
         <button class="flag-btn" data-country="ar">🇦🇷 <span>Argentina</span></button>
-        <button class="flag-btn" data-country="uy">🇺🇾 <span>Uruguay</span></button>
+        <button class="flag-btn" data-country="cl">🇨🇱 <span>Chile</span></button>
         <button class="flag-btn" data-country="es">🇪🇸 <span>España</span></button>
         <button class="flag-btn" data-country="mx">🇲🇽 <span>México</span></button>
-        <button class="flag-btn" data-country="cl">🇨🇱 <span>Chile</span></button>
+        <button class="flag-btn" data-country="uy">🇺🇾 <span>Uruguay</span></button>
       </div>
 
       <div class="community-panel" id="community-panel">
         <p class="community-hint">Tocá una bandera para ver sus cuentas.</p>
-      </div>
-
-      <div class="whatsapp-band">
-        <div class="eyebrow">Comunidad global · WhatsApp</div>
-        <h3>¿Querés conectar con otros fans?<br><i>Encontrá con quién ir a los shows.</i></h3>
-        <p>Sumate a la comunidad de WhatsApp y conectate con fans de Olivia de todo el mundo: coordiná previas, compartí entradas y hacé amigos que también arden por esta era.</p>
-        <a class="btn-join" href="https://chat.whatsapp.com/Dx7nGLVTWjk6KGoK3QQwML" target="_blank" rel="noopener noreferrer">💬 Unirme a la comunidad →</a>
       </div>
     </div>
   </section>
@@ -980,6 +939,216 @@
     </div>
   </section>
 
+  <!-- FANS / GAMES -->
+  <section class="sec fans" id="fans" data-header="light">
+    <svg class="topo" viewBox="0 0 1200 700" preserveAspectRatio="none" style="position:absolute;inset:0;opacity:.35;">
+      <path d="M-50 100 C 200 40, 420 180, 650 100 S 1100 40 1250 120"/>
+      <path d="M-50 320 C 250 240, 460 400, 720 320 S 1080 240 1250 360"/>
+      <path d="M-50 540 C 260 460, 480 600, 760 540 S 1100 460 1250 580"/>
+    </svg>
+    <div class="wrap" style="position:relative;">
+      <div class="reveal">
+        <span class="eyebrow">Otra Que Arde · Fan Arcade 2026</span>
+        <h2>Diez juegos.<br><i>Otra Que Arde.</i></h2>
+        <p>Jugá mientras dura la gira que estábamos esperando y sumate a la comunidad de fans de Olivia.</p>
+        <a class="btn-store" href="https://oliviawaldfans.com/fans/">Jugar ahora →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONVERSACIONES EN LA SANGRE -->
+  <section class="carousel-section" id="conversaciones" data-header="dark">
+    <div class="carousel-head">
+      <div class="carousel-head-left">
+        <span class="eyebrow on-dark">Contenido especial</span>
+        <span class="carousel-count" id="convo-count"></span>
+      </div>
+      <div class="carousel-arrows">
+        <button class="carousel-arrow" id="convo-prev" aria-label="Episodios anteriores">←</button>
+        <button class="carousel-arrow" id="convo-next" aria-label="Episodios siguientes">→</button>
+      </div>
+    </div>
+    <div class="wrap" style="margin-bottom:22px;">
+      <h2 style="color:var(--cream-text);font-size:clamp(1.8rem,4.2vw,2.6rem);"><i style="font-style:italic;color:var(--fire);">Conversaciones</i> en la Sangre</h2>
+      <p style="color:rgba(244,238,221,.6);font-size:.92rem;max-width:44ch;margin-top:8px;">Charlas íntimas de Olivia con otros artistas con los que tuvo colaboraciones.</p>
+    </div>
+    <div class="carousel-track" id="convo-track"></div>
+  </section>
+
+  <!-- BIO / CONOCERTE / ESCUCHAR — acordeón: se abre uno, se cierra al terminar -->
+  <section class="sec bio" id="bio" data-header="light">
+    <div class="wrap">
+      <div class="acc-list">
+
+        <div class="acc-item" data-acc="bio">
+          <button class="acc-trigger" type="button"><span>Bio</span><span class="acc-plus">+</span></button>
+          <div class="acc-panel">
+            <div class="acc-panel-inner">
+              <div class="bio-grid">
+                <div class="bio-photo">
+                  <img src="assets/bio-photo.jpg" alt="Olivia Wald">
+                </div>
+                <div class="bio-text">
+                  <p><strong>Olivia Wald</strong> es una cantante y compositora argentina nacida en Buenos Aires. Compuso y grabó su primera canción a los 10 años, y en <strong>2019</strong> debutó oficialmente como solista con <em>Se nos hizo tarde</em>.</p>
+                  <p>En <strong>2024</strong>, <em>En la cara</em> marcó un antes y un después: tuvo un remix junto a <strong>Rusherking</strong> y una versión en vivo con <strong>Q'Lokura</strong>. Ese año también lanzó <em>Paladar</em> junto a <strong>Valentina Olguín y Chule</strong>, y <em>Vacío emocional</em> junto a <strong>Kendall Peña</strong>.</p>
+                  <p>En <strong>2025</strong> llegó <strong>Cuerpo</strong>, su primer álbum de estudio, con colaboraciones junto a <strong>Sofía Mora, Valentina Olguín, Chule, Rusherking, Marasmo y Alex Ubago, Carlos Rivera y Un Verano</strong> — y el <strong>Premio Gardel a Mejor Nuevo Artista</strong>.</p>
+                  <p>En <strong>2026</strong> presentó <strong>Otra que arde</strong>, su segundo álbum, con <strong>“La teoría” junto a Alex Ponce</strong> y <strong>“Tus errores” junto a Coti</strong>, además del remix de <em>La locura</em> con <strong>Q'Lokura</strong>.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item" data-acc="conocerte">
+          <button class="acc-trigger" type="button"><span>Queremos conocerte</span><span class="acc-plus">+</span></button>
+          <div class="acc-panel">
+            <div class="acc-panel-inner">
+              <span class="eyebrow acc-conocerte-eyebrow">Comunidad de fans</span>
+              <h3 class="acc-conocerte-h3">Queremos conocerte.</h3>
+              <p class="acc-conocerte-txt">Si sos fan de Olivia Wald, este espacio es para vos. Contanos desde qué país nos seguís y dejanos un medio de contacto para invitarte a sorteos, eventos, novedades y experiencias especiales para la comunidad. ¡Gracias por ser parte! ✨</p>
+              <div class="cf-progress"><span id="cf-progressbar"></span></div>
+              <form class="conocerte-form" id="conocerte-form" novalidate>
+                <input type="hidden" name="sessionId" id="cf-sessionId">
+                <input type="hidden" name="status" id="cf-status" value="incompleto">
+
+                <div class="cf-step active" data-step="1">
+                  <div class="cf-field">
+                    <label for="cf-displayName">¿Cómo querés que te llamemos?</label>
+                    <input id="cf-displayName" name="displayName" placeholder="Tu nombre o nick" required>
+                  </div>
+                  <div class="cf-field">
+                    <label for="cf-city">¿Desde qué ciudad nos seguís?</label>
+                    <input id="cf-city" name="city" placeholder="Ciudad" required>
+                  </div>
+                  <div class="cf-field">
+                    <label>¿Querés participar en el premio del juego?</label>
+                    <div class="cf-options">
+                      <label class="cf-option"><input type="radio" name="country" value="Sí" required> Sí</label>
+                      <label class="cf-option"><input type="radio" name="country" value="No" required> No</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="cf-step" data-step="2">
+                  <div class="cf-field">
+                    <label for="cf-mainSocial">¿En qué red social seguís más a Olivia?</label>
+                    <select id="cf-mainSocial" name="mainSocial" required>
+                      <option value="">Elegí una opción</option>
+                      <option>Instagram</option><option>TikTok</option><option>Spotify</option>
+                      <option>YouTube</option><option>X</option><option>Facebook</option><option>Otra</option>
+                    </select>
+                  </div>
+                  <div class="cf-field">
+                    <label for="cf-socialNick">¿Cómo te encontramos en esa red?</label>
+                    <input id="cf-socialNick" name="socialNick" placeholder="Dejanos tu nick o usuario" required>
+                  </div>
+                  <div class="cf-field">
+                    <label for="cf-contact">¿Cómo preferís que nos pongamos en contacto con vos?</label>
+                    <p class="note">Email, WhatsApp o redes sociales. Lo usamos para invitaciones exclusivas.</p>
+                    <input id="cf-contact" name="contact" placeholder="Email, WhatsApp o usuario de una red social" required>
+                  </div>
+                </div>
+
+                <div class="cf-step" data-step="3">
+                  <div class="cf-field">
+                    <label for="cf-favoriteSong">¿Cuál es tu canción favorita de Olivia?</label>
+                    <input id="cf-favoriteSong" name="favoriteSong" placeholder="Tu canción favorita">
+                  </div>
+                  <div class="cf-field">
+                    <label for="cf-discovery">¿Recordás cómo conociste su música?</label>
+                    <textarea id="cf-discovery" name="discovery" placeholder="Contanos cómo fue..."></textarea>
+                  </div>
+                  <div class="cf-field">
+                    <label>¿Tenés pensado ir a algún show de la gira "Otra que Arde"?</label>
+                    <div class="cf-options">
+                      <label class="cf-option"><input type="radio" name="goingToShow" value="Sí"> Sí</label>
+                      <label class="cf-option"><input type="radio" name="goingToShow" value="No"> No</label>
+                      <label class="cf-option"><input type="radio" name="goingToShow" value="Todavía no lo sé"> Todavía no lo sé</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="cf-step" data-step="4">
+                  <div class="cf-field">
+                    <label>¿Sos mayor de 18 años?</label>
+                    <p class="note">Algunos eventos o experiencias pueden ser exclusivos para mayores de edad.</p>
+                    <div class="cf-options">
+                      <label class="cf-option"><input type="radio" name="adult" value="Sí" required> Sí</label>
+                      <label class="cf-option"><input type="radio" name="adult" value="No" required> No</label>
+                    </div>
+                  </div>
+                  <div class="cf-field">
+                    <label for="cf-availability">Si hay un evento, ¿cuándo te resultaría más fácil participar?</label>
+                    <select id="cf-availability" name="availability" required>
+                      <option value="">Elegí una opción</option>
+                      <option>Cualquier día</option><option>Solo fines de semana</option>
+                      <option>Solo entre semana</option><option>Depende del horario</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="cf-step" data-step="5">
+                  <div class="cf-field">
+                    <label for="cf-message">¿Querés dejarnos algún mensaje o sugerencia?</label>
+                    <p class="note">Este espacio es para vos. Contanos una idea, propuesta o lo que quieras compartir.</p>
+                    <textarea id="cf-message" name="message" placeholder="Respuesta opcional"></textarea>
+                  </div>
+                  <label class="cf-option checkbox">
+                    <input type="checkbox" name="consent" value="Sí" required>
+                    Acepto que mis datos se utilicen para comunicaciones relacionadas con la comunidad de fans de Olivia Wald (no se te enviarán promociones).
+                  </label>
+                </div>
+
+                <div class="cf-actions">
+                  <button type="button" class="cf-btn cf-btn-outline" id="cf-prevBtn" style="visibility:hidden;">Anterior</button>
+                  <button type="button" class="cf-btn cf-btn-primary" id="cf-nextBtn">Continuar</button>
+                  <button type="submit" class="cf-btn cf-btn-primary hidden" id="cf-submitBtn">Guardar mis datos</button>
+                </div>
+                <div class="cf-autosave"><span class="dot" id="cf-saveDot"></span><span id="cf-saveText">Guardado automático activo</span></div>
+              </form>
+
+              <div class="cf-thanks" id="cf-thanks">
+                <span class="eyebrow acc-conocerte-eyebrow">Registro completo</span>
+                <h3>¡Gracias por sumarte! 💙</h3>
+                <p>Ya sos parte de la comunidad de fans de Olivia Wald. Esperamos compartir muy pronto sorteos, eventos, novedades y experiencias especiales con vos.</p>
+                <button type="button" class="cf-btn cf-btn-primary" id="cf-newFormBtn">Completar otro formulario</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item" data-acc="entrevistas">
+          <button class="acc-trigger" type="button"><span>Entrevistas</span><span class="acc-plus">+</span></button>
+          <div class="acc-panel">
+            <div class="acc-panel-inner">
+              <p class="acc-conocerte-txt">Charlas, notas y entrevistas de Olivia en TV, radio, streams y redes.</p>
+              <div class="carousel-head">
+                <div class="carousel-head-left">
+                  <span class="carousel-count" id="interviews-count"></span>
+                </div>
+                <div class="carousel-arrows">
+                  <button class="carousel-arrow" id="interviews-prev" aria-label="Entrevistas anteriores">←</button>
+                  <button class="carousel-arrow" id="interviews-next" aria-label="Entrevistas siguientes">→</button>
+                </div>
+              </div>
+              <div class="carousel-track" id="interviews-track"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item" data-acc="spotify">
+          <button class="acc-trigger" type="button"><span>Escuchar en Spotify</span><span class="acc-plus">+</span></button>
+          <div class="acc-panel">
+            <div class="acc-panel-inner">
+              <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/album/3BI8faWtulqixNf6JaGhGj?utm_source=generator&si=2f76db8c2c874b79" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- SOCIALS -->
   <section class="socials" data-header="light">
     <div class="wrap" style="padding-top:70px;">
@@ -1025,35 +1194,13 @@
     </div>
   </section>
 
+
 </main>
 
 <footer data-header="dark">
   <div class="wrap">
-    <h3>Siempre <em style="color:var(--fire);font-style:italic;">ardiendo</em>, siempre <em style="color:var(--ice-pale);font-style:italic;">cerca</em>.</h3>
-    <div class="foot-grid">
-      <div class="foot-col">
-        <h4>Contacto</h4>
-        <span style="display:block;padding:6px 0;font-size:.92rem;color:rgba(244,238,221,.85);">management@oliviawald.com</span>
-      </div>
-      <div class="foot-col">
-        <h4>Páginas</h4>
-        <a href="#inicio">Inicio</a>
-        <a href="#bio">Bio</a>
-        <a href="#musica">Música</a>
-        <a href="#comunidad">Comunidad</a>
-        <a href="#en-vivo">Gira</a>
-        <a href="#fans">Fans</a>
-        <a href="https://oliviawaldfans.com/juegos/">Juegos</a>
-      </div>
-      <div class="foot-col">
-        <h4>Seguir en</h4>
-        <a href="#">Instagram</a>
-        <a href="#">TikTok</a>
-        <a href="#">Spotify</a>
-        <a href="#">YouTube</a>
-      </div>
-    </div>
-    <div class="foot-bottom">
+    <div class="foot-bottom" style="border-top:0;padding-top:0;flex-direction:column;gap:6px;text-align:center;">
+      <span style="font-size:.72rem;color:rgba(244,238,221,.5);">Esta es una web de fans, sin afiliación oficial con la artista.</span>
       <span>© 2026 Clums</span>
     </div>
   </div>
@@ -1121,22 +1268,127 @@
 
   var CONVERSACIONES = [
     ['10/09/2025','#1 — con Kendall Peña','L2Ua7Y83HBA'],
+    ['29/09/2025','Vacío emocional — Sesión con Kendall Peña','-HASqhJfZ_g'],
     ['08/10/2025','#2 — con E-Lhoy','6KFZpKpjC3k'],
+    ['15/10/2025','Tu mirada (Remix) — Sesión con E-Lhoy','pmQhVZTpoXM'],
     ['22/10/2025','#3 — con Valentina Olguin','tJLOWx8oyQA'],
+    ['29/10/2025','Sobria no me aguanto — Sesión con Valentina Olguín','QmRNj33bU6c'],
     ['05/11/2025','#4 — con Sofía Mora','dsAjndlr-Lw'],
+    ['12/11/2025','Corazón — Sesión con Sofía Mora','8plTIT46GSI'],
     ['19/11/2025','#5 — con Rusher','miMlWllbDmw'],
     ['10/12/2025','#6 — con Chule','xFGIS7nrFpM'],
+    ['17/12/2025','Esto es amor (Remix) — Sesión con Chule','jLBJ9s4lxHo'],
     ['07/01/2026','#7 — con Cardellino','cewFoOJikdg'],
+    ['14/01/2026','100 mil metros — Sesión con Cardellino','LwWOz_wugUI'],
     ['25/02/2026','#8 — con Jaz','3bl0rR7YqF8'],
+    ['11/03/2026','Que alguien me saque de este mood — Sesión con Jaz','cv3fXQF7zN0'],
     ['03/05/2026','#9 — con Alex Ponce','v3LojkVtIdA'],
     ['03/06/2026','En el camarín — con Juan Taleb (Los Caligaris)','HL1O77-NIGA'],
     ['13/07/2026','En el camarín — con Carlos Rivera','He8n-9oLk2c']
   ];
 
-  function renderCarousel(videos, trackId, countId, countSuffix){
+  var INTERVIEWS = [
+    ['19/09/2026','LA CASA STREAMING — LA TEORÍA | OLIVIA WALD en JUEVES SANTO','EfSml24Pp58'],
+    ['17/09/2026','SORRY NOT SORRY — #22 Sin Filtros "No me callo nada" | Olivia Wald','72xB9DXTUd4'],
+    ['17/09/2026','Solo Deportes Oficial — #SoloConNiki: Olivia Wald en la mesa, EL PASO DEL TIEMPO y los tutoriales de Niki','SUjR2ZAZrSA'],
+    ['17/09/2026','Un Mate Con — OLIVIA WALD: "Durante mucho tiempo me costó decir que era cantante" | Un Mate Con #22','bfTSMR7R6zo'],
+    ['10/09/2026','CANAL BARRO — Olivia Wald tuvo sarna psicológica, tiene una familia artistíca y dicute con sus fans','JQfUn-eiodk'],
+    ['03/09/2026','Claro música México — Una gira, canciones y nuevos ritmos de Olivia Wald | Claro música','GyWqtDl9I0o'],
+    ['02/09/2026','Billboard AR — Preparamos el Flat Wald perfecto con Olivia Wald | Un Café Con','MSzMznz2RQA'],
+    ['30/08/2026','Oye Digital — Olivia Wald llega a México y nos cuenta todo sobre su visita | Entrevista con Oppa Kim','aGcgPl5b-VQ'],
+    ['28/08/2026','Luis Gutiérrez / Explorarock — Entrevista Explorarock / Olivia Wald','OZ4q6DDB9kI'],
+    ['20/08/2026','FM BRAVA — OLIVIA WALD - ENTREVISTAS BRAVA - Exclusivo FM BRava','9KsmwsnS73s'],
+    ['19/08/2026','OLGA — Cómo duele, Olivia Wald | DIME QUE SI - Especial ARJONA','OhEyjGeQVNQ'],
+    ['09/08/2026','Telefe — Olivia Wald - Show completo | #LaPeñaDeMorfi','M9mcp_z5ktU'],
+    ['08/08/2026','eltrece — UN CIERRE MEMORABLE: Olivia Wald le puso un broche de oro a una previa inolvidable','_Ip0DUsDVuw'],
+    ['05/08/2026','LUZU TV — #PATRIAYFAMILIA - ¿QUÉ PASÓ CON LA JOAQUI? Y OLIVIA WALD EN CASI ÁNGELES','e5Y4jk0WGgk'],
+    ['31/07/2026','FM VIDA — OLIVIA WALD EN FM VIDA','nfWCbwhGgo0'],
+    ['31/07/2026','Cadena 3 Argentina — "La charla imperdible con Olivia Wald: Coti, el cuarteto y su amor por Córdoba" | Cadena Heat','O2HB8widtx0'],
+    ['29/07/2026','La Coope 102.7 — ENTREVISTA | Olivia Wald habló con La Coope sobre su nuevo trabajo','Q_-fWYEf1XE'],
+    ['11/07/2026','A Global Show — Olivia Wald - Entrevista exclusiva desde Madrid','3pYd5C3ptCo'],
+    ['07/07/2026','RESUMIDO — Olivia Wald: ¿Es muy difícil vivir de la música?','bXLx0j5akAg'],
+    ['18/06/2026','PRENDE — OLI WALD EN ¡HABÍA QUE DECIRLO! CON GASTÓN, PAULI, GUIDO Y LUCHI - COMPLETO 18/06/2026','xaqzJvXJjNk'],
+    ['14/05/2026','Qué Shula Vida! — ¡QUÉ SHULA VIDA! "DE ARGENTINA A MÉXICO: EL CAMINO DE OLIVIA WALD"','bm_qsinKQw4'],
+    ['21/12/2025','Televisión Pública — Olivia Wald, Florian, Luz Gaggi, Mía Folino, Anaís Castro y Yami Safdie - Hay Música Siempre','JOFycKOH41o'],
+    ['15/12/2025','TREBEL LATAM — Trebel Sessions - Olivia Wald','q4ZznzyBLt0'],
+    ['14/12/2025','Lo Del Pollo — OLIVIA WALD, CHULE, VALENTINA OLGUIN Y MARTU BRITO en Lo del Pollo | "Vivir de la música es jodido"','I4g4mRW0CrA'],
+    ['10/12/2025','eltrece — OLI WALD Y LUCHI MAIDANA - QUÉ TUPÉ - Programa completo del 10/12/2025','ph2utPZQ7DY'],
+    ['05/12/2025','LA CASA STREAMING — OLIVIA WALD Y LUCHI CON MANU DONS, LOLITA LATORRE, CAROLA GIL, LA TIA SEBI | RUMIS EN VIVO','187Jht_Is0c'],
+    ['15/11/2025','El Cronista — OLIVIA WALD y su SESIÓN EN VIVO más IMPROVISADA | LQD en CRONISTA STREAM','SQTxXlqH4Ss'],
+    ['26/10/2025','HISPA — LA SESIÓN de OLIVIA WALD: SALIR del CLÓSET y EL QUÉ DIRÁN | Con Sofi Calvo','ro4i-jhkniU'],
+    ['12/09/2025','LOVE / ST – El Streaming desde un Shopping — OLIVIA WALD CANTA EN VIVO en #LOSDELABASTO 79 | Gustavo Méndez y Giuli Luffi','apMIxocv17Y'],
+    ['11/09/2025','Telefe Córdoba — Olivia Wald se presentará por primera vez en Córdoba','dLYjeSr0HmI'],
+    ['07/08/2025','Soho Música — Entrevista a Olivia Wald: "No me sale hacer lo que no me representa"','5Q57hGhXeK0'],
+    ['29/07/2025','Telefe — CAREO PICANTE CON OLIVIA WALD | #LAPRÉ (PROGRAMA COMPLETO) 29/07/2025','HrUM9mJfDj4'],
+    ['29/06/2025','Valen y Sofi — SIN FILTRO con LUCHI MAIDANA y OLIVIA WALD','DhP813MtaFU'],
+    ['27/06/2025','LA CASA STREAMING — ¿VIVEN JUNTAS? Olivia Wald habló TODO sobre su relación con Luchi','5ZMrtqIyQ5M'],
+    ['27/06/2025','LA CASA STREAMING — MOMENTO MÁGICO - Olivia Wald en acústico íntimo en RUMIS','BnjwJT56U3k'],
+    ['11/06/2025','eltrece — EN UN VÍNCULO SIEMPRE HAY INTERÉS - ESTO QUEDA ACÁ - Programa 11/06/25 - INVITADA: OLI WALD','BdDRuIAorLo'],
+    ['15/04/2025','Urbana Play 104.3 FM — "Me enamoré de una amiga": la historia de Olivia Wald y el amor según Cande Molfese #Perros2025','MqNNYzUWaGY'],
+    ['13/03/2025','Billboard AR — OYE BILLBOARD - PGM19: Nos visita Olivia Wald y entrevistamos a Anaís Castro por su primer álbum','Yj99VW_ifNg'],
+    ['11/03/2025','Amiga date cuenta — Olivia Wald nos cuenta sobre su nueva música y su evolución artística','5DNhe5CLZko'],
+    ['22/01/2025','Urbana Play 104.3 FM — "Escribo muchas canciones despechada y me llegan testamentos de cornuda": Olivia Wald #Perros2025','V1_a7AzTwLQ'],
+    ['06/12/2024','LOS40 Argentina — ENTREVISTA A OLIVIA WALD: "El álbum ya está listo y va a salir a principios del año que viene"','rLPQFl72zco'],
+    ['22/11/2024','eltrece — ESPECIAL FIESTAS DE 15 CON OLIVIA WALD en #ViernesTrece - Programa 103 del 22/11/2024','oNr2fhc1KPQ'],
+    ['20/11/2024','Telefe — Olivia Wald improvisó una nueva canción en el stream | #INSIDERS','mxHNtsNi0VU'],
+    ['20/11/2024','Telefe — #INSIDERS | ENTREVISTA COMPLETA CON OLIVIA WALD (20/11/2024)','Xs8S5J20U2A'],
+    ['20/11/2024','Telefe — "Temporada" versión en vivo de Olivia Wald | #INSIDERS','awAoO7_G2QU'],
+    ['20/11/2024','Telefe — "En la cara" versión en vivo de Olivia Wald | #INSIDERS','9h92TxqhBlM'],
+    ['11/11/2024','Oihane López — REACCIÓN A EN LA CARA DE OLIVIA WALD Y RUSHERKING','-Pk0I4gX6Fw'],
+    ['18/10/2024','Pedro Prieto — Olivia Wald | Auténtico #201 Pedro Prieto','B6KmmtZzaNQ'],
+    ['17/10/2024','KendallPenaVEVO — Kendall Peña, Olivia Wald - vacío emocional','WxdLctxS0HQ'],
+    ['10/08/2024','Maldita Rutina — Entrevista a Olivia Wald - Programa #12 - 10/08/2024','djTZRd06STg'],
+    ['29/02/2024','Billboard AR — 10 Minutos: con Olivia Wald','sYwCNdK-RsY'],
+    ['08/12/2021','KGY Training — Nº17: "La vida es un juego" - Entrevista a Olivia Wald','ZD61Dj9S5EY'],
+    ['06/07/2021','NAIF — Music Session by NAIF ft. Olivia Wald - Vol. I','NI1LW1JTtjU'],
+    ['04/08/2026','Olivia Wald Data — Olivia Wald - TMH TikTok Live 04/08/2026','HhFOOtlBWMc'],
+    ['04/08/2026','LUCIA MAIDANA UPDATES — Lucia Maidana - live de Tu Musica Hoy en TikTok con Olivia Wald de invitada (04/08/2026)','9kywfyg1NX8'],
+    ['26/07/2026','Olivia Wald Data — Olivia Wald - TikTok Live 24/07/2026','VpamApDSDlI'],
+    ['20/05/2026','Olivia Wald Data — Olivia Wald - TikTok Live 13/05/2026','jFJOnVOuoEg'],
+    ['06/05/2026','Olivia Wald Data — Olivia Wald - Tu Musica Hoy TikTok Live 06/05/2026','bRzszz0SQx0'],
+    ['17/03/2026','LUCIA MAIDANA UPDATES — Lucía Maidana - Stream en Twitch con Olivia Wald y Zoe Bogach (23/02/2026)','qr8-aBYXoo0'],
+    ['10/03/2026','Olivia Wald Data — Olivia Wald - TikTok Live 08/03/2026','pLmzwJs8nb4'],
+    ['28/02/2026','Olivia Wald Data — Olivia Wald - TikTok Live 25/02/2026','EyuM58tT2mI'],
+    ['29/12/2025','Olivia Wald Data — Olivia Wald - TikTok Live 20/12/2025','QUrx2QMTxEU'],
+    ['19/12/2025','Olivia Wald Data — Olivia Wald - TikTok Live 18/12/2025','1h8y-jXo4Os'],
+    ['19/11/2025','LUCIA MAIDANA UPDATES — Lucía Maidana - Stream en Twitch con Olivia Wald (03/11/2025)','yH54kP1Tpdo'],
+    ['11/11/2025','Olivia Wald Data — Olivia Wald - TikTok Live 07/11/2025','hmM7G0PF_g0'],
+    ['04/11/2025','LUCIA MAIDANA UPDATES — Lucía Maidana - Stream en Twitch con Olivia Wald (15/10/2025)','FfhdUxz5g5w'],
+    ['22/10/2025','Olivia Wald Data — Olivia Wald - Full Show 12/10/2025','tJ5HmBWRSXA'],
+    ['21/10/2025','Olivia Wald Data — Olivia Wald - TikTok Live 20/10/2025','KHyzkAYLO7g'],
+    ['09/10/2025','LUCIA MAIDANA UPDATES — Lucía Maidana - Stream en Twitch con Olivia Wald y Kendall Peña (20/09/2025)','88QwYaWCDow'],
+    ['30/09/2025','Olivia Wald Data — Olivia Wald - TikTok Live 29/09/2025','-R_6RAWx6f0'],
+    ['04/09/2025','Olivia Wald Data — Olivia Wald - TikTok Live 03/09/2025','pS6TV7Bynpw'],
+    ['10/07/2025','LUCIA MAIDANA UPDATES — Lucía Maidana - Stream en Twitch con Olivia Wald (23/06/2025)','tyDKrzWzoWQ'],
+    ['08/06/2025','Olivia Wald Data — Olivia Wald - TikTok Live 04/06/2025','vhasgJ-3ErA'],
+    ['13/05/2025','Olivia Wald Data — Olivia Wald - TikTok Live 03/05/2025','XfCc0VQ_-WY'],
+    ['01/05/2025','Olivia Wald Data — Olivia Wald - TikTok Live 28/04/2025','kZgqv6PwVtk'],
+    ['21/03/2025','LUCIA MAIDANA UPDATES — Lucía Maidana - Stream en Twitch con Olivia Wald (04/03/2025)','9RRx5uVVk_c'],
+    ['20/03/2025','Olivia Wald Data — Olivia Wald - TikTok Live 14/03/2025','VLL7CUUI_4I'],
+    ['16/03/2025','Olivia Wald Data — Olivia Wald - TikTok Live 14/03/2025 (2)','nyCLDpOrDvU'],
+    ['04/03/2025','LUCIA MAIDANA UPDATES — Lucía Maidana - Stream en Twitch con Olivia Wald (12/02/2025)','dhINijzESi4'],
+    ['24/02/2025','Olivia Wald Data — Olivia Wald - TikTok Live 22/02/2025','EtiUrvzBWCM'],
+    ['17/02/2025','LUCIA MAIDANA UPDATES — Lucía Maidana - Stream en Twitch con Olivia Wald (01/08/2024)','_WvzGrYw-L4'],
+    ['14/02/2025','LUCIA MAIDANA UPDATES — Lucía Maidana - Stream en Twitch con Olivia Wald (16/12/2024)','4rsW61eXLFY'],
+    ['12/02/2025','Olivia Wald Data — Olivia Wald - TikTok Live 11/02/2025','DsVjWclx450'],
+    ['09/02/2025','Olivia Wald Data — Olivia Wald // Chilangocom - IG Live 28/01/2025','bTheSIeZF_c'],
+    ['07/02/2025','LUCIA MAIDANA UPDATES — Lucia Maidana - Stream en Twitch con Olivia Wald y Valentina Olguin (05/08/2024)','rhDO_67fDxk'],
+    ['07/02/2025','LUCIA MAIDANA UPDATES — Lucia Maidana - Stream en Twitch con Olivia Wald (13/08/2024)','f3xfGUxLJbc'],
+    ['07/02/2025','LUCIA MAIDANA UPDATES — Lucia Maidana - Stream en Twitch con Olivia Wald (08/08/2024)','Q0Oa57QrPMc'],
+    ['06/02/2025','Olivia Wald Data — Olivia Wald - TikTok Live 05/02/2025','dirUcYIUrl8'],
+    ['05/02/2025','LUCIA MAIDANA UPDATES — Lucia Maidana - Stream en Twitch con Olivia Wald (31/07/2024) 2/2','0hIO-VTFib8'],
+    ['03/02/2025','Olivia Wald Data — Olivia Wald - TikTok Live 02/02/2025','UgS9J8T6WVU'],
+    ['30/01/2025','Olivia Wald Data — Olivia Wald - TikTok Live 28/01/2025','zsxdjCOBfS4'],
+    ['22/01/2025','Olivia Wald Data — Olivia Wald - TikTok Live 20/01/2025','8n4_3yRP6gs'],
+    ['05/01/2025','Olivia Wald Data — Olivia Wald - Lucia Maidana Twitch 16/12/2024','_ep8UaDS6Qs'],
+    ['03/01/2025','Olivia Wald Data — Olivia Wald - TikTok Live 03/01/2025','m5wXWxipL7g']
+  ];
+
+  function renderCarousel(videos, trackId, countId, countSuffix, thumbUrlFn){
     var trackEl = document.getElementById(trackId);
     var countEl = countId ? document.getElementById(countId) : null;
     if(!trackEl) return;
+    var thumbFn = thumbUrlFn || function(id){ return 'assets/thumbs/' + id + '.jpg'; };
     var html = '';
     videos.forEach(function(v, i){
       var parts = v[0].split('/');
@@ -1146,7 +1398,7 @@
       var tall = (i % 2 === 1) ? ' tall' : '';
       html += '<div class="gcard' + tall + '" data-video-id="' + id + '" role="button" tabindex="0" aria-label="Reproducir ' + title.replace(/"/g,'&quot;') + '">' +
         '<div class="cap">' + mesAno + '</div>' +
-        '<div class="ph"><img src="assets/thumbs/' + id + '.jpg" alt="' + title.replace(/"/g,'&quot;') + '" loading="lazy"><span class="play">▶</span></div>' +
+        '<div class="ph"><img src="' + thumbFn(id) + '" alt="' + title.replace(/"/g,'&quot;') + '" loading="lazy"><span class="play">▶</span></div>' +
         '<div class="gtitle">' + title + '</div>' +
       '</div>';
     });
@@ -1171,16 +1423,20 @@
   }
   renderCarousel(VIDEOS, 'gallery-track', 'gallery-count', 'videos');
   renderCarousel(CONVERSACIONES, 'convo-track', 'convo-count', 'episodios');
+  renderCarousel(INTERVIEWS, 'interviews-track', 'interviews-count', 'videos', function(id){ return 'https://img.youtube.com/vi/' + id + '/hqdefault.jpg'; });
 
   var MS_SLIDES = [
-    {type:'photo', cap:'Prensa — Entrevista Rolling Stone'},
-    {type:'cover', title:'Ya No Duele', kind:'Single'},
-    {type:'photo', cap:'Backstage — Billboard Showcase'},
-    {type:'cover', title:'Fuego Lento', kind:'Single'},
-    {type:'photo', cap:'Sesión de fotos — Revista W'},
-    {type:'cover', title:'Piel', kind:'Single'},
-    {type:'photo', cap:'Entrevista — Radio Metro'},
-    {type:'cover', title:'Cuerpo', kind:'EP'}
+    {type:'photo', src:'assets/gallery/gal-01.jpg', ar:'4/5', cap:'Sesión a la luz de las velas'},
+    {type:'photo', src:'assets/gallery/gal-08.jpg', ar:'2/3', cap:'Campaña — Otra Que Arde'},
+    {type:'photo', src:'assets/gallery/gal-03.jpg', ar:'3/4', cap:'Premio Gardel a Mejor Nuevo Artista'},
+    {type:'photo', src:'assets/gallery/gal-09.jpg', ar:'2/3', cap:'Campaña — Otra Que Arde'},
+    {type:'photo', src:'assets/gallery/gal-04.jpg', ar:'3/4', cap:'Backstage — antes del show'},
+    {type:'photo', src:'assets/gallery/gal-11.jpg', ar:'3/2', cap:'Campaña — Otra Que Arde'},
+    {type:'photo', src:'assets/gallery/gal-07.jpg', ar:'3/4', cap:'Detrás de cámara — rodaje'},
+    {type:'photo', src:'assets/gallery/gal-10.jpg', ar:'2/3', cap:'Editorial'},
+    {type:'photo', src:'assets/gallery/gal-02.jpg', ar:'1/1', cap:'Sesión de fotos'},
+    {type:'photo', src:'assets/gallery/gal-06.jpg', ar:'4/5', cap:'Prensa — sesión de fotos'},
+    {type:'photo', src:'assets/gallery/gal-05.jpg', ar:'3/4', cap:'Backstage'}
   ];
   var BUST_ILLUS = '<svg class="ms-illus" viewBox="0 0 200 240" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="66" r="38"/><path d="M28 228c0-64 32-110 72-110s72 46 72 110"/></svg>';
 
@@ -1189,6 +1445,9 @@
     if(!wrap) return;
     function slideHtml(s, i){
       if(s.type === 'photo'){
+        if(s.src){
+          return '<div class="ms-slide photo has-img" style="--ar:' + s.ar + ';"><img src="' + s.src + '" alt="' + s.cap + '" loading="lazy"></div>';
+        }
         return '<div class="ms-slide photo">' + BUST_ILLUS +
           '<span class="ms-cap" style="position:absolute;left:12px;bottom:12px;">' + s.cap + '</span></div>';
       }
@@ -1211,9 +1470,8 @@
       {name:'OliviaWaldData', links:[['X','https://x.com/oliviawalddata?s=11'],['Instagram','https://www.instagram.com/oliviawalddata'],['TikTok','https://www.tiktok.com/@oliviawald.data']]},
       {name:'OliviaWaldAr', links:[['Instagram','https://www.instagram.com/oliviawaldar']]}
     ],
-    uy: [
-      {name:'OliviaWaldUruguay', links:[['Instagram','https://www.instagram.com/oliviawalduruguay'],['TikTok','https://www.tiktok.com/@oliviawalduruguay']]},
-      {name:'Clums', links:[['TikTok','https://www.tiktok.com/@clums___']]}
+    cl: [
+      {name:'OliviaWaldChile', links:[['Instagram','https://www.instagram.com/oliviawaldchile']]}
     ],
     es: [
       {name:'OliviaWaldSpain', links:[['Instagram','https://www.instagram.com/oliviawaldspain']]}
@@ -1221,8 +1479,9 @@
     mx: [
       {name:'OliviaWaldMéxico', links:[['Instagram','https://www.instagram.com/oliviawaldmexico']]}
     ],
-    cl: [
-      {name:'OliviaWaldChile', links:[['Instagram','https://www.instagram.com/oliviawaldchile']]}
+    uy: [
+      {name:'OliviaWaldUruguay', links:[['Instagram','https://www.instagram.com/oliviawald_uy/'],['TikTok','https://www.tiktok.com/@oliviawalduruguay']]},
+      {name:'Clums', links:[['TikTok','https://www.tiktok.com/@clums___']]}
     ]
   };
 
@@ -1248,6 +1507,41 @@
     });
   }
   setupCommunity();
+
+  function setupAccordion(){
+    var items = document.querySelectorAll('.acc-item');
+    if(!items.length) return;
+    items.forEach(function(item){
+      var trigger = item.querySelector('.acc-trigger');
+      var panel = item.querySelector('.acc-panel');
+      trigger.addEventListener('click', function(){
+        var isOpen = item.classList.contains('open');
+        items.forEach(function(other){
+          other.classList.remove('open');
+          other.querySelector('.acc-panel').style.maxHeight = null;
+        });
+        if(!isOpen){
+          item.classList.add('open');
+          panel.style.maxHeight = panel.scrollHeight + 'px';
+        }
+      });
+    });
+    window.addEventListener('resize', function(){
+      var openItem = document.querySelector('.acc-item.open');
+      if(openItem) openItem.querySelector('.acc-panel').style.maxHeight = openItem.querySelector('.acc-panel').scrollHeight + 'px';
+    });
+  }
+  setupAccordion();
+
+  var conocerteForm = document.getElementById('conocerte-form');
+  if(conocerteForm){
+    conocerteForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      conocerteForm.classList.add('sent');
+      var panel = conocerteForm.closest('.acc-panel');
+      if(panel) panel.style.maxHeight = panel.scrollHeight + 'px';
+    });
+  }
 
   function setupCarousel(trackId, prevId, nextId){
     var trackEl = document.getElementById(trackId);
@@ -1340,6 +1634,10 @@
       opacity:0, y:-30, ease:'none',
       scrollTrigger:{trigger:'.hero', start:'top top', end:'16% top', scrub:.6}
     });
+    gsap.to(['.ph .next-card', '.ph .hero-inner'], {
+      opacity:0, y:-30, ease:'none',
+      scrollTrigger:{trigger:'.hero', start:'top top', end:'16% top', scrub:.6}
+    });
     if(heroPhEl){
       gsap.fromTo(heroPhEl, {scale:1}, {
         scale:.6, ease:'none',
@@ -1374,9 +1672,18 @@
     document.querySelectorAll('.reveal').forEach(function(el){
       gsap.fromTo(el, {y:28, opacity:0}, {
         y:0, opacity:1, duration:1, ease:'power3.out',
-        scrollTrigger:{trigger:el, start:'top 88%'}
+        scrollTrigger:{trigger:el, start:'top 88%', once:true}
       });
     });
+
+    // statement: fades in gradually as you scroll through it (starts transparent)
+    var statementFadeEl = document.getElementById('statement-fade');
+    if(statementFadeEl){
+      gsap.fromTo(statementFadeEl, {opacity:0, y:24}, {
+        opacity:1, y:0, ease:'none',
+        scrollTrigger:{trigger:statementFadeEl, start:'top 92%', end:'top 55%', scrub:.6}
+      });
+    }
 
     // manifesto stroke draw on scroll
     gsap.to('#stroke1 path', {
@@ -1384,15 +1691,10 @@
       scrollTrigger:{trigger:'.manifesto-hero', start:'top 70%', end:'bottom 40%', scrub:1}
     });
 
-    // statement subtle scale/parallax
-    gsap.from('.statement', {
-      opacity:.35, duration:1,
-      scrollTrigger:{trigger:'.statement', start:'top 90%', end:'top 50%', scrub:1}
-    });
-
     // video carousels: arrow buttons scroll the track, no scroll-jacking
     setupCarousel('gallery-track', 'gallery-prev', 'gallery-next');
     setupCarousel('convo-track', 'convo-prev', 'convo-next');
+    setupCarousel('interviews-track', 'interviews-prev', 'interviews-next');
 
     // bio reveal on scroll
     gsap.from('.bio-photo', {y:30, opacity:0, duration:1, ease:'power3.out', scrollTrigger:{trigger:'.bio', start:'top 85%'}});
