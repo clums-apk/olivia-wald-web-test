@@ -424,6 +424,7 @@
     display:flex;align-items:center;justify-content:center;color:var(--cream-text);
     transition:transform .3s ease;
   }
+  .gcard .play svg{width:13px;height:13px;margin-left:2px;}
   .gcard:hover .play{transform:scale(1.12);}
   .gcard .gtitle{
     margin-top:10px;max-width:min(58vw,270px);
@@ -723,7 +724,7 @@
 <header>
   <a class="logo" href="#inicio"><span class="logo-mark"></span></a>
   <div class="head-right">
-    <a class="btn-store" href="https://oliviawaldfans.com/juegos/">🎮 Juegos</a>
+    <a class="btn-store" href="https://oliviawaldfans.com/juegos/"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="10" rx="5"/><path d="M7 10v4M5 12h4"/><circle cx="15" cy="10.5" r="1"/><circle cx="18" cy="13.5" r="1"/></svg>Juegos</a>
     <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false"><i></i><i></i></button>
   </div>
 </header>
@@ -831,7 +832,7 @@
     </div></div>
 
     <div class="statement" id="statement-fade">
-      <h2>Para curar mis dolores<br>no le pondré agua a tus flores.<br>Quemas así eran de plástico, <i>otro más</i><br>de todos tus <b>errores</b>.</h2>
+      <h2>Para curar mis dolores<br>no le pondré agua a tus flores.<br>Qué más da si eran de plástico, <i>otro más</i><br>de todos tus <b>errores</b>.</h2>
       <p class="statement-credit">Tus errores — Olivia Wald ft. Coti</p>
     </div>
   </section>
@@ -856,8 +857,8 @@
     <div class="wrap">
       <div class="whatsapp-band">
         <h3>¿Querés conectar con otros fans?<br><i>Encontrá con quién ir a los shows.</i></h3>
-        <p>Sumate a la comunidad de WhatsApp y conectate con fans de de todo el mundo: coordiná previas, compartí y hacé amigos que también arden por esta era.</p>
-        <a class="btn-join" href="https://chat.whatsapp.com/Dx7nGLVTWjk6KGoK3QQwML" target="_blank" rel="noopener noreferrer">💬 Unirme a la comunidad →</a>
+        <p>Sumate a la comunidad de WhatsApp y conectate con fans de todo el mundo: coordiná previas, compartí y hacé amigos que también arden por esta era.</p>
+        <a class="btn-join" href="https://chat.whatsapp.com/Dx7nGLVTWjk6KGoK3QQwML" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-11.86 7.82L3 21l1.68-6.14A8.5 8.5 0 1 1 21 11.5Z"/></svg>Unirme a la comunidad →</a>
       </div>
 
       <div class="sec-head" style="margin-top:36px;">
@@ -1396,7 +1397,7 @@
       var tall = (i % 2 === 1) ? ' tall' : '';
       html += '<div class="gcard' + tall + '" data-video-id="' + id + '" role="button" tabindex="0" aria-label="Reproducir ' + title.replace(/"/g,'&quot;') + '">' +
         '<div class="cap">' + mesAno + '</div>' +
-        '<div class="ph"><img src="' + thumbFn(id) + '" alt="' + title.replace(/"/g,'&quot;') + '" loading="lazy"><span class="play">▶</span></div>' +
+        '<div class="ph"><img src="' + thumbFn(id) + '" alt="' + title.replace(/"/g,'&quot;') + '" loading="lazy"><span class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4l15 8-15 8V4Z"/></svg></span></div>' +
         '<div class="gtitle">' + title + '</div>' +
       '</div>';
     });
