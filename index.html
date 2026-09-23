@@ -511,7 +511,7 @@
   .cf-autosave{margin-top:16px;display:flex;align-items:center;gap:8px;font-size:.7rem;color:var(--ink-soft);}
   .cf-autosave .dot{width:7px;height:7px;border-radius:50%;background:var(--ink-line);}
   .cf-autosave .dot.ok{background:#3fa96f;}
-  .conocerte-form.sent{display:none;}
+  .conocerte-form.hidden{display:none;}
   .cf-thanks{display:none;max-width:640px;}
   .cf-thanks.show{display:block;}
   .cf-thanks h3{font-size:clamp(1.5rem,4vw,2rem);margin:10px 0 12px;}
@@ -1189,9 +1189,6 @@
       <a href="https://www.deezer.com/en/artist/69745012" target="_blank" rel="noopener noreferrer">
         <span class="soc-name"><svg class="soc-icon" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="14" width="3.4" height="4.5"/><rect x="7.2" y="10" width="3.4" height="8.5"/><rect x="12.4" y="6" width="3.4" height="12.5"/><rect x="17.6" y="10" width="3.4" height="8.5"/></svg>Escuchá a Olivia en Deezer</span><span>↗</span>
       </a>
-      <a href="https://soundcloud.com/oliviawald" target="_blank" rel="noopener noreferrer">
-        <span class="soc-name"><svg class="soc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 16.5h11a3.5 3.5 0 0 0 .5-6.96A5 5 0 0 0 8.3 8.6 3.6 3.6 0 0 0 6 16.5Z"/><path d="M4 12.5v4M2.3 14v2.3"/></svg>Escuchá a Olivia en SoundCloud</span><span>↗</span>
-      </a>
     </div>
   </section>
 
@@ -1534,15 +1531,182 @@
   }
   setupAccordion();
 
-  var conocerteForm = document.getElementById('conocerte-form');
-  if(conocerteForm){
-    conocerteForm.addEventListener('submit', function(e){
-      e.preventDefault();
-      conocerteForm.classList.add('sent');
-      var panel = conocerteForm.closest('.acc-panel');
+  (function setupConocerteForm(){
+    var form = document.getElementById('conocerte-form');
+    if(!form) return;
+
+    var CF_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwHDdK8dRI0057EYOXVFOYISCbrIbAjfJY9lk2SiW53coKuUGqf5uiM4Y_nqjDkDcGA/exec";
+    var steps = Array.from(form.querySelectorAll('.cf-step'));
+    var progressBar = document.getElementById('cf-progressbar');
+    var nextBtn = document.getElementById('cf-nextBtn');
+    var prevBtn = document.getElementById('cf-prevBtn');
+    var submitBtn = document.getElementById('cf-submitBtn');
+    var saveDot = document.getElementById('cf-saveDot');
+    var saveText = document.getElementById('cf-saveText');
+    var thanksBox = document.getElementById('cf-thanks');
+    var panel = form.closest('.acc-panel');
+
+    var currentStep = 0;
+    var saveTimer = null;
+    var saving = false;
+    var pendingSave = false;
+
+    function resizePanel(){
       if(panel) panel.style.maxHeight = panel.scrollHeight + 'px';
+    }
+
+    function uuid(){
+      return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c){
+        var r = Math.random() * 16 | 0;
+        var v = c === "x" ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    }
+
+    var currentSession = localStorage.getItem("oliviaFanSession") || uuid();
+    try{ localStorage.setItem("oliviaFanSession", currentSession); }catch(err){}
+    document.getElementById('cf-sessionId').value = currentSession;
+
+    function formDataObject(){
+      var fd = new FormData(form);
+      var obj = Object.fromEntries(fd.entries());
+      obj.sessionId = currentSession;
+      obj.status = document.getElementById('cf-status').value;
+      obj.updatedAt = new Date().toISOString();
+      obj.currentStep = currentStep + 1;
+      return obj;
+    }
+
+    function restoreLocal(){
+      try{
+        var saved = JSON.parse(localStorage.getItem("oliviaFanDraft") || "{}");
+        Object.entries(saved).forEach(function(pair){
+          var key = pair[0], value = pair[1];
+          var fields = form.elements[key];
+          if(!fields) return;
+          if(fields instanceof RadioNodeList){
+            Array.from(fields).forEach(function(field){ field.checked = field.value === value; });
+          } else if(fields.type === 'checkbox'){
+            fields.checked = (value === 'Sí' || value === true);
+          } else {
+            fields.value = value;
+          }
+        });
+      }catch(err){}
+    }
+    restoreLocal();
+
+    function sendToSheet(data){
+      return fetch(CF_SCRIPT_URL, {
+        method: 'POST', mode: 'no-cors', cache: 'no-store',
+        headers: {'Content-Type': 'text/plain;charset=utf-8'},
+        body: JSON.stringify(data)
+      });
+    }
+
+    function saveDraft(remote){
+      var data = formDataObject();
+      try{ localStorage.setItem("oliviaFanDraft", JSON.stringify(data)); }catch(err){}
+
+      if(!remote){
+        saveDot.classList.add('ok');
+        saveText.textContent = 'Guardado en este dispositivo';
+        return Promise.resolve();
+      }
+      if(saving){ pendingSave = true; return Promise.resolve(); }
+
+      saving = true;
+      saveDot.classList.remove('ok');
+      saveText.textContent = 'Guardando...';
+
+      return sendToSheet(Object.assign({}, data, {action:'upsert'})).then(function(){
+        saveDot.classList.add('ok');
+        saveText.textContent = 'Guardado en la planilla';
+      }).catch(function(){
+        saveDot.classList.remove('ok');
+        saveText.textContent = 'Guardado solo en este dispositivo';
+      }).finally(function(){
+        saving = false;
+        if(pendingSave){ pendingSave = false; saveDraft(true); }
+      });
+    }
+
+    function scheduleSave(){
+      clearTimeout(saveTimer);
+      saveDot.classList.remove('ok');
+      saveText.textContent = 'Guardando...';
+      saveTimer = setTimeout(function(){ saveDraft(true); }, 500);
+    }
+    form.addEventListener('input', scheduleSave);
+    form.addEventListener('change', function(){ clearTimeout(saveTimer); saveDraft(true); });
+    form.addEventListener('focusout', function(){ clearTimeout(saveTimer); saveDraft(true); });
+
+    function updateStep(){
+      steps.forEach(function(step, i){ step.classList.toggle('active', i === currentStep); });
+      if(progressBar) progressBar.style.width = (((currentStep + 1) / steps.length) * 100) + '%';
+      prevBtn.style.visibility = currentStep === 0 ? 'hidden' : 'visible';
+      nextBtn.classList.toggle('hidden', currentStep === steps.length - 1);
+      submitBtn.classList.toggle('hidden', currentStep !== steps.length - 1);
+      resizePanel();
+    }
+
+    function validateStep(){
+      var requiredFields = Array.from(steps[currentStep].querySelectorAll('[required]'));
+      for(var i=0;i<requiredFields.length;i++){
+        var field = requiredFields[i];
+        if(field.type === 'radio'){
+          var checked = form.querySelector('[name="'+field.name+'"]:checked');
+          if(!checked){ alert('Completá esta opción para continuar.'); return false; }
+        } else if(field.type === 'checkbox'){
+          if(!field.checked){ field.focus(); alert('Tenés que aceptar esta opción para continuar.'); return false; }
+        } else if(!String(field.value || '').trim()){
+          field.focus(); field.reportValidity(); return false;
+        }
+      }
+      return true;
+    }
+
+    nextBtn.addEventListener('click', function(){
+      if(!validateStep()) return;
+      saveDraft(true);
+      currentStep = Math.min(currentStep + 1, steps.length - 1);
+      updateStep();
     });
-  }
+
+    prevBtn.addEventListener('click', function(){
+      currentStep = Math.max(currentStep - 1, 0);
+      updateStep();
+    });
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      if(!validateStep()) return;
+      document.getElementById('cf-status').value = 'completo';
+      saveDraft(true).then(function(){
+        form.classList.add('hidden');
+        if(thanksBox) thanksBox.classList.add('show');
+        try{ localStorage.removeItem('oliviaFanDraft'); }catch(err){}
+        resizePanel();
+      });
+    });
+
+    var newFormBtn = document.getElementById('cf-newFormBtn');
+    if(newFormBtn){
+      newFormBtn.addEventListener('click', function(){
+        form.reset();
+        form.classList.remove('hidden');
+        if(thanksBox) thanksBox.classList.remove('show');
+        currentSession = uuid();
+        try{ localStorage.setItem('oliviaFanSession', currentSession); }catch(err){}
+        document.getElementById('cf-sessionId').value = currentSession;
+        document.getElementById('cf-status').value = 'incompleto';
+        currentStep = 0;
+        updateStep();
+      });
+    }
+
+    updateStep();
+  })();
 
   function setupCarousel(trackId, prevId, nextId){
     var trackEl = document.getElementById(trackId);
