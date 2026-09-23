@@ -165,12 +165,12 @@
   .gcard .ph .mock-illus{color:rgba(244,238,221,.5);width:56%;}
   .split-thumb .mock-illus{width:60%;}
 
-  /* flaming-heart cursor everywhere on the site */
+  /* flaming-heart cursor on the page background; normal hand cursor on links/buttons */
   body{
     cursor: url('assets/cursor-flame.svg') 15 4, auto;
   }
   a, button, .flag-btn, .gcard, .carousel-arrow, .menu-toggle{
-    cursor: url('assets/cursor-flame.svg') 15 4, pointer;
+    cursor: pointer;
   }
   .spark-layer{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden;}
   .spark{
@@ -545,8 +545,10 @@
     display:inline-flex;gap:6px;align-items:center;
   }
   .whatsapp-band{
-    position:relative;background:var(--ink);color:var(--cream-text);border-radius:24px;
+    position:relative;background:var(--paper);color:var(--ink);border-radius:24px;
+    border:1px solid var(--ink-line);
     padding:56px 32px;text-align:center;overflow:hidden;
+    box-shadow:0 30px 70px -35px rgba(23,20,15,.25);
   }
   .whatsapp-band::before{
     content:'';position:absolute;inset:0;
@@ -554,12 +556,20 @@
                radial-gradient(70% 90% at 85% 100%, var(--fire-soft), transparent 60%);
   }
   .whatsapp-band > *{position:relative;z-index:1;}
-  .whatsapp-band .eyebrow{color:var(--ice-pale);}
+  .whatsapp-band .eyebrow{color:var(--fire-deep);}
   .whatsapp-band h3{
-    font-size:clamp(1.9rem,4.8vw,3rem);line-height:1.05;margin:14px 0 16px;
+    font-size:clamp(1.9rem,4.8vw,3rem);line-height:1.05;margin:14px 0 16px;color:var(--ink);
   }
   .whatsapp-band h3 i{font-style:italic;color:var(--fire);}
-  .whatsapp-band p{max-width:46ch;margin:0 auto 28px;font-size:.96rem;opacity:.85;}
+  .whatsapp-band p{max-width:50ch;margin:0 auto 30px;font-size:.98rem;color:var(--ink-soft);}
+  .btn-join{
+    background:var(--fire);color:var(--cream-text);
+    padding:20px 40px;border-radius:999px;font-size:.95rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;
+    display:inline-flex;gap:12px;align-items:center;
+    transition:transform .3s cubic-bezier(.2,.8,.2,1), background .3s;
+    box-shadow:0 20px 40px -18px rgba(226,74,38,.6);
+  }
+  .btn-join:hover{transform:translateY(-3px);background:var(--fire-deep);}
 
   /* ---------- Shows / En vivo ---------- */
   .shows{background:var(--ecru);}
@@ -890,9 +900,9 @@
 
       <div class="whatsapp-band">
         <div class="eyebrow">Comunidad global · WhatsApp</div>
-        <h3>¿Vas sola a los shows?<br><i>Encontrá con quién ir.</i></h3>
+        <h3>¿Querés conectar con otros fans?<br><i>Encontrá con quién ir a los shows.</i></h3>
         <p>Sumate a la comunidad de WhatsApp y conectate con fans de Olivia de todo el mundo: coordiná previas, compartí entradas y hacé amigos que también arden por esta era.</p>
-        <a class="btn-light" href="https://chat.whatsapp.com/Dx7nGLVTWjk6KGoK3QQwML" target="_blank" rel="noopener noreferrer">💬 Unirme a la comunidad →</a>
+        <a class="btn-join" href="https://chat.whatsapp.com/Dx7nGLVTWjk6KGoK3QQwML" target="_blank" rel="noopener noreferrer">💬 Unirme a la comunidad →</a>
       </div>
     </div>
   </section>
@@ -1424,9 +1434,11 @@
   }
 
   /* Hero video: crossfades in on hover (mouse) or tap (touch/pen).
-     Uses Pointer Events with pointerType checks so a tap on mobile can't
-     also trigger a synthetic mouseenter/mouseleave pair that immediately
-     re-hides the video (that double-firing was why it looked broken). */
+     The device type is detected ONCE up front (not per-event), so exactly one
+     code path is ever active: plain mouseenter/mouseleave on non-touch
+     devices (the most broadly compatible option for real hover), or
+     tap-to-toggle on touch devices. Mixing both per-event was what caused
+     a tap to also trigger a synthetic mouseleave that instantly paused it. */
   var heroVideo = document.getElementById('hero-video');
   if(heroPh && heroVideo){
     function playHeroVideo(){
@@ -1437,18 +1449,12 @@
       heroPh.classList.remove('playing');
       heroVideo.pause();
     }
-    if(window.PointerEvent){
-      heroPh.addEventListener('pointerenter', function(e){
-        if(e.pointerType === 'mouse') playHeroVideo();
-      });
-      heroPh.addEventListener('pointerleave', function(e){
-        if(e.pointerType === 'mouse') pauseHeroVideo();
-      });
-      heroPh.addEventListener('pointerdown', function(e){
-        if(e.pointerType === 'mouse') return;
+    var isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+    if(isTouchDevice){
+      heroPh.addEventListener('touchstart', function(){
         if(heroPh.classList.contains('playing')) pauseHeroVideo();
         else playHeroVideo();
-      });
+      }, {passive:true});
     } else {
       heroPh.addEventListener('mouseenter', playHeroVideo);
       heroPh.addEventListener('mouseleave', pauseHeroVideo);
