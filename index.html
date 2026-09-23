@@ -736,7 +736,10 @@
   <a href="#en-vivo">Gira</a>
   <a href="#fans">Fans</a>
   <a href="#conversaciones">Conversaciones</a>
-  <a href="#bio">Bio</a>
+  <a href="#bio" data-acc="bio">Bio</a>
+  <a href="#bio" data-acc="conocerte">Queremos conocerte</a>
+  <a href="#bio" data-acc="entrevistas">Entrevistas</a>
+  <a href="#bio" data-acc="spotify">Escuchar en Spotify</a>
   <a href="#redes">Redes</a>
   <a href="https://oliviawaldfans.com/juegos/">Juegos</a>
 </nav>
@@ -1995,7 +1998,17 @@
       menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
     navMenu.querySelectorAll('a').forEach(function(a){
-      a.addEventListener('click', closeMenu);
+      a.addEventListener('click', function(){
+        closeMenu();
+        var accKey = a.getAttribute('data-acc');
+        if(accKey){
+          setTimeout(function(){
+            var trigger = document.querySelector('.acc-item[data-acc="' + accKey + '"] .acc-trigger');
+            var item = trigger ? trigger.closest('.acc-item') : null;
+            if(trigger && item && !item.classList.contains('open')) trigger.click();
+          }, 450);
+        }
+      });
     });
     document.addEventListener('keydown', function(e){
       if(e.key === 'Escape') closeMenu();
