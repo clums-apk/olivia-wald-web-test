@@ -1742,10 +1742,13 @@
     else { setTimeout(finishLoad, 300); }
   }
   function finishLoad(){
+    window.scrollTo(0, 0);
     pre.classList.add('hide');
     document.body.classList.add('js-ready');
     setTimeout(startAnim, 250);
   }
+  if('scrollRestoration' in history){ history.scrollRestoration = 'manual'; }
+  window.scrollTo(0, 0);
   setTimeout(tick, 200);
 
   /* ---- Countdown ---- */
