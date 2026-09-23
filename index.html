@@ -1559,7 +1559,8 @@
     var pendingSave = false;
 
     function resizePanel(){
-      if(panel) panel.style.maxHeight = panel.scrollHeight + 'px';
+      var item = panel ? panel.closest('.acc-item') : null;
+      if(panel && item && item.classList.contains('open')) panel.style.maxHeight = panel.scrollHeight + 'px';
     }
 
     function uuid(){
@@ -1797,7 +1798,6 @@
 
     gsap.from('.hero-title', {y:40, opacity:0, duration:1.1, ease:'power3.out'});
     gsap.from('.hero-sub', {y:20, opacity:0, duration:1, delay:.25, ease:'power3.out'});
-    gsap.from('.next-card', {y:20, opacity:0, duration:1, delay:.4, ease:'power3.out'});
 
     // hero →︎ same photo shrinks in place (sticky) as you scroll through the tall .hero section,
     // the title/next-card fade out first, then the marquee fades in behind it and the signature draws on top
